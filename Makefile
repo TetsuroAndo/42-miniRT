@@ -6,11 +6,11 @@
 #    By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/25 13:31:17 by teando            #+#    #+#              #
-#    Updated: 2025/04/25 14:08:56 by teando           ###   ########.fr        #
+#    Updated: 2025/04/25 14:45:28 by teando           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		:= minirt
+NAME		:= miniRT
 CC			:= cc
 CFLAGS		:= -Wall -Wextra -Werror
 RM			:= rm -rf
@@ -28,12 +28,13 @@ MLX_DIR			:= $(ROOT_DIR)/src/lib/minilibx
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Darwin)
 	LIBFT		:= $(LIBFT_DIR)/libft_mac.a
-	FRAMEWORKS		:= -lmlx -lXext -lX11 -lm
+	MLX			:= $(MLX_DIR)/libmlx_Darwin.a
+	FRAMEWORKS	:= -lmlx -lXext -lX11 -lm
 else
 	LIBFT		:= $(LIBFT_DIR)/libft.a
-	FRAMEWORKS		:= -lmlx -lXext -lX11 -lm
+	MLX			:= $(MLX_DIR)/libmlx_Linux.a
+	FRAMEWORKS	:= -lmlx -lXext -lX11 -lm
 endif
-MLX				:= $(MLX_DIR)/minilibx.a
 LFLAGS			:= $(FRAMEWORKS) -L$(MLX_DIR)
 IDFLAGS			:= -I$(INC_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR)
 
@@ -51,14 +52,14 @@ all: DEFINE := -DDEBUG_MODE=DEBUG_ALL
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(MLX) $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(MLX) $(LFLAGS) $(IDFLAGS) $(DEFINE) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(MLX) $(IDFLAGS) $(LFLAGS) $(DEFINE) -o $(NAME)
 	@echo "====================="
 	@echo "== Build Complete! =="
 	@echo "====================="
 	@echo "[Executable]: $(NAME)"
 	@echo "[UNAME_S]: $(UNAME_S)"
-	@echo "[LIBRARY]: $(LIBFT) $(MLX)"
-	@echo "[INCLUDEDIR]: $(INC_DIR) $(LIBFT_DIR) $(MLX_DIR)"
+	@echo "[LIBRARY]: $(LIBFT) | $(MLX)"
+	@echo "[INCLUDEDIR]: $(INC_DIR) | $(LIBFT_DIR) | $(MLX_DIR)"
 	@echo "[Compiler flags/CFLAGS]: $(CFLAGS)"
 	@echo "[Linker flags/LFLAGS]: $(LFLAGS)"
 	@echo "[Debug flags/DEFINE]: $(DEFINE)"
@@ -71,7 +72,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(LIBFT_DIR) $(MLX_DIR)
 $(LIBFT): | $(LIBFT_DIR)/libft.h
 	$(MAKE) -C $(LIBFT_DIR)
 
-$(MLX): | $(MLX_DIR)/minilibx.h
+$(MLX): | $(MLX_DIR)/mlx.h
 	$(MAKE) -C $(MLX_DIR)
 
 c:
@@ -88,7 +89,7 @@ clean:
 fclean: clean
 	$(RM) $(NAME)
 	$(MAKE) -C $(LIBFT_DIR) fclean
-	$(MAKE) -C $(MLX_DIR) fclean
+	$(RM) $(MLX_DIR)/libmlx.a $(MLX_DIR)/libmlx_Darwin.a $(MLX_DIR)/libmlx_Linux.a
 
 re: fclean all
 
