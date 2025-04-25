@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 14:03:08 by teando            #+#    #+#             */
-/*   Updated: 2025/04/25 14:04:49 by teando           ###   ########.fr       */
+/*   Updated: 2025/04/25 14:07:38 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,5 @@
 #define MINIRT_H
 
 #include "core.h"
-#include "libft.h"
-#include "minilibx.h"
 
 #endif

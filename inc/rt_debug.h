@@ -6,15 +6,12 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 14:03:55 by teando            #+#    #+#             */
-/*   Updated: 2025/04/25 14:06:11 by teando           ###   ########.fr       */
+/*   Updated: 2025/04/25 14:07:28 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RT_DEBUG_H
 #define RT_DEBUG_H
-
-#include "rt_err.h"
-#include "rt_debug.h"
 
 #define DEBUG_NONE 0
 #define DEBUG_CORE (1 << 0)
