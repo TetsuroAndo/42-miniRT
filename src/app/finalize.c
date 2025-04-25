@@ -1,12 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   initialize.c                                       :+:      :+:    :+:   */
+/*   finalize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/25 14:47:56 by teando            #+#    #+#             */
-/*   Updated: 2025/04/25 14:47:57 by teando           ###   ########.fr       */
+/*   Created: 2025/04/25 14:47:54 by teando            #+#    #+#             */
+/*   Updated: 2025/04/25 15:35:44 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+# include "app.h"
+
+void exit_app(t_app *app, int code)
+{
+	ft_gc_destroy(app->gc);
+	mlx_destroy_window(app->mlx, app->win);
+	mlx_destroy_display(app->mlx);
+	free(app->mlx);
+	free(app->win);
+	free(app);
+	exit(1);
+}

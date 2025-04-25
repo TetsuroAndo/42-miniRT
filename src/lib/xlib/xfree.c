@@ -1,27 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_debug.h                                         :+:      :+:    :+:   */
+/*   xfree.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/25 14:03:55 by teando            #+#    #+#             */
-/*   Updated: 2025/04/25 14:07:28 by teando           ###   ########.fr       */
+/*   Created: 2025/04/25 16:40:41 by teando            #+#    #+#             */
+/*   Updated: 2025/04/25 16:41:50 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RT_DEBUG_H
-#define RT_DEBUG_H
+#include "app.h"
 
-#define DEBUG_NONE 0
-#define DEBUG_CORE (1 << 0)
-#define DEBUG_INIT (1 << 1)
-#define DEBUG_LOAD (1 << 2)
-#define DEBUG_3 (1 << 3)
-#define DEBUG_4 (1 << 4)
-#define DEBUG_5 (1 << 5)
-#define DEBUG_6 (1 << 6)
-#define DEBUG_7 (1 << 7)
-#define DEBUG_ALL (~DEBUG_NONE)
-
-#endif
+void xfree(void **p, t_app *app)
+{
+	ft_gc_free(app->gc, p);
+}

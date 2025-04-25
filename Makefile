@@ -6,7 +6,7 @@
 #    By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/25 13:31:17 by teando            #+#    #+#              #
-#    Updated: 2025/04/25 14:45:28 by teando           ###   ########.fr        #
+#    Updated: 2025/04/25 16:58:07 by teando           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,6 @@ NAME		:= miniRT
 CC			:= cc
 CFLAGS		:= -Wall -Wextra -Werror
 RM			:= rm -rf
-DEFINE		:= -DDEBUG_MODE=DEBUG_NONE
 
 # ディレクトリ設定
 ROOT_DIR		:= .
@@ -24,26 +23,29 @@ OBJ_DIR			:= $(ROOT_DIR)/obj
 LIBFT_DIR		:= $(ROOT_DIR)/src/lib/libft
 MLX_DIR			:= $(ROOT_DIR)/src/lib/minilibx
 
+# FLAGS
+DEFINE		:= -DDEBUG_MODE=DEBUG_NONE
+IDFLAGS		:= -I$(INC_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR)
+LFLAGS		:= -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
+
 # 環境依存
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Darwin)
 	LIBFT		:= $(LIBFT_DIR)/libft_mac.a
 	MLX			:= $(MLX_DIR)/libmlx_Darwin.a
-	FRAMEWORKS	:= -lmlx -lXext -lX11 -lm
+	IDFLAGS		+= OpenGL -framework AppKit -L/opt/X11/lib
 else
 	LIBFT		:= $(LIBFT_DIR)/libft.a
 	MLX			:= $(MLX_DIR)/libmlx_Linux.a
-	FRAMEWORKS	:= -lmlx -lXext -lX11 -lm
 endif
-LFLAGS			:= $(FRAMEWORKS) -L$(MLX_DIR)
-IDFLAGS			:= -I$(INC_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR)
 
 # source files
-SRC	:= \
-	$(addprefix $(SRC_DIR)/, \
-		main.c \
-	)
-SRC		+= $(shell find $(SRC_DIR)/core -name '*.c')
+# SRC	:= \
+# 	$(addprefix $(SRC_DIR)/app, \
+# 		main.c \
+# 	)
+SRC		:= $(shell find $(SRC_DIR)/app -name '*.c')
+SRC		+= $(shell find $(SRC_DIR)/lib/xlib -name '*.c')
 OBJ		:= $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC))
 
 # dev all
@@ -51,6 +53,9 @@ all: CFLAGS += -g -fsanitize=address -O1 -fno-omit-frame-pointer
 all: DEFINE := -DDEBUG_MODE=DEBUG_ALL
 all: $(NAME)
 
+ifeq ($(UNAME_S),Darwin)
+$(NAME): setup_xquartz
+endif
 $(NAME): $(LIBFT) $(MLX) $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(MLX) $(IDFLAGS) $(LFLAGS) $(DEFINE) -o $(NAME)
 	@echo "====================="
@@ -130,7 +135,7 @@ debug: f $(NAME)
 $(LIBFT_DIR)/libft.h:
 	git submodule update --remote --init --recursive
 
-$(MLX_DIR)/minilibx.h:
+$(MLX_DIR)/mlx.h:
 	git submodule update --init --recursive
 
 sub:
@@ -138,5 +143,13 @@ sub:
 
 norm:
 	@norminette $(SRC) $(INC_DIR)
+
+# =======================
+# == MACOS Setup ========
+# =======================
+
+setup_xquartz:
+	@open -a XQuartz
+	@export DISPLAY=:0
 
 .PHONY: all clean fclean re

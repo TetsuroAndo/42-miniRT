@@ -1,21 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   core.h                                             :+:      :+:    :+:   */
+/*   rt_err.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/25 14:03:38 by teando            #+#    #+#             */
-/*   Updated: 2025/04/25 14:08:07 by teando           ###   ########.fr       */
+/*   Created: 2025/04/25 14:04:11 by teando            #+#    #+#             */
+/*   Updated: 2025/04/25 15:34:40 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CORE_H
-#define CORE_H
+#ifndef RT_ERR_H
+# define RT_ERR_H
 
-#include "rt_err.h"
-#include "rt_debug.h"
-#include "libft.h"
-#include "mlx.h"
+typedef enum e_status
+{
+	E_NONE,
+	E_ALLOC,
+	E_MLX,
+	E_SCENE,
+	E_OBJ,
+	E_THREAD
+}	t_status;
 
 #endif
