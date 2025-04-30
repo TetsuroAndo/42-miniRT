@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 14:03:38 by teando            #+#    #+#             */
-/*   Updated: 2025/04/30 16:38:28 by teando           ###   ########.fr       */
+/*   Updated: 2025/04/30 18:59:55 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include "rt_obj.h"
 # include "rt_scene.h"
 # include "rt_render.h"
-# include "ft_vec.h"
+# include "rt_vec.h"
 
 /* MLX + GC + Scene をまとめたグローバルコンテキスト */
 typedef struct s_app

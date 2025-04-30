@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+         #
+#    By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/25 13:31:17 by teando            #+#    #+#              #
-#    Updated: 2025/04/30 16:44:14 by teando           ###   ########.fr        #
+#    Updated: 2025/04/30 17:51:27 by tomsato          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -131,7 +131,7 @@ $(LIBFT_DIR)/libft.h:
 	git submodule update --remote --init --recursive
 
 $(MLX_DIR)/mlx.h:
-	git submodule update --init --recursive
+	https://github.com/TetsuroAndo/42-miniRT.git
 
 sub:
 	git submodule update --remote
