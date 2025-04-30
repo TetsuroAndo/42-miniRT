@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 15:30:28 by teando            #+#    #+#             */
-/*   Updated: 2025/04/25 16:54:38 by teando           ###   ########.fr       */
+/*   Updated: 2025/04/30 15:24:43 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,19 +68,6 @@ typedef struct s_cylinder
 	t_color			color;
 }					t_cylinder;
 
-/** 汎用オブジェクト (単方向リスト) */
-typedef struct s_object
-{
-	t_obj_type		type;
-	union
-	{
-		t_sphere	sp;
-		t_plane		pl;
-		t_cylinder	cy;
-	} u;
-	struct s_object	*next;
-}					t_object;
-
 /** 環境光 (A) */
 typedef struct s_ambient
 {
@@ -112,6 +99,30 @@ typedef struct s_scene
 	t_light			*lights; /* L (可変) */
 	t_object		*objs;  /* ジオメトリ可変 */
 }					t_scene;
+
+typedef struct s_hit_record
+{
+	double		t;
+	t_vec3		pos;
+	t_vec3		normal;
+	t_color		color;
+	t_object	*obj;
+}				t_hit_record;
+
+/** 汎用オブジェクト (単方向リスト) */
+typedef struct s_object
+{
+	t_obj_type		type;
+	union
+	{
+		t_sphere	sp;
+		t_plane		pl;
+		t_cylinder	cy;
+	} u;
+	struct s_object	*next;
+	t_hit_record	(*hit)(t_object *obj, t_ray *ray);
+}					t_object;
+
 
 /* 画像バッファ */
 typedef struct s_img
