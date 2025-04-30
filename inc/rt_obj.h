@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 15:30:28 by teando            #+#    #+#             */
-/*   Updated: 2025/04/30 15:24:43 by teando           ###   ########.fr       */
+/*   Updated: 2025/04/30 15:35:40 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef enum e_obj_type
 typedef struct s_sphere
 {
 	t_vec3			center;
-	double			radius; /* .rt では diameter → radius = d / 2 */
+	double			radius;		/* .rt では diameter → radius = d / 2 */
 	t_color			color;
 }					t_sphere;
 
@@ -92,14 +92,6 @@ typedef struct s_camera
 	double			fov; /* ° */
 }					t_camera;
 
-typedef struct s_scene
-{
-	t_ambient		amb;   /* A (一意) */
-	t_camera		cam;    /* C (一意) */
-	t_light			*lights; /* L (可変) */
-	t_object		*objs;  /* ジオメトリ可変 */
-}					t_scene;
-
 typedef struct s_hit_record
 {
 	double		t;
@@ -120,9 +112,16 @@ typedef struct s_object
 		t_cylinder	cy;
 	} u;
 	struct s_object	*next;
-	t_hit_record	(*hit)(t_object *obj, t_ray *ray);
+	t_hit_record	(*hit)(t_object *obj, t_ray *ray, t_app *app);
 }					t_object;
 
+typedef struct s_scene
+{
+	t_ambient		amb;		/* A (一意) */
+	t_camera		cam;		/* C (一意) */
+	t_light			light;		/* L (一意) */
+	t_object		*objs;		/* ジオメトリ可変 */
+}					t_scene;
 
 /* 画像バッファ */
 typedef struct s_img
