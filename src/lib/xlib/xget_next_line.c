@@ -6,7 +6,7 @@
 /*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 19:32:46 by tomsato           #+#    #+#             */
-/*   Updated: 2025/04/30 19:56:21 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/04/30 20:07:24 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,8 @@ static char	*set_next_line(char *line_buffer, t_app *app)
 	return (left_char);
 }
 
+/*
+
 #include "app.h"
 #include <fcntl.h>
 #include <stdio.h>
@@ -154,3 +156,4 @@ int	main(void)
 	free(app);
 	return (0);
 }
+*/
