@@ -6,41 +6,14 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 15:30:28 by teando            #+#    #+#             */
-/*   Updated: 2025/04/30 15:35:40 by teando           ###   ########.fr       */
+/*   Updated: 2025/04/30 16:39:26 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RT_OBJ_H
 # define RT_OBJ_H
 
-/** 3 次元ベクトル */
-typedef struct s_vec3
-{
-	double			x;
-	double			y;
-	double			z;
-}					t_vec3;
-
-/** 8‑bit RGB カラー */
-typedef struct s_color
-{
-	unsigned char	r;
-	unsigned char	g;
-	unsigned char	b;
-}					t_color;
-
-typedef struct s_ray
-{
-	t_vec3			orig; /* 発射点 */
-	t_vec3			dir;  /* 正規化済み方向 */
-}					t_ray;
-
-typedef enum e_obj_type
-{
-	OBJ_SPHERE,
-	OBJ_PLANE,
-	OBJ_CYLINDER
-}					t_obj_type;
+#include "rt_vec.h"
 
 /** 球 */
 typedef struct s_sphere
@@ -68,29 +41,15 @@ typedef struct s_cylinder
 	t_color			color;
 }					t_cylinder;
 
-/** 環境光 (A) */
-typedef struct s_ambient
-{
-	double			ratio; /* 0.0 – 1.0 */
-	t_color			color;
-}					t_ambient;
 
-/** 点光源 (L) 単方向リスト */
-typedef struct s_light
-{
-	t_vec3			pos;
-	double			bright; /* 0.0 – 1.0 */
-	t_color			color; /* 未使用でも保持 */
-	struct s_light	*next;
-}					t_light;
+typedef struct s_obj t_obj;
 
-/** カメラ (C) */
-typedef struct s_camera
+typedef enum e_obj_type
 {
-	t_vec3			pos;
-	t_vec3			dir; /* 正規化 */
-	double			fov; /* ° */
-}					t_camera;
+	OBJ_SPHERE,
+	OBJ_PLANE,
+	OBJ_CYLINDER
+}					t_obj_type;
 
 typedef struct s_hit_record
 {
@@ -98,11 +57,11 @@ typedef struct s_hit_record
 	t_vec3		pos;
 	t_vec3		normal;
 	t_color		color;
-	t_object	*obj;
+	t_obj		*obj;
 }				t_hit_record;
 
 /** 汎用オブジェクト (単方向リスト) */
-typedef struct s_object
+typedef struct s_obj
 {
 	t_obj_type		type;
 	union
@@ -111,28 +70,8 @@ typedef struct s_object
 		t_plane		pl;
 		t_cylinder	cy;
 	} u;
-	struct s_object	*next;
-	t_hit_record	(*hit)(t_object *obj, t_ray *ray, t_app *app);
-}					t_object;
-
-typedef struct s_scene
-{
-	t_ambient		amb;		/* A (一意) */
-	t_camera		cam;		/* C (一意) */
-	t_light			light;		/* L (一意) */
-	t_object		*objs;		/* ジオメトリ可変 */
-}					t_scene;
-
-/* 画像バッファ */
-typedef struct s_img
-{
-	void			*ptr; /* mlx_new_image */
-	char			*px;  /* data addr */
-	int				bpp;
-	int				line_len;
-	int				endian;
-	int				width;
-	int				height;
-}					t_img;
+	t_obj			*next;
+	t_hit_record	(*hit)(t_obj *obj, t_ray *ray, t_app *app);
+}					t_obj;
 
 #endif

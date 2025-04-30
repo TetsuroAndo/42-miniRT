@@ -6,7 +6,7 @@
 #    By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/25 13:31:17 by teando            #+#    #+#              #
-#    Updated: 2025/04/25 16:58:07 by teando           ###   ########.fr        #
+#    Updated: 2025/04/30 16:44:14 by teando           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,11 +39,6 @@ else
 	MLX			:= $(MLX_DIR)/libmlx_Linux.a
 endif
 
-# source files
-# SRC	:= \
-# 	$(addprefix $(SRC_DIR)/app, \
-# 		main.c \
-# 	)
 SRC		:= $(shell find $(SRC_DIR)/app -name '*.c')
 SRC		+= $(shell find $(SRC_DIR)/lib/xlib -name '*.c')
 OBJ		:= $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC))
