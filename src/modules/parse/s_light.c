@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 22:23:51 by teando            #+#    #+#             */
-/*   Updated: 2025/05/05 01:18:43 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/05 01:52:27 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,9 @@ void	parse_light(char *line, t_scene *scene, t_app *app)
 		if (!parse_rgb(&line, &light->color))
 			exit_errmsg("light: invalid color (expected R,G,B in 0-255)", app);
 	}
-	else /* default color: white */
-	{
-		light->color.r = 255;
-		light->color.g = 255;
-		light->color.b = 255;
-	}
+	/* default color: white */
+	else
+		light->color = (t_color){255, 255, 255};
 	if (!expect_line_end(&line))
 		exit_errmsg("light: unexpected extra parameters", app);
 	light->next = NULL;

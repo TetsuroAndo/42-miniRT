@@ -16,13 +16,13 @@
 /* 画像バッファ */
 typedef struct s_img
 {
-    void *ptr; /* mlx_new_image */
-    char *px;  /* data addr */
-    int bpp;
-    int line_len;
-    int endian;
-    int width;
-    int height;
-} t_img;
+	void *ptr; /* mlx_new_image */
+	char *px;  /* data addr */
+	int	bpp;
+	int	line_len;
+	int	endian;
+	int	width;
+	int	height;
+}		t_img;
 
 #endif

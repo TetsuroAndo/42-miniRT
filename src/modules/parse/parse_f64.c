@@ -12,9 +12,12 @@
 
 #include "mod_parse.h"
 
-/* 数値範囲チェック */
+/* 数値範囲チェック（NaN、±INFも検出） */
 static int	check_range_f64(double val, double min, double max)
 {
+	/* NaNや±INFの検出 */
+	if (isnan(val) || isinf(val))
+		return (0);
 	return (val >= min && val <= max);
 }
 

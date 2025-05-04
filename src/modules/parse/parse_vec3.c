@@ -48,6 +48,9 @@ int	parse_normal_vec3(char **s, t_vec3 *out)
 		return (0);
 	/* 正規化 */
 	len = sqrt(out->x * out->x + out->y * out->y + out->z * out->z);
+	/* 数値的に不安定なケースをチェック */
+	if (len < 1e-6)
+		return (0);
 	out->x /= len;
 	out->y /= len;
 	out->z /= len;
