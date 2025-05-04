@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 19:22:19 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/04 22:45:21 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/05 02:17:50 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,8 @@ static char	*trim_line(char *line, t_app *app)
 	char	*trimmed;
 
 	trimmed = xstrtrim(line, " \t\f\r\v", app);
-	if (!*trimmed || *trimmed == '#')
-	{
-		xfree(&trimmed, app);
+	if (!trimmed || !*trimmed || *trimmed == '#')
 		return (NULL);
-	}
 	return (trimmed);
 }
 
