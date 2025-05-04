@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   xget_next_line.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 19:32:46 by tomsato           #+#    #+#             */
-/*   Updated: 2025/04/30 20:07:24 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/04 21:13:20 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <limits.h>
 
 #ifndef BUFFER_SIZE
-# define BUFFER_SIZE 1024
+# define BUFFER_SIZE 4096
 #endif
 
 #ifndef MAX_FD

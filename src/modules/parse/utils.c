@@ -1,18 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/25 14:02:41 by teando            #+#    #+#             */
-/*   Updated: 2025/05/04 21:03:30 by teando           ###   ########.fr       */
+/*   Created: 2025/05/04 21:50:00 by teando            #+#    #+#             */
+/*   Updated: 2025/05/05 01:20:04 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "app.h"
+#include "mod_parse.h"
+#include <stdlib.h>
 
-int main (int ac, char **av)
+int	expect_line_end(char **s)
 {
-	return (0);
+	/* 空行または行末を期待 */
+	if (!*s)
+		return (1);
+	while (**s && ft_isspace(**s))
+		(*s)++;
+	return (**s == '\0');
 }

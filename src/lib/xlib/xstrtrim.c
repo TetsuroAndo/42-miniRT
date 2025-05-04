@@ -1,28 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parce.c                                            :+:      :+:    :+:   */
+/*   xstrtrim.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/30 19:22:19 by tomsato           #+#    #+#             */
-/*   Updated: 2025/04/30 19:27:35 by tomsato          ###   ########.fr       */
+/*   Created: 2025/05/04 21:35:55 by teando            #+#    #+#             */
+/*   Updated: 2025/05/04 22:10:55 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "app.h"
-#include "rt_vec.h"
-#include "rt_obj.h"
-#include <fcntl.h>
+#include "xlib.h"
 
-
-
-t_obj	parse_obj(char *filename, t_app *app)
+char	*xstrtrim(char const *s1, char const *set, t_app *app)
 {
-	t_obj	obj;
-	int		file_fd;
+	char	*trimmed;
 
-	obj = NULL;
-	file_fd = open(filename, R_OK);
-	return (obj);
+	trimmed = ft_strtrim(s1, set);
+	ft_gc_track(app->gc, trimmed);
+	if (!trimmed)
+		exit_app(app, E_ALLOC);
+	return (trimmed);
 }

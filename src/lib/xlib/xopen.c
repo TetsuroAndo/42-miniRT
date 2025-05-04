@@ -1,18 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   xopen.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/25 14:02:41 by teando            #+#    #+#             */
-/*   Updated: 2025/05/04 21:03:30 by teando           ###   ########.fr       */
+/*   Created: 2025/05/04 21:10:19 by teando            #+#    #+#             */
+/*   Updated: 2025/05/04 21:27:21 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "app.h"
+#include "app.h"
 
-int main (int ac, char **av)
+int xopen(char *pathname, int flags, t_app *app)
 {
-	return (0);
+	int fd;
+
+	fd = open(pathname, flags);
+	if (fd == -1)
+		exit_app(app, E_SYSTEM);
+	return (fd);
 }

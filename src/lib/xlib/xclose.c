@@ -1,18 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   xclose.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/25 14:02:41 by teando            #+#    #+#             */
-/*   Updated: 2025/05/04 21:03:30 by teando           ###   ########.fr       */
+/*   Created: 2025/05/04 21:10:21 by teando            #+#    #+#             */
+/*   Updated: 2025/05/04 22:15:09 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "app.h"
+#include "xlib.h"
 
-int main (int ac, char **av)
+
+int	xclose(int *fd)
 {
-	return (0);
+	int	ret;
+
+	if (!fd || *fd < 3)
+		return (0);
+	ret = close(*fd);
+	if (ret == -1)
+		perror("close");
+	*fd = -1;
+	return (ret);
 }
