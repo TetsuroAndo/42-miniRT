@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 21:58:33 by teando            #+#    #+#             */
-/*   Updated: 2025/05/05 02:16:15 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/05 09:17:29 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct s_dispatch
 }			t_dispatch;
 
 /* main */
+int			run_parser(int ac, char **av, t_app *app);
 t_scene		parse_scene(char *filename, t_app *app);
 
 /* parse functions */
