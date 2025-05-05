@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   xcalloc.c                                          :+:      :+:    :+:   */
+/*   xstrtrim.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/25 16:36:59 by teando            #+#    #+#             */
-/*   Updated: 2025/05/05 09:57:36 by teando           ###   ########.fr       */
+/*   Created: 2025/05/04 21:35:55 by teando            #+#    #+#             */
+/*   Updated: 2025/05/05 02:22:07 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "xlib.h"
+#include "xlib.h"
 
-void *xcalloc(size_t n, size_t sz, t_app *app)
+char	*xstrtrim(char const *s1, char const *set, t_app *app)
 {
-    void *p;
+	char	*trimmed;
 
-	p = ft_gc_calloc(app->gc, n, sz);
-    if (!p)
+	trimmed = ft_strtrim(s1, set);
+	if (ft_gc_track(app->gc, trimmed) < 0)
 		exit_app(app, E_ALLOC);
-    return (p);
+	if (trimmed == NULL)
+		exit_app(app, E_ALLOC);
+	return (trimmed);
 }

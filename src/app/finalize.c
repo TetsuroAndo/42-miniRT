@@ -6,19 +6,31 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 14:47:54 by teando            #+#    #+#             */
-/*   Updated: 2025/04/25 15:35:44 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/05 02:30:22 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "app.h"
 
+void	exit_errmsg(char *msg, t_app *app)
+{
+	ft_putstr_fd("Error: ", STDERR_FILENO);
+	ft_putendl_fd(msg, STDERR_FILENO);
+	exit_app(app, EXIT_FAILURE);
+}
+
 void exit_app(t_app *app, int code)
 {
-	ft_gc_destroy(app->gc);
-	mlx_destroy_window(app->mlx, app->win);
-	mlx_destroy_display(app->mlx);
-	free(app->mlx);
-	free(app->win);
+	if (app->fd > 0)
+		xclose(app->fd);
+	if (app->win)
+		mlx_destroy_window(app->mlx, app->win);
+	if (app->mlx)
+	{
+		mlx_destroy_display(app->mlx);
+		free(app->mlx);
+	}
+	ft_gc_destroy(&app->gc);
 	free(app);
-	exit(1);
+	exit(code);
 }

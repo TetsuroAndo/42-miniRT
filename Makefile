@@ -6,7 +6,7 @@
 #    By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/25 13:31:17 by teando            #+#    #+#              #
-#    Updated: 2025/04/30 16:44:14 by teando           ###   ########.fr        #
+#    Updated: 2025/05/05 02:27:25 by teando           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -111,17 +111,6 @@ core: f $(NAME)
 debug: CFLAGS += -g -fsanitize=address -O1 -fno-omit-frame-pointer
 debug: DEFINE := -DDEBUG_MODE=DEBUG_ALL
 debug: f $(NAME)
-	@echo "====================="
-	@echo "== Build Complete! =="
-	@echo "====================="
-	@echo "[Executable]: $(NAME)"
-	@echo "[UNAME_S]: $(UNAME_S)"
-	@echo "[LIBRARY]: $(LIBFT) $(MLX)"
-	@echo "[INCLUDEDIR]: $(INC_DIR) $(LIBFT_DIR) $(MLX_DIR)"
-	@echo "[Compiler flags/CFLAGS]: $(CFLAGS)"
-	@echo "[Linker flags/LFLAGS]: $(LFLAGS)"
-	@echo "[Debug flags/DEFINE]: $(DEFINE)"
-	@echo "====================="
 
 # =======================
 # == Submodule Targets ==

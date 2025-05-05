@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   xcalloc.c                                          :+:      :+:    :+:   */
+/*   xclose.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/25 16:36:59 by teando            #+#    #+#             */
-/*   Updated: 2025/05/05 09:57:36 by teando           ###   ########.fr       */
+/*   Created: 2025/05/04 21:10:21 by teando            #+#    #+#             */
+/*   Updated: 2025/05/05 09:59:12 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "xlib.h"
+#include "xlib.h"
 
-void *xcalloc(size_t n, size_t sz, t_app *app)
+int	xclose(int *fd)
 {
-    void *p;
+	int	ret;
 
-	p = ft_gc_calloc(app->gc, n, sz);
-    if (!p)
-		exit_app(app, E_ALLOC);
-    return (p);
+	if (!fd || *fd < 3)
+		return (0);
+	ret = close(*fd);
+	if (ret == -1)
+		perror("close");
+	*fd = -1;
+	return (ret);
 }

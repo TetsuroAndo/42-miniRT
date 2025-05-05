@@ -6,11 +6,11 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 15:41:54 by teando            #+#    #+#             */
-/*   Updated: 2025/04/25 15:43:22 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/05 09:57:17 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "app.h"
+#include "xlib.h"
 
 t_list *xgc_init(t_app *app)
 {

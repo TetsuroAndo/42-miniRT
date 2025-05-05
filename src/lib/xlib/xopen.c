@@ -1,39 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_vec.c                                           :+:      :+:    :+:   */
+/*   xopen.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/30 16:35:22 by teando            #+#    #+#             */
-/*   Updated: 2025/04/30 16:35:49 by teando           ###   ########.fr       */
+/*   Created: 2025/05/04 21:10:19 by teando            #+#    #+#             */
+/*   Updated: 2025/05/05 09:58:14 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RT_VEC_H
-# define RT_VEC_H
+#include "xlib.h"
 
-/** 3 次元ベクトル */
-typedef struct s_vec3
+int xopen(char *pathname, int flags, t_app *app)
 {
-	double			x;
-	double			y;
-	double			z;
-}					t_vec3;
+	int fd;
 
-/** 8‑bit RGB カラー */
-typedef struct s_color
-{
-	unsigned char	r;
-	unsigned char	g;
-	unsigned char	b;
-}					t_color;
-
-typedef struct s_ray
-{
-	t_vec3			orig; /* 発射点 */
-	t_vec3			dir;  /* 正規化済み方向 */
-}					t_ray;
-
-
-#endif
+	fd = open(pathname, flags);
+	if (fd == -1)
+		exit_app(app, E_SYSTEM);
+	return (fd);
+}

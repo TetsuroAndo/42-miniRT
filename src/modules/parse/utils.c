@@ -1,23 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   xcalloc.c                                          :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/25 16:36:59 by teando            #+#    #+#             */
-/*   Updated: 2025/05/05 09:57:36 by teando           ###   ########.fr       */
+/*   Created: 2025/05/04 21:50:00 by teando            #+#    #+#             */
+/*   Updated: 2025/05/05 10:17:09 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "xlib.h"
+#include "mod_parse.h"
+#include <stdlib.h>
 
-void *xcalloc(size_t n, size_t sz, t_app *app)
+int	expect_line_end(char **s)
 {
-    void *p;
+	/* 空行または行末を期待 */
+	if (!*s)
+		return (1);
+	while (**s && ft_isspace(**s))
+		(*s)++;
+	return (**s == '\0');
+}
 
-	p = ft_gc_calloc(app->gc, n, sz);
-    if (!p)
-		exit_app(app, E_ALLOC);
-    return (p);
+void	add_obj(t_obj **obj, t_obj *new)
+{
+	new->next = *obj;
+	*obj = new;
 }

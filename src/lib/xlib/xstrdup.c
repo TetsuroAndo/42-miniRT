@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   xcalloc.c                                          :+:      :+:    :+:   */
+/*   xstrdup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/25 16:36:59 by teando            #+#    #+#             */
-/*   Updated: 2025/05/05 09:57:36 by teando           ###   ########.fr       */
+/*   Created: 2025/04/30 18:31:00 by tomsato           #+#    #+#             */
+/*   Updated: 2025/05/05 09:58:20 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "xlib.h"
+#include "xlib.h"
 
-void *xcalloc(size_t n, size_t sz, t_app *app)
+char	*xstrdup(const char *s1, t_app *app)
 {
-    void *p;
+	char	*s2;
+	size_t	size;
 
-	p = ft_gc_calloc(app->gc, n, sz);
-    if (!p)
-		exit_app(app, E_ALLOC);
-    return (p);
+	size = ft_strlen(s1) + 1;
+	s2 = (char *)xmalloc(size * sizeof(char), app);
+	if (s2)
+		ft_strlcpy(s2, s1, size);
+	return (s2);
 }
