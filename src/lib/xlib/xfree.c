@@ -6,11 +6,11 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:40:41 by teando            #+#    #+#             */
-/*   Updated: 2025/04/25 16:41:50 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/05 09:58:02 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "app.h"
+#include "xlib.h"
 
 void xfree(void **p, t_app *app)
 {

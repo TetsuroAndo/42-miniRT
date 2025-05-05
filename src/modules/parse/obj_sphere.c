@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 22:24:58 by teando            #+#    #+#             */
-/*   Updated: 2025/05/05 01:11:51 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/05 10:15:57 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,5 @@ void	parse_sphere(char *line, t_scene *scene, t_app *app)
 		exit_errmsg("sphere: invalid color", app);
 	if (!expect_line_end(&line))
 		exit_errmsg("sphere: unexpected extra parameters", app);
-	ft_lstadd_back(&scene->objs, obj);
+	add_obj(&scene->objs, obj);
 }

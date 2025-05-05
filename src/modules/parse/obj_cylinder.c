@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 22:26:10 by teando            #+#    #+#             */
-/*   Updated: 2025/05/05 01:12:02 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/05 10:15:30 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,5 @@ void	parse_cylinder(char *line, t_scene *scene, t_app *app)
 		exit_errmsg("cylinder: invalid color", app);
 	if (!expect_line_end(&line))
 		exit_errmsg("cylinder: unexpected extra parameters", app);
-	ft_lstadd_back(&scene->objs, obj);
+	add_obj(&scene->objs, obj);
 }

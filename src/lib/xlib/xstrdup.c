@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   xstrdup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 18:31:00 by tomsato           #+#    #+#             */
-/*   Updated: 2025/04/30 19:06:59 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/05 09:58:20 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "xlib.h"
 
 char	*xstrdup(const char *s1, t_app *app)

@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 16:36:11 by teando            #+#    #+#             */
-/*   Updated: 2025/05/05 02:15:16 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/05 10:14:33 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define RT_SCENE_H
 
 # include "rt_vec.h"
+# include "rt_obj.h"
 
 /** 環境光 (A) */
 typedef struct s_ambient

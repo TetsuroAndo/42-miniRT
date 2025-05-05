@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 21:50:00 by teando            #+#    #+#             */
-/*   Updated: 2025/05/05 01:20:04 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/05 10:17:09 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,4 +21,10 @@ int	expect_line_end(char **s)
 	while (**s && ft_isspace(**s))
 		(*s)++;
 	return (**s == '\0');
+}
+
+void	add_obj(t_obj **obj, t_obj *new)
+{
+	new->next = *obj;
+	*obj = new;
 }

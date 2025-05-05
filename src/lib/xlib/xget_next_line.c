@@ -6,11 +6,10 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 19:32:46 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/04 21:13:20 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/05 09:58:10 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "xlib.h"
 #include <limits.h>
 

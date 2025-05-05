@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 22:25:41 by teando            #+#    #+#             */
-/*   Updated: 2025/05/05 01:11:57 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/05 10:15:48 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,5 @@ void	parse_plane(char *line, t_scene *scene, t_app *app)
 		exit_errmsg("plane: invalid color", app);
 	if (!expect_line_end(&line))
 		exit_errmsg("plane: unexpected extra parameters", app);
-	ft_lstadd_back(&scene->objs, obj);
+	add_obj(&scene->objs, obj);
 }

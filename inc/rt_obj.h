@@ -6,17 +6,17 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 15:30:28 by teando            #+#    #+#             */
-/*   Updated: 2025/05/05 02:14:44 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/05 10:14:28 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RT_OBJ_H
 # define RT_OBJ_H
 
-# include "app.h"
 # include "rt_vec.h"
 
 typedef struct s_app	t_app;
+
 /** 球 */
 typedef struct s_sphere
 {

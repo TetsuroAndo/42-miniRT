@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtod.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 18:11:02 by tomsato           #+#    #+#             */
-/*   Updated: 2025/04/30 19:21:12 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/05 09:56:40 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "xlib.h"
 
 #define DOT '.'

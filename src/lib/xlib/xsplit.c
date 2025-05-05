@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   xsplit.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 17:55:23 by tomsato           #+#    #+#             */
-/*   Updated: 2025/04/30 19:11:19 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/05 09:58:18 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "xlib.h"
 #include <stdlib.h>
 

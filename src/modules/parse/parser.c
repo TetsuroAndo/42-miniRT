@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 19:22:19 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/05 09:21:43 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/05 10:46:46 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,14 @@ static void	validate_scene(t_scene *scene, t_app *app)
 }
 
 /* メインパース関数 */
-t_scene	parse_scene(char *filename, t_app *app)
+t_scene	*parse_scene(char *filename, t_app *app)
 {
 	char	*line;
 	char	*trimmed;
-	t_scene	scene;
+	t_scene	*scene;
 
-	ft_bzero(&scene, sizeof(t_scene));
+	scene = xmalloc(sizeof(t_scene), app);
+	ft_bzero(scene, sizeof(t_scene));
 	app->fd = xopen(filename, O_RDONLY, app);
 	while (1)
 	{
@@ -78,10 +79,10 @@ t_scene	parse_scene(char *filename, t_app *app)
 			break ;
 		trimmed = trim_line(line, app);
 		if (trimmed)
-			dispatch_line(trimmed, &scene, app);
+			dispatch_line(trimmed, scene, app);
 	}
-	xclose(app->fd);
-	validate_scene(&scene, app);
+	xclose(&app->fd);
+	validate_scene(scene, app);
 	return (scene);
 }
 

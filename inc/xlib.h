@@ -6,14 +6,14 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 15:26:45 by teando            #+#    #+#             */
-/*   Updated: 2025/05/04 22:15:15 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/05 10:21:12 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef XLIB_H
 # define XLIB_H
 
-# include "app.h"
+# include "../test/parser/test_app.h"
 # include "libft.h"
 
 typedef struct s_app	t_app;
