@@ -6,27 +6,31 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 22:42:22 by teando            #+#    #+#             */
-/*   Updated: 2025/05/04 22:42:39 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/06 14:58:34 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mod_parse.h"
+#include <stdio.h>
 
 /* 文字列から3次元ベクトルへ変換 */
 int	parse_vec3(char **s, t_vec3 *out)
 {
 	while (**s && ft_isspace(**s))
 		(*s)++;
+	/* X成分をパース */
 	if (!parse_f64(s, &out->x, -INFINITY, INFINITY))
 		return (0);
 	if (**s != ',')
 		return (0);
 	(*s)++;
+	/* Y成分をパース */
 	if (!parse_f64(s, &out->y, -INFINITY, INFINITY))
 		return (0);
 	if (**s != ',')
 		return (0);
 	(*s)++;
+	/* Z成分をパース */
 	if (!parse_f64(s, &out->z, -INFINITY, INFINITY))
 		return (0);
 	return (1);
@@ -38,7 +42,10 @@ int	parse_normal_vec3(char **s, t_vec3 *out)
 	double	len;
 
 	if (!parse_vec3(s, out))
+	{
+		fprintf(stderr, "DEBUG: Failed to parse vector\n");
 		return (0);
+	}
 	/* 各成分が-1.0～1.0の範囲内かチェック */
 	if (out->x < -1.0 || out->x > 1.0 || out->y < -1.0 || out->y > 1.0
 		|| out->z < -1.0 || out->z > 1.0)

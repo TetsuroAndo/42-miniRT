@@ -6,11 +6,12 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 22:26:10 by teando            #+#    #+#             */
-/*   Updated: 2025/05/05 10:15:30 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/05 20:52:42 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mod_parse.h"
+#include <stdio.h>
 
 /*
  * 円柱のパース (cy)
@@ -32,8 +33,12 @@ void	parse_cylinder(char *line, t_scene *scene, t_app *app)
 	if (!parse_vec3(&line, &obj->u.cy.center))
 		exit_errmsg("cylinder: invalid center position", app);
 	/* 軸ベクトル (正規化) */
+	fprintf(stderr, "DEBUG: Parsing cylinder axis vector from '%s'\n", line);
 	if (!parse_normal_vec3(&line, &obj->u.cy.axis))
+	{
+		fprintf(stderr, "DEBUG: Failed to parse cylinder axis vector\n");
 		exit_errmsg("cylinder: invalid axis vector", app);
+	}
 	/* 直径 */
 	if (!parse_f64(&line, &diameter, 0.0, INFINITY))
 		exit_errmsg("cylinder: invalid diameter", app);

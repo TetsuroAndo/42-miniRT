@@ -6,12 +6,13 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 19:22:19 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/05 10:46:46 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/05 20:12:12 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mod_parse.h"
 #include <stdlib.h>
+#include <fcntl.h>
 
 /* 行のトリミングと空行・コメント行のスキップ */
 static char	*trim_line(char *line, t_app *app)

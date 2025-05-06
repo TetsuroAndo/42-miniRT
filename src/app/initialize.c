@@ -6,13 +6,13 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 14:47:56 by teando            #+#    #+#             */
-/*   Updated: 2025/04/25 15:46:40 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/05 19:41:24 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "app.h"
+#include "app.h"
 
-int init_app(void)
+t_app	*init_app(void)
 {
 	t_app *app;
 
@@ -20,6 +20,5 @@ int init_app(void)
 	if (!app)
 		exit(1);
 	app->gc = xgc_init(app);
-	
-	return (0);
+	return (app);
 }

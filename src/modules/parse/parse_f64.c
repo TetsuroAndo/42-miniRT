@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 22:36:19 by teando            #+#    #+#             */
-/*   Updated: 2025/05/05 02:04:56 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/05 20:56:06 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,5 @@ int	parse_f64(char **s, double *out, double min, double max)
 	if (endptr == *s || !check_range_f64(*out, min, max))
 		return (0);
 	*s = endptr;
-	/* カンマをスキップ */
-	if (**s == ',')
-		(*s)++;
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 14:02:41 by teando            #+#    #+#             */
-/*   Updated: 2025/05/04 21:03:30 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/05 19:44:19 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,10 @@
 
 int main (int ac, char **av)
 {
-	return (0);
+	t_app *app;
+
+	app = init_app();
+	if (run_parser(ac, av, app))
+		return (exit_app(app, EXIT_FAILURE), 1);
+	return (exit_app(app, EXIT_SUCCESS), 0);
 }
