@@ -62,7 +62,6 @@ void test_parser_basic(void) {
     
     printf("Testing parser with file: %s\n", example_path);
     t_app *app = new_test_app();
-    g
     /* エラー状態をリセット */
     test_reset_error();
     
