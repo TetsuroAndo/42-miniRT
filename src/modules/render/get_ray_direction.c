@@ -22,7 +22,7 @@ typedef struct s_cam_basis
 	double	half_h;
 }	t_cam_basis;
 
-t_cam_basis	init_cam_basis(t_camera *cam)
+static t_cam_basis	init_cam_basis(t_camera *cam)
 {
 	t_cam_basis		basis;
 	double			aspect;
@@ -39,12 +39,14 @@ t_cam_basis	init_cam_basis(t_camera *cam)
 	return (basis);
 }
 
-t_vec3	get_ray_direction(t_camera *cam, t_cam_basis *basis, int i, int j)
+t_vec3	get_ray_direction(t_camera *cam, int i, int j)
 {
 	double	u;
 	double	v;
 	t_vec3	pixel_dir;
+        t_cam_basis basis;
 
+	basis = init_cam_basis(cam);
 	u = ((double)i + 0.5) / (double)WIDTH;
 	v = ((double)j + 0.5) / (double)HEIGHT;
 	u = (2.0 * u - 1.0) * basis->half_w;
