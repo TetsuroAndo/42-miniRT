@@ -27,7 +27,7 @@ t_cam_basis	init_cam_basis(t_camera *cam)
 	t_cam_basis		basis;
 	double			aspect;
 	double			theta;
-	const t_vec3	world_up = vec3(0, 1, 0);
+	const t_vec3	world_up = vec3_new(0, 1, 0);
 
 	basis.forward = vec3_normalize(cam->dir);
 	basis.right = vec3_normalize(vec3_cross(basis.forward, world_up));
