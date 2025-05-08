@@ -6,7 +6,7 @@
 /*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 15:26:45 by teando            #+#    #+#             */
-/*   Updated: 2025/05/08 14:24:46 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/08 18:41:51 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,9 @@ int						xclose(int fd);
 /* libft */
 char					*xget_next_line(int fd, t_app *app);
 double					ft_strtod(const char *nptr, char **endptr);
+
+/* vec */
+double	vec3_lenth(t_vec3 v);
+t_vec3	ft_normalize(t_vec3 v);
 
 #endif
