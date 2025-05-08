@@ -22,6 +22,17 @@ typedef struct s_cam_basis
 	double	half_h;
 }	t_cam_basis;
 
+
+static t_vec3 vec3_scale(t_vec3 v, double s)
+{
+	t_vec3 result;
+
+	result.x = v.x * s;
+	result.y = v.y * s;
+	result.z = v.z * s;
+	return result;
+}
+
 static t_cam_basis	init_cam_basis(t_camera *cam)
 {
 	t_cam_basis		basis;
@@ -41,18 +52,20 @@ static t_cam_basis	init_cam_basis(t_camera *cam)
 
 t_vec3	get_ray_direction(t_camera *cam, int i, int j)
 {
-	double	u;
-	double	v;
-	t_vec3	pixel_dir;
-        t_cam_basis basis;
+	double		u;
+	double		v;
+	t_vec3		pixel_dir;
+	t_cam_basis	basis;
 
 	basis = init_cam_basis(cam);
+
 	u = ((double)i + 0.5) / (double)WIDTH;
 	v = ((double)j + 0.5) / (double)HEIGHT;
 	u = (2.0 * u - 1.0) * basis.half_w;
 	v = (1.0 - 2.0 * v) * basis.half_h;
+
 	pixel_dir = vec3_add(basis.forward,
-					vec3_add(vec3_mul(basis.right, u),
-							 vec3_mul(basis.up, v)));
+					vec3_add(vec3_scale(basis.right, u),
+							 vec3_scale(basis.up, v)));
 	return vec3_normalize(pixel_dir);
 }
