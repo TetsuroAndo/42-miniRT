@@ -6,10 +6,11 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:36:59 by teando            #+#    #+#             */
-/*   Updated: 2025/05/05 20:03:00 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/09 03:21:59 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+# include "app.h"
 # include "xlib.h"
 
 void *xcalloc(size_t n, size_t sz, t_app *app)

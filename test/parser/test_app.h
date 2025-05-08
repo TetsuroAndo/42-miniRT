@@ -1,5 +1,5 @@
-#ifndef TEST_APP_H
-# define TEST_APP_H
+// #ifndef TEST_APP_H
+// # define TEST_APP_H
 
 /* テスト環境かどうかを判定するマクロ */
 # define TEST_MODE 1
@@ -30,4 +30,4 @@ typedef struct s_app
 
 void print_scene(t_scene *scene);
 
-#endif
+// #endif

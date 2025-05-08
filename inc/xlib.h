@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 15:26:45 by teando            #+#    #+#             */
-/*   Updated: 2025/05/06 14:59:41 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/09 03:19:41 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,13 @@
 
 typedef struct s_app	t_app;
 
+# ifndef M_PI
+#  define M_PI 3.14159265358979323846
+# endif
+# ifndef M_PI_2
+#  define M_PI_2 (M_PI / 2)
+# endif
+
 /* gc */
 t_list					*xgc_init(t_app *app);
 void					*xmalloc(size_t size, t_app *app);
@@ -39,14 +46,18 @@ char					*xstrtrim(char const *s1, char const *set, t_app *app);
 
 /* fd */
 int						xopen(char *pathname, int flags, t_app *app);
-int						xclose(int *fd);
+int						xclose(int fd);
 
 /* libft */
 char					*xget_next_line(int fd, t_app *app);
 double					ft_strtod(const char *nptr, char **endptr);
 
-/* core */
-void					exit_app(t_app *app, int code);
-void					exit_errmsg(char *msg, t_app *app);
+/* vec */
+t_vec3					vec3_cross(t_vec3 v1, t_vec3 v2);
+double					vec3_lenth(t_vec3 v);
+t_vec3					vec3_normalize(t_vec3 v);
+t_vec3					vec3_add(t_vec3 v1, t_vec3 v2);
+t_vec3					vec3_mul(t_vec3 v1, t_vec3 v2);
+t_vec3					vec3_new(double x, double y, double z);
 
 #endif

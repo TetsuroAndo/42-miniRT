@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 22:42:10 by teando            #+#    #+#             */
-/*   Updated: 2025/05/05 20:40:03 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/09 03:22:57 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,8 @@ int	parse_rgb(char **s, t_color *out)
 		(*s)++;
 	if (!parse_f64(s, &r, 0, 255))
 		return (0);
-	if (**s != ',')
-		return (0);
-	(*s)++;
 	if (!parse_f64(s, &g, 0, 255))
 		return (0);
-	if (**s != ',')
-		return (0);
-	(*s)++;
 	if (!parse_f64(s, &b, 0, 255))
 		return (0);
 	out->r = (unsigned char)r;

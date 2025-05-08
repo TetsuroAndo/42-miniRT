@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 22:36:19 by teando            #+#    #+#             */
-/*   Updated: 2025/05/05 20:56:06 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/09 03:22:47 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	check_range_f64(double val, double min, double max)
 	/* NaNや±INFの検出 */
 	if (isnan(val) || isinf(val))
 		return (0);
-	return (val >= min && val <= max);
+	return (min <= val && val <= max);
 }
 
 /* 

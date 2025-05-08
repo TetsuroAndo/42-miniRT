@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 22:42:22 by teando            #+#    #+#             */
-/*   Updated: 2025/05/06 14:58:34 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/09 03:23:23 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,8 @@ int	parse_vec3(char **s, t_vec3 *out)
 	/* X成分をパース */
 	if (!parse_f64(s, &out->x, -INFINITY, INFINITY))
 		return (0);
-	if (**s != ',')
-		return (0);
-	(*s)++;
-	/* Y成分をパース */
 	if (!parse_f64(s, &out->y, -INFINITY, INFINITY))
 		return (0);
-	if (**s != ',')
-		return (0);
-	(*s)++;
-	/* Z成分をパース */
 	if (!parse_f64(s, &out->z, -INFINITY, INFINITY))
 		return (0);
 	return (1);

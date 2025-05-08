@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 19:22:19 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/05 20:12:12 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/09 03:23:28 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ static void	dispatch_line(char *line, t_scene *scene, t_app *app)
 			return (dispatch[i].fn(line + dispatch[i].len, scene, app));
 		++i;
 	}
-	exit_errmsg("unknown identifier", app);
+	if (*line != '\0' && *line != '\n')
+		exit_errmsg("unknown identifier", app);
 }
 
 /* シーン検証 */
@@ -82,7 +83,7 @@ t_scene	*parse_scene(char *filename, t_app *app)
 		if (trimmed)
 			dispatch_line(trimmed, scene, app);
 	}
-	xclose(&app->fd);
+	xclose(app->fd);
 	validate_scene(scene, app);
 	return (scene);
 }
