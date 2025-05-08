@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   initialize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 14:47:56 by teando            #+#    #+#             */
-/*   Updated: 2025/04/25 15:46:40 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/08 13:33:17 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "app.h"
 
-int init_app(void)
+t_app *init_app(void)
 {
 	t_app *app;
 
@@ -21,5 +21,5 @@ int init_app(void)
 		exit(1);
 	app->gc = xgc_init(app);
 	
-	return (0);
+	return (app);
 }

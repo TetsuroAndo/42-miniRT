@@ -1,25 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/25 14:02:41 by teando            #+#    #+#             */
-/*   Updated: 2025/05/08 13:38:46 by tomsato          ###   ########.fr       */
+/*   Created: 2025/05/08 13:25:14 by tomsato           #+#    #+#             */
+/*   Updated: 2025/05/08 13:36:55 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "app.h"
 
-int	main(int ac, char **av)
+static int	close_window(t_app *app)
 {
-	t_app	*app;
-
-	app = init_app();
-	run_parser(ac, av, app);
-	draw(&app);
-	setup_hooks(&app);
-	mlx_loop(app->mlx);
+	exit_app(app, 0);
 	return (0);
+}
+
+static int	key_hook(int keycode, t_app *app)
+{
+	if (keycode == KEY_ESC)
+		exit_app(app, 0);
+	return (0);
+}
+
+void	setup_hooks(t_app *app)
+{
+	mlx_key_hook(app->win, key_hook, app);
+	mlx_hook(app->win, 17, 0, close_window, app);
 }

@@ -1,25 +1,13 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   cal_cam.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/25 14:02:41 by teando            #+#    #+#             */
-/*   Updated: 2025/05/08 13:38:46 by tomsato          ###   ########.fr       */
+/*   Created: 2025/05/08 13:39:44 by tomsato           #+#    #+#             */
+/*   Updated: 2025/05/08 13:39:53 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "app.h"
-
-int	main(int ac, char **av)
-{
-	t_app	*app;
-
-	app = init_app();
-	run_parser(ac, av, app);
-	draw(&app);
-	setup_hooks(&app);
-	mlx_loop(app->mlx);
-	return (0);
-}
+# include "rt_render.h"
