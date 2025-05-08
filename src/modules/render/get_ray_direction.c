@@ -39,13 +39,18 @@ t_cam_basis	init_cam_basis(t_camera *cam)
 	return (basis);
 }
 
-
-t_vec3	get_ray_direction(t_camera *cam, int i, int j)
+t_vec3	get_ray_direction(t_camera *cam, t_cam_basis *basis, int i, int j)
 {
-	t_vec3	dir;
-	t_vec3	forward;
-	
-	forward = vec3_vec3_normalize(cam->dir);
-	dir = vec3_add(add_f_m(cam, forward, i), mul_up_y(cam, forward, j));
-	return (vec3_vec3_normalize(dir));
+	double	u;
+	double	v;
+	t_vec3	pixel_dir;
+
+	u = ((double)i + 0.5) / (double)WIDTH;
+	v = ((double)j + 0.5) / (double)HEIGHT;
+	u = (2.0 * u - 1.0) * basis->half_w;
+	v = (1.0 - 2.0 * v) * basis->half_h;
+	pixel_dir = vec3_add(basis->forward,
+					vec3_add(vec3_mul(basis->right, u),
+							 vec3_mul(basis->up, v)));
+	return vec3_normalize(pixel_dir);
 }
