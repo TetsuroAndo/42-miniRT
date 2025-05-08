@@ -6,12 +6,22 @@
 /*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 18:31:02 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/08 18:51:42 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/08 20:35:51 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt_vec.h"
 #include <math.h>
+
+t_vec3	vec3_cross(t_vec3 v1, t_vec3 v2)
+{
+	t_vec3	result;
+
+	result.x = v1.y * v2.z - v1.z * v2.y;
+	result.y = v1.z * v2.x - v1.x * v2.z;
+	result.z = v1.x * v2.y - v1.y * v2.x;
+	return (result);
+}
 
 t_vec3	vec3_mul(t_vec3 v1, t_vec3 v2)
 {
@@ -38,7 +48,7 @@ double	vec3_lenth(t_vec3 v)
 	return (sqrt((v.x * v.x) + (v.y * v.y) + (v.z * v.z)));
 }
 
-t_vec3	ft_normalize(t_vec3 v)
+t_vec3	vec3_normalize(t_vec3 v)
 {
 	double	len;
 	t_vec3	norm;
