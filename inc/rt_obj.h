@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_obj.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 15:30:28 by teando            #+#    #+#             */
-/*   Updated: 2025/05/08 21:14:58 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/09 03:09:25 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 
 # include "rt_vec.h"
 
-typedef struct s_app	t_app;
+typedef struct s_app		t_app;
+typedef struct s_obj		t_obj;
+typedef struct s_hit_record	t_hit_record;
 
 /** 球 */
 typedef struct s_sphere
@@ -42,8 +44,6 @@ typedef struct s_cylinder
 	double				height;
 	t_color				color;
 }						t_cylinder;
-
-typedef struct s_obj	t_obj;
 
 typedef enum e_obj_type
 {

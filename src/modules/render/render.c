@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 10:28:38 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/08 21:15:24 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/09 01:34:37 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,19 +54,23 @@ void	render(t_img *img, t_app *app)
 	int	i;
 	int	j;
 	t_ray	ray;
+	int	color;
 
 	i = 0;
 	while (i < HEIGHT)
 	{
 		j = 0;
-		while (j < HEIGHT)
+		while (j < WIDTH)
 		{
 			//レイの方向を取得
 			ray.orig = app->scene->cam.pos;
-			ray.dir = get_ray_direction(app->scene->cam, i, j);
+			ray.dir = get_ray_direction(&app->scene->cam, i, j);
 			//交差判定をする
 			//ライトを参照して、色を取得
-			//my_mlx_pixel_putする
+			// 仮の色を設定（後で実際のレイトレーシング結果に置き換える）
+			color = create_trgb(0, i % 256, j % 256, (i + j) % 256);
+			// 画像にピクセルを描画
+			my_mlx_pixel_put(img, j, i, color);
 			j++;
 		}
 		i++;

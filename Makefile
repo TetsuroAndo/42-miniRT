@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+         #
+#    By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/25 13:31:17 by teando            #+#    #+#              #
-#    Updated: 2025/05/08 14:31:03 by tomsato          ###   ########.fr        #
+#    Updated: 2025/05/09 03:05:54 by teando           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Darwin)
 	LIBFT		:= $(LIBFT_DIR)/libft_mac.a
 	MLX			:= $(MLX_DIR)/libmlx_Darwin.a
-	IDFLAGS		+= OpenGL -framework AppKit -L/opt/X11/lib
+	LFLAGS		+= -framework OpenGL -framework AppKit -L/opt/X11/lib
 else
 	LIBFT		:= $(LIBFT_DIR)/libft.a
 	MLX			:= $(MLX_DIR)/libmlx_Linux.a
@@ -45,14 +45,28 @@ SRC		+= $(shell find $(SRC_DIR)/modules/parse -name '*.c')
 SRC		+= $(shell find $(SRC_DIR)/modules/render -name '*.c')
 OBJ		:= $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC))
 
-# dev all
-all: CFLAGS += -g -fsanitize=address -O1 -fno-omit-frame-pointer
-all: DEFINE := -DDEBUG_MODE=DEBUG_ALL
-all: $(NAME)
+# =======================
+# == Targets =============
+# =======================
+all:
+	$(MAKE) __all -j $(shell nproc)
+v: f
+	$(MAKE) __v -j $(shell nproc)
+core: f
+	$(MAKE) __core -j $(shell nproc)
+debug: f
+	$(MAKE) __debug -j $(shell nproc)
 
+__all: CFLAGS += -g -fsanitize=address -O1 -fno-omit-frame-pointer
+__all: DEFINE := -DDEBUG_MODE=DEBUG_ALL
+__all: __build
 ifeq ($(UNAME_S),Darwin)
-$(NAME): setup_xquartz
+__build: setup_xquartz
+__build: $(NAME)
+else
+__build: $(NAME)
 endif
+
 $(NAME): $(LIBFT) $(MLX) $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(MLX) $(IDFLAGS) $(LFLAGS) $(DEFINE) -o $(NAME)
 	@echo "====================="
@@ -60,8 +74,8 @@ $(NAME): $(LIBFT) $(MLX) $(OBJ)
 	@echo "====================="
 	@echo "[Executable]: $(NAME)"
 	@echo "[UNAME_S]: $(UNAME_S)"
-	@echo "[LIBRARY]: $(LIBFT) | $(MLX)"
-	@echo "[INCLUDEDIR]: $(INC_DIR) | $(LIBFT_DIR) | $(MLX_DIR)"
+	@echo "[Library]: $(LIBFT) | $(MLX)"
+	@echo "[IncludeDir]: $(INC_DIR) | $(LIBFT_DIR) | $(MLX_DIR)"
 	@echo "[Compiler flags/CFLAGS]: $(CFLAGS)"
 	@echo "[Linker flags/LFLAGS]: $(LFLAGS)"
 	@echo "[Debug flags/DEFINE]: $(DEFINE)"
@@ -99,20 +113,21 @@ re: fclean all
 # == PRODUCTION =========
 # =======================
 
-v: CFLAGS += -O2
-v: f $(NAME)
+__v: CFLAGS += -O2
+__v: DEFINE := -DDEBUG_MODE=DEBUG_NONE
+__v: __build
 
 # =======================
 # == DEBUG =============
 # =======================
 
-core: CFLAGS += -g -fsanitize=address -O1 -fno-omit-frame-pointer
-core: DEFINE := -DDEBUG_MODE=DEBUG_CORE
-core: f $(NAME)
+__core: CFLAGS += -g -fsanitize=address -O1 -fno-omit-frame-pointer
+__core: DEFINE := -DDEBUG_MODE=DEBUG_CORE
+__core: __build
 
-debug: CFLAGS += -g -fsanitize=address -O1 -fno-omit-frame-pointer
-debug: DEFINE := -DDEBUG_MODE=DEBUG_ALL
-debug: f $(NAME)
+__debug: CFLAGS += -g -fsanitize=address -O1 -fno-omit-frame-pointer
+__debug: DEFINE := -DDEBUG_MODE=DEBUG_ALL
+__debug: __build
 
 # =======================
 # == Submodule Targets ==
@@ -136,6 +151,9 @@ norm:
 
 setup_xquartz:
 	@open -a XQuartz
-	@export DISPLAY=:0
+	@if [ -z "$$DISPLAY" ]; then \
+		echo "Setting DISPLAY environment variable..."; \
+		export DISPLAY=:0; \
+	fi
 
 .PHONY: all clean fclean re

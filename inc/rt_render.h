@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_render.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 16:37:53 by teando            #+#    #+#             */
-/*   Updated: 2025/05/08 21:15:01 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/09 03:11:37 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # ifndef HEIGHT
 #  define HEIGHT 1080 / 2
 # endif
+
+typedef struct s_camera t_camera;
 
 /* 画像バッファ */
 typedef struct s_img
