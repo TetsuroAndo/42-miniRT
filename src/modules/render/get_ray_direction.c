@@ -49,10 +49,10 @@ t_vec3	get_ray_direction(t_camera *cam, int i, int j)
 	basis = init_cam_basis(cam);
 	u = ((double)i + 0.5) / (double)WIDTH;
 	v = ((double)j + 0.5) / (double)HEIGHT;
-	u = (2.0 * u - 1.0) * basis->half_w;
-	v = (1.0 - 2.0 * v) * basis->half_h;
-	pixel_dir = vec3_add(basis->forward,
-					vec3_add(vec3_mul(basis->right, u),
-							 vec3_mul(basis->up, v)));
+	u = (2.0 * u - 1.0) * basis.half_w;
+	v = (1.0 - 2.0 * v) * basis.half_h;
+	pixel_dir = vec3_add(basis.forward,
+					vec3_add(vec3_mul(basis.right, u),
+							 vec3_mul(basis.up, v)));
 	return vec3_normalize(pixel_dir);
 }
