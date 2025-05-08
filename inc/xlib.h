@@ -6,15 +6,15 @@
 /*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 15:26:45 by teando            #+#    #+#             */
-/*   Updated: 2025/05/08 18:41:51 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/08 18:52:20 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef XLIB_H
 # define XLIB_H
 
-# include <stdio.h>
 # include "app.h"
+# include <stdio.h>
 // # include "../test/parser/test_app.h"
 # include "libft.h"
 
@@ -41,7 +41,9 @@ char					*xget_next_line(int fd, t_app *app);
 double					ft_strtod(const char *nptr, char **endptr);
 
 /* vec */
-double	vec3_lenth(t_vec3 v);
-t_vec3	ft_normalize(t_vec3 v);
+double					vec3_lenth(t_vec3 v);
+t_vec3					ft_normalize(t_vec3 v);
+t_vec3					vec3_add(t_vec3 v1, t_vec3 v2);
+t_vec3					vec3_mul(t_vec3 v1, t_vec3 v2);
 
 #endif
