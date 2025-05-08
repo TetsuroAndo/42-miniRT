@@ -6,7 +6,7 @@
 /*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 18:11:02 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/08 14:59:25 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/08 15:01:52 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ double	ft_strtod(const char *nptr, char **endptr)
 	const char	*decimal_start;
 
 	b_dot = ft_strtol(nptr, endptr, BASE);
-	while (*nptr && *nptr != DOT)
+	while (*nptr && (*nptr != DOT && ft_isdigit(*nptr)))
 		nptr++;
 	if (*nptr == DOT)
 	{

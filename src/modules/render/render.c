@@ -6,7 +6,7 @@
 /*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 10:28:38 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/08 13:17:49 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/08 16:45:54 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,53 @@ void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
+int	create_trgb(int t, int r, int g, int b)
+{
+	return (t << 24 | r << 16 | g << 8 | b);
+}
+
+static void	temp(t_img *img)
+{
+	int	i;
+	int	j;
+	int	color;
+
+	i = 0;
+	j = 0;
+	color = create_trgb(0, 0, 0, 0);
+	while (i < WIDTH)
+	{
+		j = 0;
+		while (j < HEIGHT)
+		{
+			color = create_trgb(0, 0, 0, 0);
+			if ((i % 50 > 25 && j % 50 < 25) || (i % 50 < 25 && j % 50 > 25))
+                color = create_trgb(0, 255, 255, 255);
+			my_mlx_pixel_put(img, i, j, color);
+			j++;
+		}
+		i++;
+	}
+}
 
 void	draw(t_app *app)
 {
-	void	*mlx;
-	void	*win;
-	t_img	*img;
+	t_img *img;
 
-	mlx = app->mlx;
+	app->mlx = mlx_init();
+	if (!app->mlx)
+		exit_app(app, 1);
+	app->win = mlx_new_window(app->mlx, WIDTH, HEIGHT, "miniRT");
+	if (!app->win)
+		exit_app(app, 1);
 	img = app->img;
-	mlx = mlx_init();
-	win = mlx_new_window(mlx, WIDTH, HEIGHT, "miniRT");
 	img->width = WIDTH;
 	img->height = HEIGHT;
-	img->ptr = mlx_new_image(mlx, img->width, img->height);
-	img->px = mlx_get_data_addr(img->ptr, &img->bpp,
-			&img->line_len, &img->endian);
-	// ← ここに描画処理（my_mlx_pixel_putなど）を追加
-	mlx_put_image_to_window(mlx, win, img->ptr, 0, 0);
+	img->ptr = mlx_new_image(app->mlx, img->width, img->height);
+	if (!img->ptr)
+		exit_app(app, 1);
+	img->px = mlx_get_data_addr(img->ptr, &img->bpp, &img->line_len,
+			&img->endian);
+	temp(img);
+	mlx_put_image_to_window(app->mlx, app->win, img->ptr, 0, 0);
 }

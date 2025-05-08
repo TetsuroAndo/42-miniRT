@@ -6,12 +6,14 @@
 /*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 16:37:53 by teando            #+#    #+#             */
-/*   Updated: 2025/05/08 13:18:14 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/08 15:23:47 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RT_RENDER_H
 # define RT_RENDER_H
+
+#include "app.h"
 
 # ifndef WIDTH
 #  define WIDTH 1920 / 2
@@ -34,6 +36,8 @@ typedef struct s_img
 
 /*render.c*/
 void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
+int		create_trgb(int t, int r, int g, int b);
+
 void	draw(t_app *app);
 
 #endif

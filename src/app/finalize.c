@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   finalize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 14:47:54 by teando            #+#    #+#             */
-/*   Updated: 2025/05/05 02:30:22 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/08 15:39:34 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void exit_app(t_app *app, int code)
 {
 	if (app->fd > 0)
 		xclose(app->fd);
+	if (app->img->ptr)
+		mlx_destroy_image(app->mlx, app->img->ptr);
 	if (app->win)
 		mlx_destroy_window(app->mlx, app->win);
 	if (app->mlx)

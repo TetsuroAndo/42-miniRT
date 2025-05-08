@@ -6,7 +6,7 @@
 /*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 14:03:38 by teando            #+#    #+#             */
-/*   Updated: 2025/05/08 13:35:01 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/08 14:32:17 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,21 @@
 # include <stdlib.h>
 # include <unistd.h>
 
+typedef struct s_img	t_img;
+
 /* MLX + GC + Scene をまとめたグローバルコンテキスト */
 typedef struct s_app
 {
 	void	*mlx;
 	void	*win;
-	t_img	img;
-	t_scene	scene;
+	t_img	*img;
+	t_scene	*scene;
 	int		fd;
 	t_list	*gc;
 }			t_app;
 
 
-t_app		*init_app(void)
+t_app		*init_app(void);
 void		exit_app(t_app *app, int code);
 void		exit_errmsg(char *msg, t_app *app);
 

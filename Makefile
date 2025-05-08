@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+         #
+#    By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/25 13:31:17 by teando            #+#    #+#              #
-#    Updated: 2025/05/05 02:27:25 by teando           ###   ########.fr        #
+#    Updated: 2025/05/08 14:31:03 by tomsato          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,8 @@ endif
 
 SRC		:= $(shell find $(SRC_DIR)/app -name '*.c')
 SRC		+= $(shell find $(SRC_DIR)/lib/xlib -name '*.c')
+SRC		+= $(shell find $(SRC_DIR)/modules/parse -name '*.c')
+SRC		+= $(shell find $(SRC_DIR)/modules/render -name '*.c')
 OBJ		:= $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC))
 
 # dev all

@@ -3,17 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   xlib.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 15:26:45 by teando            #+#    #+#             */
-/*   Updated: 2025/05/05 10:21:12 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/08 14:24:46 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef XLIB_H
 # define XLIB_H
 
-# include "../test/parser/test_app.h"
+# include <stdio.h>
+# include "app.h"
+// # include "../test/parser/test_app.h"
 # include "libft.h"
 
 typedef struct s_app	t_app;
@@ -32,7 +34,7 @@ char					*xstrtrim(char const *s1, char const *set, t_app *app);
 
 /* fd */
 int						xopen(char *pathname, int flags, t_app *app);
-int						xclose(int *fd);
+int						xclose(int fd);
 
 /* libft */
 char					*xget_next_line(int fd, t_app *app);
