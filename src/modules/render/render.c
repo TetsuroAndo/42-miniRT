@@ -6,7 +6,7 @@
 /*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 10:28:38 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/08 20:37:21 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/08 21:15:24 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	render(t_img *img, t_app *app)
 {
 	int	i;
 	int	j;
-	t_vec3	dir;
+	t_ray	ray;
 
 	i = 0;
 	while (i < HEIGHT)
@@ -62,7 +62,8 @@ void	render(t_img *img, t_app *app)
 		while (j < HEIGHT)
 		{
 			//レイの方向を取得
-			dir = get_ray_direction(t_camera *cam, int i, int j);
+			ray.orig = app->scene->cam.pos;
+			ray.dir = get_ray_direction(app->scene->cam, i, j);
 			//交差判定をする
 			//ライトを参照して、色を取得
 			//my_mlx_pixel_putする

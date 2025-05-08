@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_obj.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 15:30:28 by teando            #+#    #+#             */
-/*   Updated: 2025/05/05 10:14:28 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/08 21:14:58 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,6 @@ typedef enum e_obj_type
 	OBJ_PLANE,
 	OBJ_CYLINDER
 }						t_obj_type;
-
-typedef struct s_hit_record
-{
-	double				t;
-	t_vec3				pos;
-	t_vec3				normal;
-	t_color				color;
-	t_obj				*obj;
-}						t_hit_record;
 
 /** 汎用オブジェクト (単方向リスト) */
 typedef struct s_obj

@@ -6,11 +6,13 @@
 /*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 13:25:14 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/08 16:40:03 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/08 21:17:07 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "app.h"
+
+#define KEY_ESC 65307
 
 static int	close_window(t_app *app)
 {
@@ -20,7 +22,7 @@ static int	close_window(t_app *app)
 
 static int	key_hook(int keycode, t_app *app)
 {
-	if (keycode == 65307)
+	if (keycode == KEY_ESC)
 		exit_app(app, 0);
 	return (0);
 }
