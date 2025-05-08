@@ -6,7 +6,7 @@
 /*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 15:26:45 by teando            #+#    #+#             */
-/*   Updated: 2025/05/08 18:52:20 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/08 20:43:32 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,13 @@
 # include "libft.h"
 
 typedef struct s_app	t_app;
+
+# ifndef M_PI
+#  define M_PI 3.14159265358979323846
+# endif
+# ifndef M_PI_2
+#  define M_PI_2 (M_PI / 2)
+# endif
 
 /* gc */
 t_list					*xgc_init(t_app *app);
@@ -41,9 +48,11 @@ char					*xget_next_line(int fd, t_app *app);
 double					ft_strtod(const char *nptr, char **endptr);
 
 /* vec */
+t_vec3					vec3_cross(t_vec3 v1, t_vec3 v2);
 double					vec3_lenth(t_vec3 v);
-t_vec3					ft_normalize(t_vec3 v);
+t_vec3					vec3_normalize(t_vec3 v);
 t_vec3					vec3_add(t_vec3 v1, t_vec3 v2);
 t_vec3					vec3_mul(t_vec3 v1, t_vec3 v2);
+t_vec3					vec3_new(double x, double y, double z);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 10:28:38 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/08 16:45:54 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/08 20:37:21 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,31 @@ static void	temp(t_img *img)
 		{
 			color = create_trgb(0, 0, 0, 0);
 			if ((i % 50 > 25 && j % 50 < 25) || (i % 50 < 25 && j % 50 > 25))
-                color = create_trgb(0, 255, 255, 255);
+				color = create_trgb(0, 255, 255, 255);
 			my_mlx_pixel_put(img, i, j, color);
+			j++;
+		}
+		i++;
+	}
+}
+
+void	render(t_img *img, t_app *app)
+{
+	int	i;
+	int	j;
+	t_vec3	dir;
+
+	i = 0;
+	while (i < HEIGHT)
+	{
+		j = 0;
+		while (j < HEIGHT)
+		{
+			//レイの方向を取得
+			dir = get_ray_direction(t_camera *cam, int i, int j);
+			//交差判定をする
+			//ライトを参照して、色を取得
+			//my_mlx_pixel_putする
 			j++;
 		}
 		i++;
