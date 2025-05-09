@@ -6,7 +6,7 @@
 #    By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/25 13:31:17 by teando            #+#    #+#              #
-#    Updated: 2025/05/09 03:05:54 by teando           ###   ########.fr        #
+#    Updated: 2025/05/09 03:45:20 by teando           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -144,6 +144,12 @@ sub:
 
 norm:
 	@norminette $(SRC) $(INC_DIR)
+
+nm:
+	@nm $(OBJ) | grep ' U ' | awk '{print $$2}' | sort | uniq
+
+nmbin:
+	@nm $(NAME) | grep ' U ' | awk '{print $$2}' | sort | uniq
 
 # =======================
 # == MACOS Setup ========
