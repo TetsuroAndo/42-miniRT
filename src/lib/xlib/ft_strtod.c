@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtod.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 18:11:02 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/05 09:56:40 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/08 15:01:52 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #define DOT '.'
 #define BASE 10
 
-static double	pow(double x, double y)
+static double	my_pow(double x, double y)
 {
 	double	result;
 	double	i;
@@ -39,7 +39,7 @@ double	ft_strtod(const char *nptr, char **endptr)
 	const char	*decimal_start;
 
 	b_dot = ft_strtol(nptr, endptr, BASE);
-	while (*nptr && *nptr != DOT)
+	while (*nptr && (*nptr != DOT && ft_isdigit(*nptr)))
 		nptr++;
 	if (*nptr == DOT)
 	{
@@ -50,7 +50,7 @@ double	ft_strtod(const char *nptr, char **endptr)
 		if (digits > 0)
 		{
 			a_dot = ft_strtol(decimal_start, endptr, BASE);
-			result = b_dot + (a_dot / pow(10.0, digits));
+			result = b_dot + (a_dot / my_pow(10.0, digits));
 			return (result);
 		}
 	}

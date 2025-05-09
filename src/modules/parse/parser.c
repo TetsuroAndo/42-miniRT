@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 19:22:19 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/05 10:46:46 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/08 15:36:01 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ static void	dispatch_line(char *line, t_scene *scene, t_app *app)
 			return (dispatch[i].fn(line + dispatch[i].len, scene, app));
 		++i;
 	}
-	exit_errmsg("unknown identifier", app);
+	if (*line != '\0' && *line != '\n')
+		exit_errmsg("unknown identifier", app);
 }
 
 /* シーン検証 */
@@ -81,7 +82,7 @@ t_scene	*parse_scene(char *filename, t_app *app)
 		if (trimmed)
 			dispatch_line(trimmed, scene, app);
 	}
-	xclose(&app->fd);
+	xclose(app->fd);
 	validate_scene(scene, app);
 	return (scene);
 }

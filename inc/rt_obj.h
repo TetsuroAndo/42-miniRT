@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 15:30:28 by teando            #+#    #+#             */
-/*   Updated: 2025/05/05 10:14:28 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/09 03:09:25 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 
 # include "rt_vec.h"
 
-typedef struct s_app	t_app;
+typedef struct s_app		t_app;
+typedef struct s_obj		t_obj;
+typedef struct s_hit_record	t_hit_record;
 
 /** 球 */
 typedef struct s_sphere
@@ -43,23 +45,12 @@ typedef struct s_cylinder
 	t_color				color;
 }						t_cylinder;
 
-typedef struct s_obj	t_obj;
-
 typedef enum e_obj_type
 {
 	OBJ_SPHERE,
 	OBJ_PLANE,
 	OBJ_CYLINDER
 }						t_obj_type;
-
-typedef struct s_hit_record
-{
-	double				t;
-	t_vec3				pos;
-	t_vec3				normal;
-	t_color				color;
-	t_obj				*obj;
-}						t_hit_record;
 
 /** 汎用オブジェクト (単方向リスト) */
 typedef struct s_obj

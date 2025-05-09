@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_f64.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 22:36:19 by teando            #+#    #+#             */
-/*   Updated: 2025/05/05 02:04:56 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/08 15:02:35 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	check_range_f64(double val, double min, double max)
 	/* NaNや±INFの検出 */
 	if (isnan(val) || isinf(val))
 		return (0);
-	return (val >= min && val <= max);
+	return (min <= val && val <= max);
 }
 
 /* 

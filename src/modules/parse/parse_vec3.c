@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_vec3.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 22:42:22 by teando            #+#    #+#             */
-/*   Updated: 2025/05/04 22:42:39 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/08 15:02:55 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,8 @@ int	parse_vec3(char **s, t_vec3 *out)
 		(*s)++;
 	if (!parse_f64(s, &out->x, -INFINITY, INFINITY))
 		return (0);
-	if (**s != ',')
-		return (0);
-	(*s)++;
 	if (!parse_f64(s, &out->y, -INFINITY, INFINITY))
 		return (0);
-	if (**s != ',')
-		return (0);
-	(*s)++;
 	if (!parse_f64(s, &out->z, -INFINITY, INFINITY))
 		return (0);
 	return (1);
