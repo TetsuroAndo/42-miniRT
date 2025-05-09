@@ -23,7 +23,7 @@ typedef struct s_app
 	void    *mlx;       /* ダミー。NULL 固定で OK                                  */
 	void    *win;       /* ダミー                                                  */
 	t_img    img;       /* 未使用                                                 */
-	t_scene  *scene;     /* パーサがここへ書き込む                                 */
+	t_scene  *scene;    /* パーサがここへ書き込む                                 */
 	int      fd;        /* xopen / xclose が触る                                  */
 	t_list  *gc;        /* ガーベジコレクタ root                                   */
 }              t_app;

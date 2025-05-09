@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 16:36:11 by teando            #+#    #+#             */
-/*   Updated: 2025/05/05 10:14:33 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/09 17:21:51 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,20 +32,20 @@ typedef struct s_camera
 }					t_camera;
 
 /** 点光源 (L) 単方向リスト */
-typedef struct s_light
+typedef struct s_lights
 {
 	t_vec3			pos;
 	double			bright; /* 0.0 – 1.0 */
 	t_color			color; /* 未使用でも保持 */
-	struct s_light	*next;
-}					t_light;
+	struct s_lights	*next;
+}					t_lights;
 
 typedef struct s_scene
 {
-	t_ambient		amb; /* A (一意) */
-	t_camera		cam;  /* C (一意) */
-	t_light			light; /* L (一意) */
-	t_obj			*objs;   /* ジオメトリ可変 */
+	t_ambient		amb;
+	t_camera		cam;
+	t_lights		*lights;
+	t_obj			*objs;
 }					t_scene;
 
 #endif

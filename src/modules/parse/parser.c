@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 19:22:19 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/09 03:23:28 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/09 17:37:45 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,9 @@ static void	dispatch_line(char *line, t_scene *scene, t_app *app)
 		{"sp", 2, parse_sphere},
 		{"pl", 2, parse_plane},
 		{"cy", 2, parse_cylinder},
+		{"co", 2, parse_cone},
+		{"hb", 2, parse_hyperboloid},
+		{"pb", 2, parse_paraboloid},
 		{"", 0, NULL}
 	};
 	size_t i;
@@ -57,7 +60,7 @@ static void	validate_scene(t_scene *scene, t_app *app)
 		exit_errmsg("missing ambient light", app);
 	if (!scene->cam.fov)
 		exit_errmsg("missing camera", app);
-	if (!scene->light.bright)
+	if (!scene->lights)
 		exit_errmsg("missing light", app);
 	if (!scene->objs)
 		exit_errmsg("no renderable object!", app);
@@ -72,7 +75,6 @@ t_scene	*parse_scene(char *filename, t_app *app)
 	t_scene	*scene;
 
 	scene = xmalloc(sizeof(t_scene), app);
-	ft_bzero(scene, sizeof(t_scene));
 	app->fd = xopen(filename, O_RDONLY, app);
 	while (1)
 	{
@@ -98,5 +100,7 @@ int	run_parser(int ac, char **av, t_app *app)
 	if (!extension || ft_strcmp(extension, ".rt") != 0)
 		return (ft_dprintf(2, "Import only <.rt> file\n"), 1);
 	app->scene = parse_scene(av[1], app);
+	if (!app->scene)
+		return (ft_dprintf(2, "Failed to parse scene\n"), 1);
 	return (0);
 }

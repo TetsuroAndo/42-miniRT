@@ -41,6 +41,9 @@ void		parse_light(char *line, t_scene *scene, t_app *app);
 void		parse_sphere(char *line, t_scene *scene, t_app *app);
 void		parse_plane(char *line, t_scene *scene, t_app *app);
 void		parse_cylinder(char *line, t_scene *scene, t_app *app);
+void		parse_cone(char *line, t_scene *scene, t_app *app);
+void		parse_hyperboloid(char *line, t_scene *scene, t_app *app);
+void		parse_paraboloid(char *line, t_scene *scene, t_app *app);
 
 /* utils */
 int			parse_f64(char **s, double *out, double min, double max);
