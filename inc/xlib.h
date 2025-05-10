@@ -6,7 +6,7 @@
 /*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 15:26:45 by teando            #+#    #+#             */
-/*   Updated: 2025/05/08 20:43:32 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/10 19:12:37 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,8 @@ t_vec3					vec3_normalize(t_vec3 v);
 t_vec3					vec3_add(t_vec3 v1, t_vec3 v2);
 t_vec3					vec3_mul(t_vec3 v1, t_vec3 v2);
 t_vec3					vec3_new(double x, double y, double z);
+t_vec3					vec3_scale(t_vec3 v, double s);
+void					vec3_print(t_vec3 v);
+t_vec3					vec3_sub(t_vec3 v1, t_vec3 v2);
 
 #endif

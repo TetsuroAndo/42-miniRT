@@ -3,14 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   obj_sphere.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 22:24:58 by teando            #+#    #+#             */
-/*   Updated: 2025/05/05 10:15:57 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/10 19:55:02 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mod_parse.h"
+
+t_hit_record	sphere_hit(t_obj *obj, t_ray ray, t_app *app)
+{
+	t_hit_record	result;
+	
+	result.t = INFINITY;
+	
+	return (result);
+}
 
 /*
  * 球体のパース (sp)
@@ -26,6 +35,7 @@ void	parse_sphere(char *line, t_scene *scene, t_app *app)
 
 	obj = (t_obj *)xmalloc(sizeof(t_obj), app);
 	obj->type = OBJ_SPHERE;
+	obj->hit = sphere_hit();
 	/* 中心座標 */
 	if (!parse_vec3(&line, &obj->u.sp.center))
 		exit_errmsg("sphere: invalid center position", app);

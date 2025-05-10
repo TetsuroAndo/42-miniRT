@@ -3,14 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   obj_plane.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 22:25:41 by teando            #+#    #+#             */
-/*   Updated: 2025/05/05 10:15:48 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/10 19:57:53 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mod_parse.h"
+
+t_hit_record	plane_hit(t_obj *obj, t_ray ray, t_app *app)
+{
+	t_hit_record	result;
+	
+	result.t = INFINITY;
+	
+	return (result);
+}
 
 /*
  * 平面のパース (pl)
@@ -25,6 +34,7 @@ void	parse_plane(char *line, t_scene *scene, t_app *app)
 
 	obj = (t_obj *)xmalloc(sizeof(t_obj), app);
 	obj->type = OBJ_PLANE;
+	obj->hit = plane_hit();
 	/* 平面上の点 */
 	if (!parse_vec3(&line, &obj->u.pl.point))
 		exit_errmsg("plane: invalid point", app);

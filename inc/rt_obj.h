@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_obj.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 15:30:28 by teando            #+#    #+#             */
-/*   Updated: 2025/05/09 03:09:25 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/10 19:38:10 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ typedef struct s_obj
 		t_cylinder		cy;
 	} u;
 	t_obj				*next;
-	t_hit_record		(*hit)(t_obj *obj, t_ray *ray, t_app *app);
+	t_hit_record		(*hit)(t_obj *obj, t_ray ray, t_app *app);
 }						t_obj;
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 10:28:38 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/09 01:34:37 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/10 19:44:55 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,63 @@ static void	temp(t_img *img)
 	}
 }
 
+int	is_shadow(t_hit_record *hit, t_app *app)
+{
+	(void)hit;
+	(void)app;
+	//影かどうかの判定
+	return (0);
+}
+
+int	calculate_light_color(t_hit_record *hit, t_light light, t_app *app)
+{
+	t_color	result;
+	t_color	ambient;
+	t_vec3	light_dir;
+	double	distance;
+	double	diffuse_intensity;
+
+	ambient.r = (int)(hit->color.r * app->scene->amb.ratio
+			* app->scene->amb.color.r / 255);
+	ambient.g = (int)(hit->color.g * app->scene->amb.ratio
+			* app->scene->amb.color.g / 255);
+	ambient.b = (int)(hit->color.b * app->scene->amb.ratio
+			* app->scene->amb.color.b / 255);
+	light_dir = vec3_sub(light.pos, hit->pos);
+	distance = vec3_length(light_dir);
+	diffuse_intensity = light.bright / (distance * distance);
+	diffuse_intensity = fmin(fmax(diffuse_intensity, 0.0), 1.0);
+	result.r = fmin(ambient.r + (int)(hit->color.r * diffuse_intensity), 255);
+	result.g = fmin(ambient.g + (int)(hit->color.g * diffuse_intensity), 255);
+	result.b = fmin(ambient.b + (int)(hit->color.b * diffuse_intensity), 255);
+	return (create_trgb(0, result.r, result.g, result.b));
+}
+
+t_hit_record	intersect_ray(t_ray ray, t_app *app)
+{
+	t_obj			*obj;
+	t_hit_record	min;
+	t_hit_record	tmp;
+
+	min.t = INFINITY;
+	obj = app->scene->objs;
+	while (obj)
+	{
+		tmp = obj->hit(obj, ray, app);
+		if (0 < tmp.t && tmp.t < min.t)
+			min = tmp;
+		obj = obj->next;
+	}
+	return (min);
+}
+
 void	render(t_img *img, t_app *app)
 {
-	int	i;
-	int	j;
-	t_ray	ray;
-	int	color;
+	int				i;
+	int				j;
+	t_ray			ray;
+	t_hit_record	*hit;
+	int				color;
 
 	i = 0;
 	while (i < HEIGHT)
@@ -67,8 +118,15 @@ void	render(t_img *img, t_app *app)
 			ray.dir = get_ray_direction(&app->scene->cam, i, j);
 			//交差判定をする
 			//ライトを参照して、色を取得
+			hit->color.r = 255;
+			hit->color.g = 0;
+			hit->color.b = 0;
 			// 仮の色を設定（後で実際のレイトレーシング結果に置き換える）
-			color = create_trgb(0, i % 256, j % 256, (i + j) % 256);
+			if (is_shadow(hit, app))
+				color = create_trgb(0, 0, 0, 0);
+			else
+				color = calculate_light_color(hit, app->scene->light);
+			// color = create_trgb(0, i % 256, j % 256, (i + j) % 256);
 			// 画像にピクセルを描画
 			my_mlx_pixel_put(img, j, i, color);
 			j++;
@@ -79,7 +137,7 @@ void	render(t_img *img, t_app *app)
 
 void	draw(t_app *app)
 {
-	t_img *img;
+	t_img	*img;
 
 	app->mlx = mlx_init();
 	if (!app->mlx)
@@ -96,5 +154,6 @@ void	draw(t_app *app)
 	img->px = mlx_get_data_addr(img->ptr, &img->bpp, &img->line_len,
 			&img->endian);
 	temp(img);
+	render(img, app);
 	mlx_put_image_to_window(app->mlx, app->win, img->ptr, 0, 0);
 }
