@@ -16,13 +16,20 @@
 /* 文字列から3次元ベクトルへ変換 */
 int	parse_vec3(char **s, t_vec3 *out)
 {
-	while (**s && ft_isspace(**s))
-		(*s)++;
+	skip_ws(s);
 	/* X成分をパース */
 	if (!parse_f64(s, &out->x, -INFINITY, INFINITY))
 		return (0);
+	/* カンマを期待 */
+	if (!expect_char(s, ','))
+		return (0);
+	/* Y成分をパース */
 	if (!parse_f64(s, &out->y, -INFINITY, INFINITY))
 		return (0);
+	/* カンマを期待 */
+	if (!expect_char(s, ','))
+		return (0);
+	/* Z成分をパース */
 	if (!parse_f64(s, &out->z, -INFINITY, INFINITY))
 		return (0);
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 22:36:19 by teando            #+#    #+#             */
-/*   Updated: 2025/05/09 03:22:47 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/14 12:12:19 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static int	check_range_f64(double val, double min, double max)
 
 /* 
  * 文字列から浮動小数点数へ変換
+ * 注：デリミタ処理を行わず、数値のみを解析する
  *
  * @param s		入力文字列
  * @param out	出力値
@@ -34,8 +35,7 @@ int	parse_f64(char **s, double *out, double min, double max)
 {
 	char	*endptr;
 
-	while (**s && (ft_isspace(**s) || **s == ','))
-		(*s)++;
+	skip_ws(s);
 	*out = ft_strtod(*s, &endptr);
 	if (endptr == *s || !check_range_f64(*out, min, max))
 		return (0);
