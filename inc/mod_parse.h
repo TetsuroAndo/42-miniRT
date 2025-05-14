@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 21:58:33 by teando            #+#    #+#             */
-/*   Updated: 2025/05/14 15:55:01 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/14 16:23:52 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int			parse_f64(char **s, double *out, double min, double max);
 int			parse_rgb(char **s, t_color *out);
 int			parse_vec3(char **s, t_vec3 *out);
 int			parse_normal_vec3(char **s, t_vec3 *out);
-void		add_obj(t_obj **head, t_obj *obj);
+void		add_obj(t_obj **obj, t_obj *new);
 
 /* tokenize utils */
 void		skip_ws(char **s);
