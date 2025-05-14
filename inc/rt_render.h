@@ -6,14 +6,18 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 16:37:53 by teando            #+#    #+#             */
-/*   Updated: 2025/05/09 03:11:37 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/14 10:28:46 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RT_RENDER_H
 # define RT_RENDER_H
 
-# include "app.h"
+# ifdef TEST_MODE
+#  include "../test/parser/test_app.h"
+# else
+#  include "app.h"
+# endif
 
 # ifndef WIDTH
 #  define WIDTH 1920 / 2

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_f64.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 22:36:19 by teando            #+#    #+#             */
-/*   Updated: 2025/05/08 15:02:35 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/09 03:22:47 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,11 @@ int	parse_f64(char **s, double *out, double min, double max)
 {
 	char	*endptr;
 
-	while (**s && ft_isspace(**s))
+	while (**s && (ft_isspace(**s) || **s == ','))
 		(*s)++;
 	*out = ft_strtod(*s, &endptr);
 	if (endptr == *s || !check_range_f64(*out, min, max))
 		return (0);
 	*s = endptr;
-	/* カンマをスキップ */
-	if (**s == ',')
-		(*s)++;
 	return (1);
 }

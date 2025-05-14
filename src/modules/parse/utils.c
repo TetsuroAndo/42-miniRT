@@ -18,7 +18,7 @@ int	expect_line_end(char **s)
 	/* 空行または行末を期待 */
 	if (!*s)
 		return (1);
-	while (**s && ft_isspace(**s))
+	while (**s && (ft_isspace(**s) || **s == ','))
 		(*s)++;
 	return (**s == '\0');
 }

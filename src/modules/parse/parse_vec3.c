@@ -3,20 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   parse_vec3.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 22:42:22 by teando            #+#    #+#             */
-/*   Updated: 2025/05/08 15:02:55 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/14 11:06:09 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mod_parse.h"
+#include <stdio.h>
 
 /* 文字列から3次元ベクトルへ変換 */
 int	parse_vec3(char **s, t_vec3 *out)
 {
 	while (**s && ft_isspace(**s))
 		(*s)++;
+	/* X成分をパース */
 	if (!parse_f64(s, &out->x, -INFINITY, INFINITY))
 		return (0);
 	if (!parse_f64(s, &out->y, -INFINITY, INFINITY))

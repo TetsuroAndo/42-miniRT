@@ -3,20 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   xlib.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 15:26:45 by teando            #+#    #+#             */
-/*   Updated: 2025/05/08 20:43:32 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/14 10:29:33 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef XLIB_H
 # define XLIB_H
 
-# include "app.h"
-# include <stdio.h>
-// # include "../test/parser/test_app.h"
+# include "err.h"
 # include "libft.h"
+# include <errno.h>
+
+# ifdef TEST_MODE
+#  include "../test/parser/test_app.h"
+# else
+#  include "app.h"
+# endif
 
 typedef struct s_app	t_app;
 

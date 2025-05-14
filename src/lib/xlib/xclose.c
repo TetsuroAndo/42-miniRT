@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   xclose.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 21:10:21 by teando            #+#    #+#             */
-/*   Updated: 2025/05/08 14:19:45 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/09 03:22:28 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "xlib.h"
+#include <stdio.h>
 
 int	xclose(int fd)
 {
