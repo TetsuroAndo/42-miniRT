@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 18:11:02 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/14 14:43:42 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/14 15:18:46 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #define DOT '.'
 #define BASE 10
 
+/* 累乗計算のヘルパー関数 */
 static double	my_pow(double x, double y)
 {
 	double	result;
@@ -30,13 +31,35 @@ static double	my_pow(double x, double y)
 	return (result);
 }
 
+/* 小数部分の処理を行う関数 */
+static double	process_fraction(const char *decimal_start, char **endptr, int digits)
+{
+	long	a_dot;
+	double	frac;
+
+	a_dot = ft_strtol(decimal_start, endptr, BASE);
+	frac = a_dot / my_pow(10.0, digits);
+	return (frac);
+}
+
+/* 小数点以降の桁数をカウントする関数 */
+static int	count_decimal_digits(const char *decimal_start)
+{
+	int	digits;
+
+	digits = 0;
+	while (decimal_start[digits] && ft_isdigit(decimal_start[digits]))
+		digits++;
+	return (digits);
+}
+
 double	ft_strtod(const char *nptr, char **endptr)
 {
 	long		b_dot;
-	long		a_dot;
 	double		result;
 	int			digits;
 	const char	*decimal_start;
+	double		frac;
 
 	b_dot = ft_strtol(nptr, endptr, BASE);
 	nptr = *endptr;
@@ -44,14 +67,15 @@ double	ft_strtod(const char *nptr, char **endptr)
 	{
 		nptr++;
 		decimal_start = nptr;
-		digits = 0;
-		while (decimal_start[digits] && ft_isdigit(decimal_start[digits]))
-			digits++;
+		digits = count_decimal_digits(decimal_start);
 		*endptr = (char *)decimal_start + digits;
 		if (digits > 0)
 		{
-			a_dot = ft_strtol(decimal_start, endptr, BASE);
-			result = b_dot + (a_dot / my_pow(10.0, digits));
+			frac = process_fraction(decimal_start, endptr, digits);
+			if (b_dot < 0)
+				result = b_dot - frac;
+			else
+				result = b_dot + frac;
 			return (result);
 		}
 	}

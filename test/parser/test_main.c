@@ -141,7 +141,7 @@ void test_parser_basic(int ac, char **av) {
 
 /* ベクトルを出力する関数 */
 void print_vec3(const char* name, t_vec3 vec) {
-    printf("  %s: (%.2f, %.2f, %.2f)\n", name, vec.x, vec.y, vec.z);
+    printf("  %s: (%.3f, %.3f, %.3f)\n", name, vec.x, vec.y, vec.z);
 }
 
 /* 色を出力する関数 */
