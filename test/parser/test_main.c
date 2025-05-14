@@ -6,8 +6,6 @@
 #include "test_app.h"
 #include <assert.h>
 
-#define TEST_FILE "../../maps/bonus.rt"
-
 /* テストに必要な関数の宣言 */
 t_list *xgc_init(t_app *app);
 t_scene *parse_scene(char *filename, t_app *app);
@@ -40,10 +38,34 @@ void test_report(const char* test_name, bool success, const char* message) {
 }
 
 /* ファイル存在テスト */
-void test_file_exists(void) {
-    const char* example_path = TEST_FILE;
+void test_file_exists(int ac, char **av) {
+    if (ac != 2) {
+        test_report("FileExists", false, "Usage: test_file_exists <filename>");
+        return;
+    }
+    const char* example_path = av[1];
     printf("Checking file existence: %s\n", example_path);
-    
+
+    /* ファイルの内容を1行ずつ出力して確認 */
+    printf("\nDEBUG: File content (with hex for whitespace):\n");
+    FILE *debug_file = fopen(example_path, "r");
+    if (debug_file) {
+        char debug_line[256];
+        int line_num = 1;
+        while (fgets(debug_line, sizeof(debug_line), debug_file)) {
+            printf("Line %d: ", line_num++);
+            /* 各文字を出力（空白文字は16進数で表示） */
+            for (int i = 0; debug_line[i] && debug_line[i] != '\n'; i++) {
+                if (debug_line[i] == ' ') printf("[SP]");
+                else if (debug_line[i] == '\t') printf("[TAB]");
+                else if (debug_line[i] == '\r') printf("[CR]");
+                else printf("%c", debug_line[i]);
+            }
+            printf("\n");
+        }
+        fclose(debug_file);
+    }
+    printf("\n");
     bool exists = file_exists(example_path);
     test_report("FileExists", exists, exists ? "File exists" : "File not found");
 }
@@ -54,20 +76,33 @@ char *test_get_error_msg(void);
 void test_reset_error(void);
 
 /* パーサーの基本機能テスト */
-void test_parser_basic(void) {
-    const char* example_path = TEST_FILE;
+void test_parser_basic(int ac, char **av) {
+    if (ac != 2) {
+        test_report("ParserBasic", false, "Usage: test_parser_basic <filename>");
+        return;
+    }
+    const char* example_path = av[1];
     if (!file_exists(example_path)) {
         test_report("ParserBasic", false, "Test file does not exist");
         return;
     }
-    
-    printf("Testing parser with file: %s\n", example_path);
+
     t_app *app = new_test_app();
     /* エラー状態をリセット */
     test_reset_error();
     
     /* パーサーを実行 */
     t_scene *sc = parse_scene((char*)example_path, app);
+    
+    /* デバッグ出力: パース直後のカメラの値を確認 */
+    // if (sc) {
+    //     printf("DEBUG: Camera values after parsing:\n");
+    //     printf("  - FOV: %.2f\n", sc->cam.fov);
+    //     printf("  - Position: (%.2f, %.2f, %.2f)\n", sc->cam.pos.x, sc->cam.pos.y, sc->cam.pos.z);
+    //     printf("  - Direction: (%.2f, %.2f, %.2f)\n", sc->cam.dir.x, sc->cam.dir.y, sc->cam.dir.z);
+    // } else {
+    //     printf("DEBUG: Scene is NULL after parsing\n");
+    // }
     
     /* エラーが発生したかチェック */
     if (test_error_occurred()) {
@@ -102,8 +137,6 @@ void test_parser_basic(void) {
              lights_ok ? "OK" : "NG",
              objects_ok ? "OK" : "NG");
     test_report("ParserBasic", all_ok, message);
-
-    print_scene(sc);
 }
 
 /* ベクトルを出力する関数 */
@@ -247,14 +280,14 @@ void print_scene(t_scene *scene)
 }
 
 /* メイン関数 */
-int main(void) {
+int main(int ac, char **av) {
     printf("=== miniRT Parser Tests ===\n");
     
     /* ファイル存在テスト */
-    test_file_exists();
+    test_file_exists(ac, av);
     
     /* パーサーの基本機能テスト */
-    test_parser_basic();
+    test_parser_basic(ac, av);
     
     printf("=== Tests Completed ===\n");
     return 0;
