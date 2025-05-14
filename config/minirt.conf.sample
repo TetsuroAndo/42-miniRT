@@ -1,0 +1,4 @@
+CFLAGS=-g -fsanitize=address -O1 -fno-omit-frame-pointer
+DEBUG_MODE=DEBUG_ALL
+WIDTH=1280
+HEIGHT=720
