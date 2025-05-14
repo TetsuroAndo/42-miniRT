@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 14:03:38 by teando            #+#    #+#             */
-/*   Updated: 2025/05/09 03:17:38 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/14 12:51:59 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include "rt_vec.h"
 # include "xlib.h"
 # include "mod_parse.h"
+# include "mod_render.h"
 # include <errno.h>
 # include <fcntl.h>
 # include <math.h>

@@ -6,11 +6,11 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 10:28:38 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/09 01:34:37 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/14 12:55:45 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "app.h"
+#include "mod_render.h"
 
 void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
 {
@@ -67,8 +67,7 @@ void	render(t_img *img, t_app *app)
 			ray.dir = get_ray_direction(&app->scene->cam, i, j);
 			//交差判定をする
 			//ライトを参照して、色を取得
-			// 仮の色を設定（後で実際のレイトレーシング結果に置き換える）
-			color = create_trgb(0, i % 256, j % 256, (i + j) % 256);
+			color = ray_color_trgb(app, &ray);
 			// 画像にピクセルを描画
 			my_mlx_pixel_put(img, j, i, color);
 			j++;
@@ -95,6 +94,7 @@ void	draw(t_app *app)
 		exit_app(app, 1);
 	img->px = mlx_get_data_addr(img->ptr, &img->bpp, &img->line_len,
 			&img->endian);
+	// render(img, app);
 	temp(img);
 	mlx_put_image_to_window(app->mlx, app->win, img->ptr, 0, 0);
 }

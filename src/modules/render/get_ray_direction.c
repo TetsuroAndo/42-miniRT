@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_ray_direction.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 18:48:53 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/08 21:03:37 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/14 12:58:02 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,6 @@ typedef struct s_cam_basis
 	double	half_w;
 	double	half_h;
 }	t_cam_basis;
-
-
-static t_vec3 vec3_scale(t_vec3 v, double s)
-{
-	t_vec3 result;
-
-	result.x = v.x * s;
-	result.y = v.y * s;
-	result.z = v.z * s;
-	return result;
-}
 
 static t_cam_basis	init_cam_basis(t_camera *cam)
 {

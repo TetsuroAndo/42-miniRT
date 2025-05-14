@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 16:37:53 by teando            #+#    #+#             */
-/*   Updated: 2025/05/14 10:28:46 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/14 12:48:11 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,5 @@ typedef struct s_hit_record
 	t_color				color;
 	t_obj				*obj;
 }						t_hit_record;
-
-/*render.c*/
-void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
-int		create_trgb(int t, int r, int g, int b);
-t_vec3	get_ray_direction(t_camera *cam, int i, int j);
-
-void	draw(t_app *app);
 
 #endif
