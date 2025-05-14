@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:40:00 by teando            #+#    #+#             */
-/*   Updated: 2025/05/09 17:40:00 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/14 17:27:05 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	parse_paraboloid(char *line, t_scene *scene, t_app *app)
 {
 	t_obj	*obj;
 
-	obj = (t_obj *)xmalloc(sizeof(t_obj), app);
+	obj = (t_obj *)xcalloc(1, sizeof(t_obj), app);
 	obj->type = OBJ_PARABOLOID;
 	/* 頂点座標 */
 	if (!parse_vec3(&line, &obj->u.pb.vertex))

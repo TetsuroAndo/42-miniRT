@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 22:26:10 by teando            #+#    #+#             */
-/*   Updated: 2025/05/14 11:06:00 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/14 17:26:57 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	parse_cylinder(char *line, t_scene *scene, t_app *app)
 	t_obj	*obj;
 	double	diameter;
 
-	obj = (t_obj *)xmalloc(sizeof(t_obj), app);
+	obj = (t_obj *)xcalloc(1, sizeof(t_obj), app);
 	obj->type = OBJ_CYLINDER;
 	/* 中心座標 */
 	if (!parse_vec3(&line, &obj->u.cy.center))

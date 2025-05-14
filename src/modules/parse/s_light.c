@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 22:23:51 by teando            #+#    #+#             */
-/*   Updated: 2025/05/09 17:40:09 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/14 17:27:28 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	parse_light(char *line, t_scene *scene, t_app *app)
 {
 	t_lights	*light;
 
-	light = (t_lights *)xmalloc(sizeof(t_lights), app);
+	light = (t_lights *)xcalloc(1, sizeof(t_lights), app);
 	/* 位置 */
 	if (!parse_vec3(&line, &light->pos))
 		exit_errmsg("light: invalid position (expected x,y,z)", app);

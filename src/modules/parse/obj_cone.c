@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:30:00 by teando            #+#    #+#             */
-/*   Updated: 2025/05/14 10:32:18 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/14 17:26:52 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	parse_cone(char *line, t_scene *scene, t_app *app)
 	t_obj	*obj;
 	double	angle_deg;
 
-	obj = (t_obj *)xmalloc(sizeof(t_obj), app);
+	obj = (t_obj *)xcalloc(1, sizeof(t_obj), app);
 	obj->type = OBJ_CONE;
 	/* 頂点座標 */
 	if (!parse_vec3(&line, &obj->u.co.vertex))

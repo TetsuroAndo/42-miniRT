@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 15:27:21 by teando            #+#    #+#             */
-/*   Updated: 2025/05/05 09:57:30 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/14 17:27:39 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,5 @@ void *xmalloc(size_t size, t_app *app)
     p = ft_gc_malloc(app->gc, size);
     if (!p)
 		    exit_app(app, E_ALLOC);
-    ft_bzero(p, size);
     return (p);
 }
