@@ -1,10 +1,17 @@
 ROOT      := ../..
+UNAME_S   := $(shell uname -s)
 OBJ_DIR   := $(ROOT)/obj
 SRC_DIR   := $(ROOT)/src
 INC_DIR   := $(ROOT)/inc
 XLIB_DIR  := $(SRC_DIR)/lib/xlib
 PARSE_DIR := $(SRC_DIR)/modules/parse
 LIBFT_DIR := $(SRC_DIR)/lib/libft
+
+ifeq ($(UNAME_S),Darwin)
+	LIBFT := $(LIBFT_DIR)/libft_mac.a
+else
+	LIBFT := $(LIBFT_DIR)/libft.a
+endif
 
 # Homebrew でインストールされた GoogleTest を使用
 GTEST_PREFIX := /opt/homebrew/opt/googletest
@@ -39,9 +46,15 @@ $(OBJ_DIR)/test/parser/%.o: %.c
 	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) $(IDFLAGS) -c $< -o $@
 
-parser_tests: $(OBJ)
-	$(CC) $(OBJ) $(LIBFT_DIR)/libft_mac.a -o $@
+parser_tests: $(OBJ) $(LIBFT)
+	$(CC) $(OBJ) $(LIBFT) -o $@
+
+$(LIBFT):
+	$(MAKE) -C $(LIBFT_DIR)
 
 clean:
 	rm -rf $(OBJ) parser_tests $(OBJ_DIR)
-.PHONY: all clean
+	$(MAKE) -C $(LIBFT_DIR) fclean
+
+re: clean all
+.PHONY: all clean re

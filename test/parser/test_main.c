@@ -6,7 +6,7 @@
 #include "test_app.h"
 #include <assert.h>
 
-#define TEST_FILE "../../maps/example.rt"
+#define TEST_FILE "../../maps/bonus.rt"
 
 /* テストに必要な関数の宣言 */
 t_list *xgc_init(t_app *app);
