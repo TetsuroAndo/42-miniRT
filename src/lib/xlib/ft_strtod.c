@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 18:11:02 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/14 14:27:31 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/14 14:43:42 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ double	ft_strtod(const char *nptr, char **endptr)
 		digits = 0;
 		while (decimal_start[digits] && ft_isdigit(decimal_start[digits]))
 			digits++;
+		*endptr = (char *)decimal_start + digits;
 		if (digits > 0)
 		{
 			a_dot = ft_strtol(decimal_start, endptr, BASE);
