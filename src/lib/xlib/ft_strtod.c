@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 18:11:02 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/14 15:18:46 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/14 16:01:09 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,21 +31,10 @@ static double	my_pow(double x, double y)
 	return (result);
 }
 
-/* 小数部分の処理を行う関数 */
-static double	process_fraction(const char *decimal_start, char **endptr, int digits)
-{
-	long	a_dot;
-	double	frac;
-
-	a_dot = ft_strtol(decimal_start, endptr, BASE);
-	frac = a_dot / my_pow(10.0, digits);
-	return (frac);
-}
-
 /* 小数点以降の桁数をカウントする関数 */
-static int	count_decimal_digits(const char *decimal_start)
+static size_t	count_decimal_digits(const char *decimal_start)
 {
-	int	digits;
+	size_t	digits;
 
 	digits = 0;
 	while (decimal_start[digits] && ft_isdigit(decimal_start[digits]))
@@ -55,31 +44,28 @@ static int	count_decimal_digits(const char *decimal_start)
 
 double	ft_strtod(const char *nptr, char **endptr)
 {
-	long		b_dot;
-	double		result;
-	int			digits;
-	const char	*decimal_start;
-	double		frac;
+	long	a_dot;
+	long	b_dot;
+	size_t	digits;
+	double	frac;
 
 	b_dot = ft_strtol(nptr, endptr, BASE);
 	nptr = *endptr;
 	if (*nptr == DOT)
 	{
-		nptr++;
-		decimal_start = nptr;
-		digits = count_decimal_digits(decimal_start);
-		*endptr = (char *)decimal_start + digits;
+		++nptr;
+		digits = count_decimal_digits(nptr);
+		*endptr = (char *)nptr + digits;
 		if (digits > 0)
 		{
-			frac = process_fraction(decimal_start, endptr, digits);
+			a_dot = ft_strtol(nptr, endptr, BASE);
+			frac = (double)a_dot / my_pow(10.0, (double)digits);
 			if (b_dot < 0)
-				result = b_dot - frac;
-			else
-				result = b_dot + frac;
-			return (result);
+				return ((double)b_dot - frac);
+			return ((double)b_dot + frac);
 		}
 	}
-	return (b_dot);
+	return ((double)b_dot);
 }
 
 /*
