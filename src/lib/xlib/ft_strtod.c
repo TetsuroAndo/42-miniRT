@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtod.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 18:11:02 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/08 15:01:52 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/14 14:27:31 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ double	ft_strtod(const char *nptr, char **endptr)
 	const char	*decimal_start;
 
 	b_dot = ft_strtol(nptr, endptr, BASE);
-	while (*nptr && (*nptr != DOT && ft_isdigit(*nptr)))
-		nptr++;
+	nptr = *endptr;
 	if (*nptr == DOT)
 	{
-		decimal_start = nptr + 1;
+		nptr++;
+		decimal_start = nptr;
 		digits = 0;
 		while (decimal_start[digits] && ft_isdigit(decimal_start[digits]))
 			digits++;
