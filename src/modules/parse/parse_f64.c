@@ -34,7 +34,7 @@ int	parse_f64(char **s, double *out, double min, double max)
 {
 	char	*endptr;
 
-	while (**s && ft_isspace(**s))
+	while (**s && (ft_isspace(**s) || **s == ','))
 		(*s)++;
 	*out = ft_strtod(*s, &endptr);
 	if (endptr == *s || !check_range_f64(*out, min, max))

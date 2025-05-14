@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 22:42:22 by teando            #+#    #+#             */
-/*   Updated: 2025/05/09 03:23:23 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/14 11:06:09 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,7 @@ int	parse_normal_vec3(char **s, t_vec3 *out)
 	double	len;
 
 	if (!parse_vec3(s, out))
-	{
-		fprintf(stderr, "DEBUG: Failed to parse vector\n");
 		return (0);
-	}
 	/* 各成分が-1.0～1.0の範囲内かチェック */
 	if (out->x < -1.0 || out->x > 1.0 || out->y < -1.0 || out->y > 1.0
 		|| out->z < -1.0 || out->z > 1.0)
