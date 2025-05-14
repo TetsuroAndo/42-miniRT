@@ -4,6 +4,7 @@
 #include <stdbool.h>
 
 #include "test_app.h"
+#include <assert.h>
 
 #define TEST_FILE "../../maps/example.rt"
 
@@ -24,7 +25,7 @@ bool file_exists(const char* path) {
 /* テスト用のアプリケーションコンテキストを初期化 */
 static t_app *new_test_app(void)
 {
-    static t_app app; /* 静的領域なのでテスト間で毎回 0-clear */
+    static t_app app;           /* 静的領域に確保すると楽 */
     memset(&app, 0, sizeof(app));
     app.gc = xgc_init(&app);
     return &app;
@@ -88,20 +89,21 @@ void test_parser_basic(void) {
     /* パース結果の検証 */
     bool ambient_ok = sc->amb.ratio > 0.0;
     bool camera_ok = sc->cam.fov > 0.0;
-    bool light_ok = sc->light.bright > 0.0;
-    bool objects_ok = sc->objs != NULL;
+    bool lights_ok = (sc->lights != NULL);
+    bool objects_ok = (sc->objs   != NULL);
     
-    bool all_ok = ambient_ok && camera_ok && light_ok && objects_ok;
+    bool all_ok = ambient_ok && camera_ok && lights_ok && objects_ok;
     
     char message[256];
-    snprintf(message, sizeof(message), 
-             "Ambient: %s, Camera: %s, Light: %s, Objects: %s",
+    snprintf(message, sizeof(message),
+             "Ambient: %s, Camera: %s, Lights: %s, Objects: %s",
              ambient_ok ? "OK" : "NG",
              camera_ok ? "OK" : "NG",
-             light_ok ? "OK" : "NG",
+             lights_ok ? "OK" : "NG",
              objects_ok ? "OK" : "NG");
-    
     test_report("ParserBasic", all_ok, message);
+
+    print_scene(sc);
 }
 
 /* ベクトルを出力する関数 */
@@ -130,11 +132,16 @@ void print_camera(t_camera cam) {
 }
 
 /* 光源を出力する関数 */
-void print_light(t_light light) {
-    printf("Light:\n");
-    print_vec3("Position", light.pos);
-    printf("  Brightness: %.2f\n", light.bright);
-    print_color("Color", light.color);
+static void print_lights(t_lights *lst)
+{
+    int idx = 0;
+    for (t_lights *l = lst; l; l = l->next)
+    {
+        printf("Light %d:\n", ++idx);
+        print_vec3("Position", l->pos);
+        printf("  Brightness: %.2f\n", l->bright);
+        print_color("Color", l->color);
+    }
 }
 
 /* 球体を出力する関数 */
@@ -163,49 +170,78 @@ void print_cylinder(t_cylinder cy) {
     print_color("Color", cy.color);
 }
 
-/* オブジェクトを出力する関数 */
-void print_objects(t_obj *objs) {
-    printf("Objects:\n");
-    if (objs == NULL) {
-        printf("  No objects\n");
-        return;
+/* オブジェクト種別名を取得 */
+static const char* obj_type_name(t_obj_type t)
+{
+    switch (t) {
+        case OBJ_SPHERE: return "Sphere";
+        case OBJ_PLANE: return "Plane";
+        case OBJ_CYLINDER: return "Cylinder";
+        case OBJ_CONE: return "Cone";
+        case OBJ_HYPERBOLOID: return "Hyperboloid";
+        case OBJ_PARABOLOID: return "Paraboloid";
+        default: return "Unknown";
     }
-    
-    int count = 0;
-    t_obj *current = objs;
-    while (current) {
-        count++;
-        printf("Object %d:\n", count);
-        
-        switch (current->type) {
+}
+
+/* ──────────────────────────────── *
+ *  印字ユーティリティ（新オブジェクト対応）
+ * ──────────────────────────────── */
+static void print_objects(t_obj *objs)
+{
+    int idx = 0;
+    for (t_obj *o = objs; o; o = o->next)
+    {
+        printf("  [%d] %-12s\n", ++idx, obj_type_name(o->type));
+        switch (o->type)
+        {
             case OBJ_SPHERE:
-                print_sphere(current->u.sp);
+                print_vec3("center", o->u.sp.center);
+                printf("    radius: %.3f\n", o->u.sp.radius);
                 break;
             case OBJ_PLANE:
-                print_plane(current->u.pl);
+                print_vec3("point",  o->u.pl.point);
+                print_vec3("normal", o->u.pl.normal);
                 break;
             case OBJ_CYLINDER:
-                print_cylinder(current->u.cy);
+                print_vec3("center", o->u.cy.center);
+                print_vec3("axis",   o->u.cy.axis);
+                printf("    r=%.3f h=%.3f\n", o->u.cy.radius, o->u.cy.height);
+                break;
+            case OBJ_CONE:
+                print_vec3("vertex", o->u.co.vertex);
+                print_vec3("axis",   o->u.co.axis);
+                printf("    angle=%.3f h=%.3f\n", o->u.co.angle, o->u.co.height);
+                break;
+            case OBJ_HYPERBOLOID:
+                print_vec3("center", o->u.hb.center);
+                print_vec3("axis",   o->u.hb.axis);
+                printf("    a=%.3f b=%.3f c=%.3f\n", o->u.hb.a, o->u.hb.b, o->u.hb.c);
+                break;
+            case OBJ_PARABOLOID:
+                print_vec3("vertex", o->u.pb.vertex);
+                print_vec3("axis",   o->u.pb.axis);
+                printf("    k=%.3f h=%.3f\n", o->u.pb.k, o->u.pb.height);
                 break;
             default:
-                printf("  Unknown object type\n");
+                break;
         }
-        
-        current = current->next;
     }
 }
 
 /* シーン全体を出力する関数 */
-void print_scene(t_scene *scene) {
-    if (scene == NULL) {
+void print_scene(t_scene *scene)
+{
+    if (!scene)
+    {
         printf("Scene is NULL\n");
         return;
     }
-    
+
     printf("\n=== Scene Contents ===\n");
     print_ambient(scene->amb);
     print_camera(scene->cam);
-    print_light(scene->light);
+    print_lights(scene->lights);
     print_objects(scene->objs);
     printf("=====================\n\n");
 }

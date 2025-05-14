@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "app.h"
 # include "xlib.h"
 
 void *xcalloc(size_t n, size_t sz, t_app *app)

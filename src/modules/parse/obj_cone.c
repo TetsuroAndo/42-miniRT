@@ -6,13 +6,12 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:30:00 by teando            #+#    #+#             */
-/*   Updated: 2025/05/09 17:30:00 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/14 10:32:18 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mod_parse.h"
 #include <stdio.h>
-#include <math.h>
 
 /*
  * 円錐のパース (co)
