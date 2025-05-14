@@ -6,7 +6,7 @@
 #    By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/25 13:31:17 by teando            #+#    #+#              #
-#    Updated: 2025/05/09 03:45:20 by teando           ###   ########.fr        #
+#    Updated: 2025/05/14 21:56:47 by teando           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,20 +15,22 @@ CC			:= cc
 CFLAGS		:= -Wall -Wextra -Werror
 RM			:= rm -rf
 
-# ディレクトリ設定
+# Project PATH
 ROOT_DIR		:= .
 SRC_DIR			:= $(ROOT_DIR)/src
 INC_DIR			:= $(ROOT_DIR)/inc
 OBJ_DIR			:= $(ROOT_DIR)/obj
 LIBFT_DIR		:= $(ROOT_DIR)/src/lib/libft
 MLX_DIR			:= $(ROOT_DIR)/src/lib/minilibx
+CONF_DIR		:= $(ROOT_DIR)/config
+CONF			:= $(CONF_DIR)/minirt.conf
+CONF_SAMP		:= $(CONF_DIR)/minirt.conf.sample
 
 # FLAGS
-DEFINE		:= -DDEBUG_MODE=DEBUG_NONE
 IDFLAGS		:= -I$(INC_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR)
 LFLAGS		:= -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
 
-# 環境依存
+# Environment Dependent
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Darwin)
 	LIBFT		:= $(LIBFT_DIR)/libft_mac.a
@@ -49,7 +51,7 @@ OBJ		:= $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC))
 # == Targets =============
 # =======================
 all:
-	$(MAKE) __all -j $(shell nproc)
+	$(MAKE) __build -j $(shell nproc)
 v: f
 	$(MAKE) __v -j $(shell nproc)
 core: f
@@ -57,14 +59,11 @@ core: f
 debug: f
 	$(MAKE) __debug -j $(shell nproc)
 
-__all: CFLAGS += -g -fsanitize=address -O1 -fno-omit-frame-pointer
-__all: DEFINE := -DDEBUG_MODE=DEBUG_ALL
-__all: __build
 ifeq ($(UNAME_S),Darwin)
 __build: setup_xquartz
-__build: $(NAME)
+__build: conf_get $(NAME)
 else
-__build: $(NAME)
+__build: conf_get $(NAME)
 endif
 
 $(NAME): $(LIBFT) $(MLX) $(OBJ)
@@ -79,6 +78,7 @@ $(NAME): $(LIBFT) $(MLX) $(OBJ)
 	@echo "[Compiler flags/CFLAGS]: $(CFLAGS)"
 	@echo "[Linker flags/LFLAGS]: $(LFLAGS)"
 	@echo "[Debug flags/DEFINE]: $(DEFINE)"
+	@echo "[Window size]: $(WIDTH_DEF) x $(HEIGHT_DEF)"
 	@echo "====================="
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(LIBFT_DIR) $(MLX_DIR)
@@ -113,19 +113,18 @@ re: fclean all
 # == PRODUCTION =========
 # =======================
 
-__v: CFLAGS += -O2
-__v: DEFINE := -DDEBUG_MODE=DEBUG_NONE
+__v: CFLAGS := $(filter-out -O%,$(CFLAGS)) -O3
 __v: __build
 
 # =======================
 # == DEBUG =============
 # =======================
 
-__core: CFLAGS += -g -fsanitize=address -O1 -fno-omit-frame-pointer
+__core: CFLAGS := $(filter-out -O%,$(CFLAGS)) -O1 -g -fsanitize=address -fno-omit-frame-pointer
 __core: DEFINE := -DDEBUG_MODE=DEBUG_CORE
 __core: __build
 
-__debug: CFLAGS += -g -fsanitize=address -O1 -fno-omit-frame-pointer
+__debug: CFLAGS := $(filter-out -O%,$(CFLAGS)) -O1 -g -fsanitize=address -fno-omit-frame-pointer
 __debug: DEFINE := -DDEBUG_MODE=DEBUG_ALL
 __debug: __build
 
@@ -142,6 +141,10 @@ $(MLX_DIR)/mlx.h:
 sub:
 	git submodule update --remote
 
+# =======================
+# == Dev Tool Targets ===
+# =======================
+
 norm:
 	@norminette $(SRC) $(INC_DIR)
 
@@ -150,6 +153,28 @@ nm:
 
 nmbin:
 	@nm $(NAME) | grep ' U ' | awk '{print $$2}' | sort | uniq
+
+$(CONF):
+	@mkdir -p $(CONF_DIR)
+	@if [ ! -f $(CONF_SAMP) ]; then \
+		echo "Warning: Sample config file $(CONF_SAMP) not found. Creating a default one."; \
+		echo "CFLAGS=-O3" > $(CONF); \
+		echo "DEBUG_MODE=DEBUG_NONE" >> $(CONF); \
+		echo "WIDTH=1280" >> $(CONF); \
+		echo "HEIGHT=720" >> $(CONF); \
+	elif [ ! -f $(CONF) ]; then \
+		echo "Creating default config file from sample..."; \
+		cp $(CONF_SAMP) $(CONF); \
+	fi
+
+conf_get: $(CONF)
+	$(eval WIDTH_DEF := $(shell cat $(CONF) | grep WIDTH | cut -d'=' -f2 || echo 960))
+	$(eval HEIGHT_DEF := $(shell cat $(CONF) | grep HEIGHT | cut -d'=' -f2 || echo 540))
+	$(eval DEBUG_MODE := $(shell cat $(CONF) | grep DEBUG_MODE || echo DEBUG_MODE=DEBUG_NONE))
+	$(eval DEFINE := $(if $(findstring DEBUG_MODE,$(DEFINE)),$(DEFINE),-DWIDTH=$(WIDTH_DEF) -DHEIGHT=$(HEIGHT_DEF) -D$(DEBUG_MODE)))
+	$(eval CFLAGS := $(if $(findstring -O, $(CFLAGS)), $(CFLAGS), $(CFLAGS) $(shell cat $(CONF) | grep CFLAGS | sed 's/CFLAGS=//')))
+
+conf: $(CONF)
 
 # =======================
 # == MACOS Setup ========
