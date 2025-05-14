@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 18:11:02 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/14 14:43:42 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/14 16:01:09 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #define DOT '.'
 #define BASE 10
 
+/* 累乗計算のヘルパー関数 */
 static double	my_pow(double x, double y)
 {
 	double	result;
@@ -30,32 +31,41 @@ static double	my_pow(double x, double y)
 	return (result);
 }
 
+/* 小数点以降の桁数をカウントする関数 */
+static size_t	count_decimal_digits(const char *decimal_start)
+{
+	size_t	digits;
+
+	digits = 0;
+	while (decimal_start[digits] && ft_isdigit(decimal_start[digits]))
+		digits++;
+	return (digits);
+}
+
 double	ft_strtod(const char *nptr, char **endptr)
 {
-	long		b_dot;
-	long		a_dot;
-	double		result;
-	int			digits;
-	const char	*decimal_start;
+	long	a_dot;
+	long	b_dot;
+	size_t	digits;
+	double	frac;
 
 	b_dot = ft_strtol(nptr, endptr, BASE);
 	nptr = *endptr;
 	if (*nptr == DOT)
 	{
-		nptr++;
-		decimal_start = nptr;
-		digits = 0;
-		while (decimal_start[digits] && ft_isdigit(decimal_start[digits]))
-			digits++;
-		*endptr = (char *)decimal_start + digits;
+		++nptr;
+		digits = count_decimal_digits(nptr);
+		*endptr = (char *)nptr + digits;
 		if (digits > 0)
 		{
-			a_dot = ft_strtol(decimal_start, endptr, BASE);
-			result = b_dot + (a_dot / my_pow(10.0, digits));
-			return (result);
+			a_dot = ft_strtol(nptr, endptr, BASE);
+			frac = (double)a_dot / my_pow(10.0, (double)digits);
+			if (b_dot < 0)
+				return ((double)b_dot - frac);
+			return ((double)b_dot + frac);
 		}
 	}
-	return (b_dot);
+	return ((double)b_dot);
 }
 
 /*

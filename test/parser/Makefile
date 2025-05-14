@@ -23,6 +23,7 @@ DEFINE_FLAGS := -DTEST_MODE=1 -DDEBUG_MODE=DEBUG_NONE
 
 # Cコンパイラフラグ
 CFLAGS := -std=gnu11 -Wall -Wextra -Werror $(DEFINE_FLAGS)
+LFLAGS := -lm
 
 # インクルードディレクトリ
 IDFLAGS := -I$(INC_DIR) -I$(LIBFT_DIR) -I$(GTEST_INC) -I.
@@ -47,7 +48,7 @@ $(OBJ_DIR)/test/parser/%.o: %.c
 	$(CC) $(CFLAGS) $(IDFLAGS) -c $< -o $@
 
 parser_tests: $(OBJ) $(LIBFT)
-	$(CC) $(OBJ) $(LIBFT) -o $@
+	$(CC) $(OBJ) $(LIBFT) $(LFLAGS) -o $@
 
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_DIR)

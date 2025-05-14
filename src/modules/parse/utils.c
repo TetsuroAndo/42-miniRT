@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 21:50:00 by teando            #+#    #+#             */
-/*   Updated: 2025/05/14 12:21:10 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/14 15:54:35 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,10 @@
  * @param s 入力文字列ポインタのポインタ
  * @return 常に1（成功）
  */
-int	skip_ws(char **s)
+void	skip_ws(char **s)
 {
 	while (**s && ft_isspace(**s))
 		(*s)++;
-	return (1);
 }
 
 /**
@@ -42,14 +41,18 @@ int	expect_char(char **s, char c)
 	return (1);
 }
 
+/*
+ * 行末を期待 コメントは許容する
+ * 
+ * @param s 入力文字列ポインタのポインタ
+ * @return 成功時1、失敗時0
+ */
 int	expect_line_end(char **s)
 {
-	/* 空行または行末を期待 */
 	if (!*s)
 		return (1);
-	while (**s && (ft_isspace(**s) || **s == ','))
-		(*s)++;
-	return (**s == '\0');
+	skip_ws(s);
+	return (**s == '\0' || **s == '#');
 }
 
 void	add_obj(t_obj **obj, t_obj *new)
