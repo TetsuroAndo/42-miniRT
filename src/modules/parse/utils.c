@@ -6,12 +6,41 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 21:50:00 by teando            #+#    #+#             */
-/*   Updated: 2025/05/05 10:17:09 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/14 12:21:10 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mod_parse.h"
 #include <stdlib.h>
+
+/**
+ * 空白文字をスキップする
+ * 
+ * @param s 入力文字列ポインタのポインタ
+ * @return 常に1（成功）
+ */
+int	skip_ws(char **s)
+{
+	while (**s && ft_isspace(**s))
+		(*s)++;
+	return (1);
+}
+
+/**
+ * 期待する文字があるかチェックし、あれば次に進む
+ * 
+ * @param s 入力文字列ポインタのポインタ
+ * @param c 期待する文字
+ * @return 成功時1、失敗時0
+ */
+int	expect_char(char **s, char c)
+{
+	skip_ws(s);
+	if (**s != c)
+		return (0);
+	(*s)++;
+	return (1);
+}
 
 int	expect_line_end(char **s)
 {

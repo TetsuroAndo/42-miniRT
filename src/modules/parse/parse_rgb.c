@@ -19,12 +19,20 @@ int	parse_rgb(char **s, t_color *out)
 	double	g;
 	double	b;
 
-	while (**s && ft_isspace(**s))
-		(*s)++;
+	skip_ws(s);
+	/* R成分をパース */
 	if (!parse_f64(s, &r, 0, 255))
 		return (0);
+	/* カンマを期待 */
+	if (!expect_char(s, ','))
+		return (0);
+	/* G成分をパース */
 	if (!parse_f64(s, &g, 0, 255))
 		return (0);
+	/* カンマを期待 */
+	if (!expect_char(s, ','))
+		return (0);
+	/* B成分をパース */
 	if (!parse_f64(s, &b, 0, 255))
 		return (0);
 	out->r = (unsigned char)r;

@@ -54,7 +54,6 @@ $(LIBFT):
 
 clean:
 	rm -rf $(OBJ) parser_tests $(OBJ_DIR)
-	$(MAKE) -C $(LIBFT_DIR) fclean
 
 re: clean all
 .PHONY: all clean re
