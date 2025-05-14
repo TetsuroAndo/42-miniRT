@@ -6,12 +6,28 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 12:49:07 by teando            #+#    #+#             */
-/*   Updated: 2025/05/14 14:04:22 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/14 14:05:39 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mod_render.h"
 #include <math.h>
+
+static inline double	vec3_dot(t_vec3 a, t_vec3 b)
+{
+	return (a.x * b.x + a.y * b.y + a.z * b.z);
+}
+
+static inline t_vec3	vec3_sub(t_vec3 a, t_vec3 b)
+{
+	return ((t_vec3){a.x - b.x, a.y - b.y, a.z - b.z});
+}
+
+static inline t_vec3	vec3_scale(t_vec3 v, double s)
+{
+	return ((t_vec3){v.x * s, v.y * s, v.z * s});
+}
+
 
 /* ────────────────────────────────────────────────────────────────────────── */
 /*  Sphere intersection – other primitives follow the same pattern.          */
