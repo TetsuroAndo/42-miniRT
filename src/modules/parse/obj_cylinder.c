@@ -6,12 +6,21 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 22:26:10 by teando            #+#    #+#             */
-/*   Updated: 2025/05/15 16:48:26 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/15 16:49:44 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mod_parse.h"
 #include <stdio.h>
+
+t_hit_record	cylinder_hit(t_obj *obj, t_ray ray, t_app *app)
+{
+	t_hit_record	result;
+	
+	result.t = INFINITY;
+	
+	return (result);
+}
 
 /*
  * 円柱のパース (cy)

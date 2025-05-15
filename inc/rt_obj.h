@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 15:30:28 by teando            #+#    #+#             */
-/*   Updated: 2025/05/15 16:47:59 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/15 16:51:34 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,16 +110,6 @@ struct s_obj
     }               u;
     struct s_obj    *next;
     t_hit_record    (*hit)(struct s_obj *obj, t_ray *ray, t_app *app);
-};
-	t_obj_type			type;
-	union
-	{
-		t_sphere		sp;
-		t_plane			pl;
-		t_cylinder		cy;
-	} u;
-	t_obj				*next;
-	t_hit_record		(*hit)(t_obj *obj, t_ray ray, t_app *app);
 }						t_obj;
 
 #endif
