@@ -6,7 +6,7 @@
 /*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 10:28:38 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/10 19:44:55 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/15 21:50:00 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	is_shadow(t_hit_record *hit, t_app *app)
 	return (0);
 }
 
-int	calculate_light_color(t_hit_record *hit, t_light light, t_app *app)
+int	calculate_light_color(t_hit_record *hit, t_lights *lights, t_app *app)
 {
 	t_color	result;
 	t_color	ambient;
@@ -71,9 +71,9 @@ int	calculate_light_color(t_hit_record *hit, t_light light, t_app *app)
 			* app->scene->amb.color.g / 255);
 	ambient.b = (int)(hit->color.b * app->scene->amb.ratio
 			* app->scene->amb.color.b / 255);
-	light_dir = vec3_sub(light.pos, hit->pos);
-	distance = vec3_length(light_dir);
-	diffuse_intensity = light.bright / (distance * distance);
+	light_dir = vec3_sub(lights->pos, hit->pos);
+	distance = vec3_len(light_dir);
+	diffuse_intensity = lights->bright / (distance * distance);
 	diffuse_intensity = fmin(fmax(diffuse_intensity, 0.0), 1.0);
 	result.r = fmin(ambient.r + (int)(hit->color.r * diffuse_intensity), 255);
 	result.g = fmin(ambient.g + (int)(hit->color.g * diffuse_intensity), 255);
@@ -107,6 +107,7 @@ void	render(t_img *img, t_app *app)
 	t_hit_record	*hit;
 	int				color;
 
+	hit = (t_hit_record *)xcalloc(sizeof(t_hit_record), 1, app);
 	i = 0;
 	while (i < HEIGHT)
 	{
@@ -122,10 +123,11 @@ void	render(t_img *img, t_app *app)
 			hit->color.g = 0;
 			hit->color.b = 0;
 			// 仮の色を設定（後で実際のレイトレーシング結果に置き換える）
+			color = create_trgb(0, 0, 0, 0);
 			if (is_shadow(hit, app))
 				color = create_trgb(0, 0, 0, 0);
 			else
-				color = calculate_light_color(hit, app->scene->light);
+				color = calculate_light_color(hit, app->scene->lights, app);
 			// color = create_trgb(0, i % 256, j % 256, (i + j) % 256);
 			// 画像にピクセルを描画
 			my_mlx_pixel_put(img, j, i, color);

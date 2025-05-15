@@ -3,23 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   obj_sphere.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 22:24:58 by teando            #+#    #+#             */
-/*   Updated: 2025/05/15 16:48:46 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/15 17:49:50 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mod_parse.h"
-
-t_hit_record	sphere_hit(t_obj *obj, t_ray ray, t_app *app)
-{
-	t_hit_record	result;
-	
-	result.t = INFINITY;
-	
-	return (result);
-}
 
 /*
  * 球体のパース (sp)

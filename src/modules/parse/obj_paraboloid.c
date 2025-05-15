@@ -3,24 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   obj_paraboloid.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:40:00 by teando            #+#    #+#             */
-/*   Updated: 2025/05/15 16:50:37 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/15 17:50:50 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mod_parse.h"
 #include <stdio.h>
-
-t_hit_record	paraboloid_hit(t_obj *obj, t_ray ray, t_app *app)
-{
-	t_hit_record	result;
-	
-	result.t = INFINITY;
-	
-	return (result);
-}
 
 /*
  * 放物面のパース (pb)

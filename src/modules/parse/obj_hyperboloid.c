@@ -3,25 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   obj_hyperboloid.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:35:00 by teando            #+#    #+#             */
-/*   Updated: 2025/05/15 16:50:43 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/15 17:51:09 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mod_parse.h"
 #include <stdio.h>
-
-t_hit_record	hyperboloid_hit(t_obj *obj, t_ray ray, t_app *app)
-{
-	t_hit_record	result;
-	
-	result.t = INFINITY;
-	
-	return (result);
-}
-
 /*
  * 双曲面のパース (hb)
  *	- 識別子: `hb`
