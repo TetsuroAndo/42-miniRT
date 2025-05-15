@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   obj_sphere.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 22:24:58 by teando            #+#    #+#             */
-/*   Updated: 2025/05/10 19:55:02 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/15 16:48:46 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ void	parse_sphere(char *line, t_scene *scene, t_app *app)
 	t_obj	*obj;
 	double	diameter;
 
-	obj = (t_obj *)xmalloc(sizeof(t_obj), app);
+	obj = (t_obj *)xcalloc(1, sizeof(t_obj), app);
 	obj->type = OBJ_SPHERE;
-	obj->hit = sphere_hit();
+	obj->hit = sphere_hit;
 	/* 中心座標 */
 	if (!parse_vec3(&line, &obj->u.sp.center))
 		exit_errmsg("sphere: invalid center position", app);

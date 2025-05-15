@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_rgb.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 22:42:10 by teando            #+#    #+#             */
-/*   Updated: 2025/05/08 15:02:58 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/09 03:22:57 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,20 @@ int	parse_rgb(char **s, t_color *out)
 	double	g;
 	double	b;
 
-	while (**s && ft_isspace(**s))
-		(*s)++;
+	skip_ws(s);
+	/* R成分をパース */
 	if (!parse_f64(s, &r, 0, 255))
 		return (0);
+	/* カンマを期待 */
+	if (!expect_char(s, ','))
+		return (0);
+	/* G成分をパース */
 	if (!parse_f64(s, &g, 0, 255))
 		return (0);
+	/* カンマを期待 */
+	if (!expect_char(s, ','))
+		return (0);
+	/* B成分をパース */
 	if (!parse_f64(s, &b, 0, 255))
 		return (0);
 	out->r = (unsigned char)r;

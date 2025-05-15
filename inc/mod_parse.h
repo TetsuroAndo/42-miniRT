@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 21:58:33 by teando            #+#    #+#             */
-/*   Updated: 2025/05/05 10:19:42 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/14 16:23:52 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,20 @@ void		parse_light(char *line, t_scene *scene, t_app *app);
 void		parse_sphere(char *line, t_scene *scene, t_app *app);
 void		parse_plane(char *line, t_scene *scene, t_app *app);
 void		parse_cylinder(char *line, t_scene *scene, t_app *app);
+void		parse_cone(char *line, t_scene *scene, t_app *app);
+void		parse_hyperboloid(char *line, t_scene *scene, t_app *app);
+void		parse_paraboloid(char *line, t_scene *scene, t_app *app);
 
-/* utils */
+/* parse utils */
 int			parse_f64(char **s, double *out, double min, double max);
 int			parse_rgb(char **s, t_color *out);
 int			parse_vec3(char **s, t_vec3 *out);
 int			parse_normal_vec3(char **s, t_vec3 *out);
+void		add_obj(t_obj **obj, t_obj *new);
+
+/* tokenize utils */
+void		skip_ws(char **s);
+int			expect_char(char **s, char c);
 int			expect_line_end(char **s);
-void		add_obj(t_obj **head, t_obj *obj);
 
 #endif

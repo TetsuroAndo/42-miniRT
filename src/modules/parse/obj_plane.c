@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   obj_plane.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 22:25:41 by teando            #+#    #+#             */
-/*   Updated: 2025/05/10 19:57:53 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/15 16:48:37 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ void	parse_plane(char *line, t_scene *scene, t_app *app)
 {
 	t_obj	*obj;
 
-	obj = (t_obj *)xmalloc(sizeof(t_obj), app);
+	obj = (t_obj *)xcalloc(1, sizeof(t_obj), app);
 	obj->type = OBJ_PLANE;
-	obj->hit = plane_hit();
+	obj->hit = plane_hit;
 	/* 平面上の点 */
 	if (!parse_vec3(&line, &obj->u.pl.point))
 		exit_errmsg("plane: invalid point", app);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_debug.h                                         :+:      :+:    :+:   */
+/*   debug.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 14:03:55 by teando            #+#    #+#             */
-/*   Updated: 2025/04/25 16:30:02 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/14 19:58:31 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,9 @@
 # define DEBUG_THREAD (1 << 5)
 # define DEBUG_CAMERA (1 << 6)
 # define DEBUG_ALL (~DEBUG_NONE)
+
+# ifndef DEBUG_MODE
+#  define DEBUG_MODE DEBUG_NONE
+# endif
 
 #endif

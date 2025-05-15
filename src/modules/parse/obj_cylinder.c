@@ -3,23 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   obj_cylinder.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 22:26:10 by teando            #+#    #+#             */
-/*   Updated: 2025/05/10 19:58:16 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/15 16:48:26 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mod_parse.h"
-
-t_hit_record	cylinder_hit(t_obj *obj, t_ray ray, t_app *app)
-{
-	t_hit_record	result;
-	
-	result.t = INFINITY;
-	
-	return (result);
-}
+#include <stdio.h>
 
 /*
  * 円柱のパース (cy)
@@ -35,9 +27,9 @@ void	parse_cylinder(char *line, t_scene *scene, t_app *app)
 	t_obj	*obj;
 	double	diameter;
 
-	obj = (t_obj *)xmalloc(sizeof(t_obj), app);
+	obj = (t_obj *)xcalloc(1, sizeof(t_obj), app);
 	obj->type = OBJ_CYLINDER;
-	obj->hit = cylinder_hit();
+	obj->hit = cylinder_hit;
 	/* 中心座標 */
 	if (!parse_vec3(&line, &obj->u.cy.center))
 		exit_errmsg("cylinder: invalid center position", app);
