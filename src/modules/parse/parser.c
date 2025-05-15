@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 19:22:19 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/15 17:01:07 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/15 22:44:41 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ t_scene	*parse_scene(char *filename, t_app *app)
 		if (trimmed)
 			dispatch_line(trimmed, scene, app);
 	}
-	xclose(app->fd);
+	xclose(&app->fd);
 	validate_scene(scene, app);
 	return (scene);
 }

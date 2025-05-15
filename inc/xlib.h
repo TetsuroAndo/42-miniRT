@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 15:26:45 by teando            #+#    #+#             */
-/*   Updated: 2025/05/15 22:29:55 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/15 22:44:30 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char					*xstrtrim(char const *s1, char const *set, t_app *app);
 
 /* fd */
 int						xopen(char *pathname, int flags, t_app *app);
-int						xclose(int fd);
+int						xclose(int *fd);
 
 /* libft */
 char					*xget_next_line(int fd, t_app *app);
