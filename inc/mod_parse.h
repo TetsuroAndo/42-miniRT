@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mod_parse.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 21:58:33 by teando            #+#    #+#             */
-/*   Updated: 2025/05/15 17:03:23 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/15 17:08:03 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "rt_obj.h"
 # include "rt_scene.h"
 # include "rt_vec.h"
+# include "mod_hit.h"
 # include <math.h>
 # include <stdlib.h>
 
@@ -44,14 +45,6 @@ void		parse_cylinder(char *line, t_scene *scene, t_app *app);
 void		parse_cone(char *line, t_scene *scene, t_app *app);
 void		parse_hyperboloid(char *line, t_scene *scene, t_app *app);
 void		parse_paraboloid(char *line, t_scene *scene, t_app *app);
-
-/* hit functions */
-t_hit_record	cone_hit(t_obj *obj, t_ray ray, t_app *app);
-t_hit_record	plane_hit(t_obj *obj, t_ray ray, t_app *app);
-t_hit_record	cylinder_hit(t_obj *obj, t_ray ray, t_app *app);
-t_hit_record	cone_hit(t_obj *obj, t_ray ray, t_app *app);
-t_hit_record	hyperboloid_hit(t_obj *obj, t_ray ray, t_app *app);
-t_hit_record	paraboloid_hit(t_obj *obj, t_ray ray, t_app *app);
 
 /* parse utils */
 int			parse_f64(char **s, double *out, double min, double max);
