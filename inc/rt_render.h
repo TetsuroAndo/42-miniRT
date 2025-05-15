@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 16:37:53 by teando            #+#    #+#             */
-/*   Updated: 2025/05/14 20:49:23 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/15 16:58:43 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # endif
 
 typedef struct s_camera	t_camera;
+typedef struct s_obj	t_obj;
 
 typedef struct s_img
 {

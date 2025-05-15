@@ -3,61 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   vec_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 18:31:02 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/10 18:54:36 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/15 17:05:21 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt_vec.h"
 #include <math.h>
 
-t_vec3	vec3_cross(t_vec3 v1, t_vec3 v2)
+t_vec3	vec3_new(double x, double y, double z)
 {
-	t_vec3	result;
-
-	result.x = v1.y * v2.z - v1.z * v2.y;
-	result.y = v1.z * v2.x - v1.x * v2.z;
-	result.z = v1.x * v2.y - v1.y * v2.x;
-	return (result);
-}
-
-t_vec3	vec3_mul(t_vec3 v1, t_vec3 v2)
-{
-	t_vec3	result;
-
-	result.x = v1.x * v2.x;
-	result.y = v1.y * v2.y;
-	result.z = v1.z * v2.z;
-	return (result);
+	return ((t_vec3){x, y, z});
 }
 
 t_vec3	vec3_add(t_vec3 v1, t_vec3 v2)
 {
-	t_vec3	result;
-
-	result.x = v1.x + v2.x;
-	result.y = v1.y + v2.y;
-	result.z = v1.z + v2.z;
-	return (result);
+	return ((t_vec3){v1.x + v2.x, v1.y + v2.y, v1.z + v2.z});
 }
 
-double	vec3_lenth(t_vec3 v)
+t_vec3	vec3_sub(t_vec3 v1, t_vec3 v2)
 {
-	return (sqrt((v.x * v.x) + (v.y * v.y) + (v.z * v.z)));
+	return ((t_vec3){v1.x - v2.x, v1.y - v2.y, v1.z - v2.z});
 }
 
-t_vec3	vec3_normalize(t_vec3 v)
+t_vec3	vec3_mul(t_vec3 v1, t_vec3 v2)
 {
-	double	len;
-	t_vec3	norm;
+	return ((t_vec3){v1.x * v2.x, v1.y * v2.y, v1.z * v2.z});
+}
 
-	len = vec3_lenth(v);
-	if (len == 0.0)
-		return (v);
-	norm.x = v.x / len;
-	norm.y = v.y / len;
-	norm.z = v.z / len;
-	return (norm);
+t_vec3	vec3_scale(t_vec3 v, double s)
+{
+	return ((t_vec3){v.x * s, v.y * s, v.z * s});
 }
