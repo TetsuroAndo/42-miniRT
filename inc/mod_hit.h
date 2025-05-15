@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   mod_hit.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 17:08:17 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/15 17:54:07 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/15 22:21:50 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MOD_HIT_H
 # define MOD_HIT_H
 
-# include "app.h"
 # include "xlib.h"
+# include "rt_render.h"
 
 typedef struct s_app	t_app;
 typedef struct s_scene	t_scene;

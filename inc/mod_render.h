@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   xstrndup.c                                         :+:      :+:    :+:   */
+/*   mod_render.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/30 18:34:22 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/05 09:58:24 by teando           ###   ########.fr       */
+/*   Created: 2025/05/15 22:20:32 by teando            #+#    #+#             */
+/*   Updated: 2025/05/15 22:23:36 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "xlib.h"
-#include <stdlib.h>
+#ifndef MOD_RENDER_H
+# define MOD_RENDER_H
 
-char	*xstrndup(const char *s, size_t n, t_app *app)
-{
-	char	*r;
-	size_t	len;
+# include "xlib.h"
+#include <math.h>
 
-	r = (char *)xmalloc((n + 1) * sizeof(char), app);
-	len = ft_strnlen(s, n);
-	if (!r)
-		return (NULL);
-	r[len] = '\0';
-	return (ft_memcpy(r, s, len));
-}
+void					my_mlx_pixel_put(t_img *img, int x, int y, int color);
+int						create_trgb(int t, int r, int g, int b);
+t_vec3					get_ray_direction(t_camera *cam, int i, int j);
+
+void					draw(t_app *app);
+
+#endif

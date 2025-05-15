@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vec_utils_2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 20:33:11 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/15 19:41:30 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/15 22:32:01 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,5 @@ t_vec3	vec3_cross(t_vec3 v1, t_vec3 v2)
 
 t_vec3	vec3_div(t_vec3 v, double t)
 {
-	t_vec3 result;
-
-	result.x = v.x / t;
-	result.y = v.y / t;
-	result.z = v.z / t;
-	return (result);
+	return ((t_vec3){v.x / t, v.y / t, v.z / t});
 }

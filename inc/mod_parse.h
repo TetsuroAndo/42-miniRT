@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mod_parse.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 21:58:33 by teando            #+#    #+#             */
-/*   Updated: 2025/05/15 17:08:03 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/15 22:29:00 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@
 # include "rt_scene.h"
 # include "rt_vec.h"
 # include "mod_hit.h"
-# include <math.h>
-# include <stdlib.h>
 
 typedef struct s_app	t_app;
 typedef struct s_scene	t_scene;

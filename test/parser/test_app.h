@@ -41,6 +41,8 @@ void print_scene(t_scene *scene);    /* 宣言だけ残す */
 # include "rt_obj.h"
 # include "rt_scene.h"
 # include "rt_vec.h"
+# include "mod_hit.h"
+# include "rt_render.h"
 # include <errno.h>
 # include <fcntl.h>
 # include <math.h>

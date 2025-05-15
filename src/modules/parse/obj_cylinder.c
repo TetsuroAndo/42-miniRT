@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   obj_cylinder.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 22:26:10 by teando            #+#    #+#             */
-/*   Updated: 2025/05/15 17:51:32 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/15 22:04:45 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mod_parse.h"
-#include <stdio.h>
 
 /*
  * 円柱のパース (cy)

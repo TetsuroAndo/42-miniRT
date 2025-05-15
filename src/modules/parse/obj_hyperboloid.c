@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   obj_hyperboloid.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:35:00 by teando            #+#    #+#             */
-/*   Updated: 2025/05/15 17:51:09 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/15 22:04:38 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mod_parse.h"
-#include <stdio.h>
+
 /*
  * 双曲面のパース (hb)
  *	- 識別子: `hb`

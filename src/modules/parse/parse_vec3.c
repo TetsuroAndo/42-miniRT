@@ -6,12 +6,11 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 22:42:22 by teando            #+#    #+#             */
-/*   Updated: 2025/05/14 11:06:09 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/15 22:05:07 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mod_parse.h"
-#include <stdio.h>
 
 /* 文字列から3次元ベクトルへ変換 */
 int	parse_vec3(char **s, t_vec3 *out)

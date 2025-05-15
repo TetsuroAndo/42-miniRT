@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   obj_paraboloid.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:40:00 by teando            #+#    #+#             */
-/*   Updated: 2025/05/15 17:50:50 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/15 22:04:31 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mod_parse.h"
-#include <stdio.h>
 
 /*
  * 放物面のパース (pb)

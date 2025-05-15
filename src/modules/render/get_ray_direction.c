@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_ray_direction.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 18:48:53 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/10 18:57:23 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/15 22:23:16 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "xlib.h"
-#include <math.h>
+#include "mod_render.h"
 
 typedef struct s_cam_basis
 {

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   vec_utils_3.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 19:41:32 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/15 19:43:28 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/15 22:33:39 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "xlib.h"
 
-double vec3_dot(t_vec3 a, t_vec3 b)
+double	vec3_dot(t_vec3 a, t_vec3 b)
 {
 	return (a.x * b.x + a.y * b.y + a.z * b.z);
 }

@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   obj_cone.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:30:00 by teando            #+#    #+#             */
-/*   Updated: 2025/05/15 17:48:56 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/15 22:04:52 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mod_parse.h"
-#include <stdio.h>
 
 /*
  * 円錐のパース (co)
