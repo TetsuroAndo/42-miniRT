@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 17:50:20 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/17 16:33:55 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/17 16:41:10 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ static double	calc_sphere_hit(t_obj *obj, t_ray ray)
 	const double	b = 2.0 * vec3_dot(oc, ray.dir);
 	const double	c = vec3_dot(oc, oc) - obj->u.sp.radius * obj->u.sp.radius;
 	const double	disc = b * b - 4 * a * c;
+
 	if (disc < 0.0)
 		return (INFINITY);
 	return (get_valid_t(a, b, disc));
