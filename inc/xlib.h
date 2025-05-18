@@ -6,22 +6,23 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 15:26:45 by teando            #+#    #+#             */
-/*   Updated: 2025/05/14 10:29:33 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/15 22:44:30 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef XLIB_H
 # define XLIB_H
 
-# include "err.h"
-# include "libft.h"
-# include <errno.h>
-
 # ifdef TEST_MODE
 #  include "../test/parser/test_app.h"
 # else
 #  include "app.h"
 # endif
+
+# include "err.h"
+# include "libft.h"
+# include "rt_vec.h"
+# include <errno.h>
 
 typedef struct s_app	t_app;
 
@@ -46,7 +47,7 @@ char					*xstrtrim(char const *s1, char const *set, t_app *app);
 
 /* fd */
 int						xopen(char *pathname, int flags, t_app *app);
-int						xclose(int fd);
+int						xclose(int *fd);
 
 /* libft */
 char					*xget_next_line(int fd, t_app *app);
@@ -54,10 +55,15 @@ double					ft_strtod(const char *nptr, char **endptr);
 
 /* vec */
 t_vec3					vec3_cross(t_vec3 v1, t_vec3 v2);
-double					vec3_lenth(t_vec3 v);
+double					vec3_len(t_vec3 v);
 t_vec3					vec3_normalize(t_vec3 v);
 t_vec3					vec3_add(t_vec3 v1, t_vec3 v2);
 t_vec3					vec3_mul(t_vec3 v1, t_vec3 v2);
 t_vec3					vec3_new(double x, double y, double z);
+t_vec3					vec3_scale(t_vec3 v, double s);
+void					vec3_print(t_vec3 v);
+t_vec3					vec3_sub(t_vec3 v1, t_vec3 v2);
+t_vec3					vec3_div(t_vec3 v, double t);
+double					vec3_dot(t_vec3 a, t_vec3 b);
 
 #endif

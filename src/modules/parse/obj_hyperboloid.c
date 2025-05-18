@@ -6,12 +6,11 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:35:00 by teando            #+#    #+#             */
-/*   Updated: 2025/05/14 17:27:01 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/15 22:04:38 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mod_parse.h"
-#include <stdio.h>
 
 /*
  * 双曲面のパース (hb)
@@ -29,6 +28,7 @@ void	parse_hyperboloid(char *line, t_scene *scene, t_app *app)
 
 	obj = (t_obj *)xcalloc(1, sizeof(t_obj), app);
 	obj->type = OBJ_HYPERBOLOID;
+	obj->hit = hyperboloid_hit;
 	/* 中心座標 */
 	if (!parse_vec3(&line, &obj->u.hb.center))
 		exit_errmsg("hyperboloid: invalid center position", app);

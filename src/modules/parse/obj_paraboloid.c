@@ -6,12 +6,11 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:40:00 by teando            #+#    #+#             */
-/*   Updated: 2025/05/14 17:27:05 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/15 22:04:31 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mod_parse.h"
-#include <stdio.h>
 
 /*
  * 放物面のパース (pb)
@@ -28,6 +27,7 @@ void	parse_paraboloid(char *line, t_scene *scene, t_app *app)
 
 	obj = (t_obj *)xcalloc(1, sizeof(t_obj), app);
 	obj->type = OBJ_PARABOLOID;
+	obj->hit = paraboloid_hit;
 	/* 頂点座標 */
 	if (!parse_vec3(&line, &obj->u.pb.vertex))
 		exit_errmsg("paraboloid: invalid vertex position", app);

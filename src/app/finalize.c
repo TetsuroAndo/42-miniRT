@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 14:47:54 by teando            #+#    #+#             */
-/*   Updated: 2025/05/09 03:06:11 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/15 22:52:49 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,11 @@ void	exit_errmsg(char *msg, t_app *app)
 void exit_app(t_app *app, int code)
 {
 	if (app->fd > 0)
-		xclose(app->fd);
+		xclose(&app->fd);
 	if (app->img->ptr)
 		mlx_destroy_image(app->mlx, app->img->ptr);
+	if (app->img)
+		free(app->img);
 	if (app->win)
 		mlx_destroy_window(app->mlx, app->win);
 	if (app->mlx)

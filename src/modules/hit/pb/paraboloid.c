@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   xopen.c                                            :+:      :+:    :+:   */
+/*   paraboloid.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/04 21:10:19 by teando            #+#    #+#             */
-/*   Updated: 2025/05/15 22:45:59 by teando           ###   ########.fr       */
+/*   Created: 2025/05/15 17:50:52 by tomsato           #+#    #+#             */
+/*   Updated: 2025/05/15 17:51:03 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "xlib.h"
-#include <fcntl.h>
+#include "mod_hit.h"
 
-int xopen(char *pathname, int flags, t_app *app)
+t_hit_record	paraboloid_hit(t_obj *obj, t_ray ray, t_app *app)
 {
-	int fd;
-
-	fd = open(pathname, flags);
-	if (fd == -1)
-	{
-		perror("open");
-		exit_app(app, E_SYSTEM);
-	}
-	return (fd);
+	t_hit_record	result;
+	(void)obj;
+	(void)ray;
+	(void)app;
+	
+	result.t = INFINITY;
+	
+	return (result);
 }

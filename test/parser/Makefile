@@ -5,6 +5,7 @@ SRC_DIR   := $(ROOT)/src
 INC_DIR   := $(ROOT)/inc
 XLIB_DIR  := $(SRC_DIR)/lib/xlib
 PARSE_DIR := $(SRC_DIR)/modules/parse
+HIT_DIR := $(SRC_DIR)/modules/hit
 LIBFT_DIR := $(SRC_DIR)/lib/libft
 
 ifeq ($(UNAME_S),Darwin)
@@ -29,7 +30,7 @@ LFLAGS := -lm
 IDFLAGS := -I$(INC_DIR) -I$(LIBFT_DIR) -I$(GTEST_INC) -I.
 
 # ソースファイルのリスト
-SRC_C    := $(wildcard $(XLIB_DIR)/*.c) $(wildcard $(PARSE_DIR)/*.c) $(CURDIR)/stub_exit.c $(CURDIR)/test_main.c
+SRC_C    := $(wildcard $(XLIB_DIR)/*.c) $(wildcard $(PARSE_DIR)/*.c) $(wildcard $(HIT_DIR)/*.c) $(CURDIR)/stub_exit.c $(CURDIR)/test_main.c
 
 # オブジェクトファイルのリスト
 OBJ_C    := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(filter $(SRC_DIR)/%, $(SRC_C)))

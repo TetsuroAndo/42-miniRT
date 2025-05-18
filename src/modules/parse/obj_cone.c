@@ -6,12 +6,11 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:30:00 by teando            #+#    #+#             */
-/*   Updated: 2025/05/14 17:26:52 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/15 22:04:52 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mod_parse.h"
-#include <stdio.h>
 
 /*
  * 円錐のパース (co)
@@ -29,6 +28,7 @@ void	parse_cone(char *line, t_scene *scene, t_app *app)
 
 	obj = (t_obj *)xcalloc(1, sizeof(t_obj), app);
 	obj->type = OBJ_CONE;
+	obj->hit = cone_hit;
 	/* 頂点座標 */
 	if (!parse_vec3(&line, &obj->u.co.vertex))
 		exit_errmsg("cone: invalid vertex position", app);

@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 19:22:19 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/14 17:27:20 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/15 22:44:41 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ t_scene	*parse_scene(char *filename, t_app *app)
 	char	*trimmed;
 	t_scene	*scene;
 
-	scene = xcalloc(1, sizeof(t_scene), app);
+	scene = (t_scene *)xcalloc(1, sizeof(t_scene), app);
 	app->fd = xopen(filename, O_RDONLY, app);
 	while (1)
 	{
@@ -85,7 +85,7 @@ t_scene	*parse_scene(char *filename, t_app *app)
 		if (trimmed)
 			dispatch_line(trimmed, scene, app);
 	}
-	xclose(app->fd);
+	xclose(&app->fd);
 	validate_scene(scene, app);
 	return (scene);
 }

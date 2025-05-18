@@ -6,23 +6,30 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 14:03:38 by teando            #+#    #+#             */
-/*   Updated: 2025/05/09 03:17:38 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/15 22:34:53 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef APP_H
 # define APP_H
 
+/* origin lib */
 # include "debug.h"
 # include "err.h"
 # include "libft.h"
 # include "mlx.h"
-# include "rt_obj.h"
+# include "xlib.h"
+
+/* rt */
 # include "rt_render.h"
 # include "rt_scene.h"
-# include "rt_vec.h"
-# include "xlib.h"
+
+/* modules */
+# include "mod_hit.h"
 # include "mod_parse.h"
+# include "mod_render.h"
+
+/* std lib */
 # include <errno.h>
 # include <fcntl.h>
 # include <math.h>

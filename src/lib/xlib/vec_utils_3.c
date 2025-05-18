@@ -1,23 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vec_new.c                                          :+:      :+:    :+:   */
+/*   vec_utils_3.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/08 20:33:11 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/08 20:35:23 by tomsato          ###   ########.fr       */
+/*   Created: 2025/05/15 19:41:32 by tomsato           #+#    #+#             */
+/*   Updated: 2025/05/15 22:33:39 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rt_vec.h"
+#include "xlib.h"
 
-t_vec3	vec3_new(double x, double y, double z)
+double	vec3_dot(t_vec3 a, t_vec3 b)
 {
-	t_vec3	result;
-
-	result.x = x;
-	result.y = y;
-	result.z = z;
-	return (result);
+	return (a.x * b.x + a.y * b.y + a.z * b.z);
 }

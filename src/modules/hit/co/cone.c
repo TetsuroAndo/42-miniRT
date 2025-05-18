@@ -1,13 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cal_cam.c                                          :+:      :+:    :+:   */
+/*   cone.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/08 13:39:44 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/08 13:39:53 by tomsato          ###   ########.fr       */
+/*   Created: 2025/05/15 17:48:59 by tomsato           #+#    #+#             */
+/*   Updated: 2025/05/15 17:49:17 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "rt_render.h"
+#include "mod_hit.h"
+
+t_hit_record	cone_hit(t_obj *obj, t_ray ray, t_app *app)
+{
+	t_hit_record	result;
+	(void)obj;
+	(void)ray;
+	(void)app;
+	
+	result.t = INFINITY;
+	
+	return (result);
+}

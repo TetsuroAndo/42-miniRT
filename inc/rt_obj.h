@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_obj.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/14 10:53:03 by teando            #+#    #+#             */
-/*   Updated: 2025/05/14 10:56:55 by teando           ###   ########.fr       */
+/*   Created: 2025/04/25 15:30:28 by teando            #+#    #+#             */
+/*   Updated: 2025/05/15 17:58:12 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ struct s_obj
         t_paraboloid    pb;
     }               u;
     struct s_obj    *next;
-    t_hit_record    (*hit)(struct s_obj *obj, t_ray *ray, t_app *app);
+    t_hit_record    (*hit)(struct s_obj *obj, t_ray ray, t_app *app);
 };
 
 #endif

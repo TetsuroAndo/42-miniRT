@@ -6,12 +6,11 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 22:26:10 by teando            #+#    #+#             */
-/*   Updated: 2025/05/14 17:26:57 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/15 22:04:45 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mod_parse.h"
-#include <stdio.h>
 
 /*
  * 円柱のパース (cy)
@@ -29,6 +28,7 @@ void	parse_cylinder(char *line, t_scene *scene, t_app *app)
 
 	obj = (t_obj *)xcalloc(1, sizeof(t_obj), app);
 	obj->type = OBJ_CYLINDER;
+	obj->hit = cylinder_hit;
 	/* 中心座標 */
 	if (!parse_vec3(&line, &obj->u.cy.center))
 		exit_errmsg("cylinder: invalid center position", app);
