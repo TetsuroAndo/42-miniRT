@@ -3,18 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   plane.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 17:12:32 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/15 21:49:35 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/18 17:30:55 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mod_hit.h"
-
-#ifndef EPSILON
-# define EPSILON 1e-6
-#endif
 
 static void	fill_plane_hit_record(t_hit_record *rec, t_obj *obj, t_ray ray)
 {

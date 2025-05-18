@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 17:50:20 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/17 16:41:10 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/18 17:31:16 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ static double	get_valid_t(const double a, const double b, const double disc)
 
 	sqrt_d = sqrt(disc);
 	t1 = (-b - sqrt_d) / (2 * a);
-	if (t1 >= 1e-6)
+	if (t1 >= EPSILON)
 		return (t1);
 	t2 = (-b + sqrt_d) / (2 * a);
-	if (t2 >= 1e-6)
+	if (t2 >= EPSILON)
 		return (t2);
 	return (INFINITY);
 }

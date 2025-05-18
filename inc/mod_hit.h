@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 17:08:17 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/15 22:21:50 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/18 17:31:04 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@
 
 typedef struct s_app	t_app;
 typedef struct s_scene	t_scene;
+
+# ifndef EPSILON
+#  define EPSILON 1e-6
+# endif
 
 /* hit functions */
 t_hit_record			cone_hit(t_obj *obj, t_ray ray, t_app *app);
