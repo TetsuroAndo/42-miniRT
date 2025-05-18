@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 10:28:38 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/15 22:22:36 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/18 21:21:24 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,24 +62,48 @@ int	calculate_light_color(t_hit_record *hit, t_lights *lights, t_app *app)
 	t_color	result;
 	t_color	ambient;
 	t_vec3	light_dir;
+	double	diff;
 	double	distance;
+	double	attenuation;
 	double	diffuse_intensity;
 
+	// アンビエント光
 	ambient.r = (int)(hit->color.r * app->scene->amb.ratio
 			* app->scene->amb.color.r / 255);
 	ambient.g = (int)(hit->color.g * app->scene->amb.ratio
 			* app->scene->amb.color.g / 255);
 	ambient.b = (int)(hit->color.b * app->scene->amb.ratio
 			* app->scene->amb.color.b / 255);
+
+	// 拡散光のための計算
 	light_dir = vec3_sub(lights->pos, hit->pos);
 	distance = vec3_len(light_dir);
-	diffuse_intensity = lights->bright / (distance * distance);
-	diffuse_intensity = fmin(fmax(diffuse_intensity, 0.0), 1.0);
-	result.r = fmin(ambient.r + (int)(hit->color.r * diffuse_intensity), 255);
-	result.g = fmin(ambient.g + (int)(hit->color.g * diffuse_intensity), 255);
-	result.b = fmin(ambient.b + (int)(hit->color.b * diffuse_intensity), 255);
+	light_dir = vec3_normalize(light_dir);
+	diff = fmax(vec3_dot(hit->normal, light_dir), 0.0);
+	attenuation = lights->bright / (distance * distance + 1);
+	diffuse_intensity = diff * attenuation;
+
+	// デバッグ出力
+	printf("---- Light Debug ----\n");
+	printf("Hit Pos: (%f, %f, %f)\n", hit->pos.x, hit->pos.y, hit->pos.z);
+	printf("Normal: (%f, %f, %f)\n", hit->normal.x, hit->normal.y, hit->normal.z);
+	printf("Light Pos: (%f, %f, %f)\n", lights->pos.x, lights->pos.y, lights->pos.z);
+	printf("Distance: %f\n", distance);
+	printf("Dot(N,L): %f\n", diff);
+	printf("Attenuation: %f\n", attenuation);
+	printf("Diffuse Intensity: %f\n", diffuse_intensity);
+	printf("Ambient: (%d, %d, %d)\n", ambient.r, ambient.g, ambient.b);
+
+	result.r = fmin(ambient.r + hit->color.r * diffuse_intensity, 255);
+	result.g = fmin(ambient.g + hit->color.g * diffuse_intensity, 255);
+	result.b = fmin(ambient.b + hit->color.b * diffuse_intensity, 255);
+
+	printf("Final color: (%d, %d, %d)\n", result.r, result.g, result.b);
+	printf("---------------------\n");
+
 	return (create_trgb(0, result.r, result.g, result.b));
 }
+
 
 t_hit_record	intersect_ray(t_ray ray, t_app *app)
 {
@@ -96,6 +120,8 @@ t_hit_record	intersect_ray(t_ray ray, t_app *app)
 			min = tmp;
 		obj = obj->next;
 	}
+	if (min.t == INFINITY)
+		min.t = 0;
 	return (min);
 }
 
@@ -104,33 +130,34 @@ void	render(t_img *img, t_app *app)
 	int				i;
 	int				j;
 	t_ray			ray;
-	t_hit_record	*hit;
-	int				color;
+	t_hit_record	hit;
+	int				color_value;
 
-	hit = (t_hit_record *)xcalloc(sizeof(t_hit_record), 1, app);
 	i = 0;
 	while (i < HEIGHT)
 	{
 		j = 0;
 		while (j < WIDTH)
 		{
-			//レイの方向を取得
 			ray.orig = app->scene->cam.pos;
 			ray.dir = get_ray_direction(&app->scene->cam, i, j);
-			//交差判定をする
-			//ライトを参照して、色を取得
-			hit->color.r = 255;
-			hit->color.g = 0;
-			hit->color.b = 0;
-			// 仮の色を設定（後で実際のレイトレーシング結果に置き換える）
-			color = create_trgb(0, 0, 0, 0);
-			if (is_shadow(hit, app))
-				color = create_trgb(0, 0, 0, 0);
+			hit = intersect_ray(ray, app);
+			if (hit.t > EPSILON)
+			{
+				if (hit.obj != NULL)
+				{
+					color_value = create_trgb(0, hit.color.r, hit.color.g, hit.color.b);
+				}
+				else
+				{
+					color_value = create_trgb(0, 255, 0, 255);
+				}
+			}
 			else
-				color = calculate_light_color(hit, app->scene->lights, app);
-			// color = create_trgb(0, i % 256, j % 256, (i + j) % 256);
-			// 画像にピクセルを描画
-			my_mlx_pixel_put(img, j, i, color);
+			{
+				color_value = create_trgb(0, 20, 20, 20);
+			}
+			my_mlx_pixel_put(img, j, i, color_value);
 			j++;
 		}
 		i++;

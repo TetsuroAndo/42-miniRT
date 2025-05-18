@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_ray_direction.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 18:48:53 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/15 22:23:16 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/18 22:00:40 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static t_cam_basis	init_cam_basis(t_camera *cam)
 	t_cam_basis		basis;
 	double			aspect;
 	double			theta;
-	const t_vec3	world_up = vec3_new(0, 1, 0);
+	const t_vec3	world_up = vec3_new(-1, 0, 0);
 
 	basis.forward = vec3_normalize(cam->dir);
 	basis.right = vec3_normalize(vec3_cross(basis.forward, world_up));
