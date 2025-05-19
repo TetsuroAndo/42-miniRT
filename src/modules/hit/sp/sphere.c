@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sphere.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 17:50:20 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/18 22:11:27 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/20 04:22:27 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 /* ───────────────────────── ヘルパ ───────────────────────── */
 
-static void	fill_rec(t_hit_record *rec, t_obj *obj,
+static inline void	fill_rec(t_hit_record *rec, t_obj *obj,
 					  t_ray ray, double t)
 {
 	rec->t     = t;
@@ -35,7 +35,7 @@ static void	fill_rec(t_hit_record *rec, t_obj *obj,
 	rec->obj   = obj;
 }
 
-static double	get_valid_t(double a, double b, double disc)
+static inline double	get_valid_t(double a, double b, double disc)
 {
 	const double sqrt_d = sqrt(disc);
 	const double t1     = (-b - sqrt_d) / (2 * a);
@@ -48,7 +48,7 @@ static double	get_valid_t(double a, double b, double disc)
 	return (-1.0);            /* ヒットなし */
 }
 
-static double	solve_quadratic(const t_vec3 oc,
+static inline double	solve_quadratic(const t_vec3 oc,
 								const t_vec3 dir,
 								const double r2)
 {

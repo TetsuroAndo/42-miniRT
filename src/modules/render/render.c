@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 10:28:38 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/18 21:21:24 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/20 04:40:37 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ int	calculate_light_color(t_hit_record *hit, t_lights *lights, t_app *app)
 	diffuse_intensity = diff * attenuation;
 
 	// デバッグ出力
+	/*
 	printf("---- Light Debug ----\n");
 	printf("Hit Pos: (%f, %f, %f)\n", hit->pos.x, hit->pos.y, hit->pos.z);
 	printf("Normal: (%f, %f, %f)\n", hit->normal.x, hit->normal.y, hit->normal.z);
@@ -93,13 +94,16 @@ int	calculate_light_color(t_hit_record *hit, t_lights *lights, t_app *app)
 	printf("Attenuation: %f\n", attenuation);
 	printf("Diffuse Intensity: %f\n", diffuse_intensity);
 	printf("Ambient: (%d, %d, %d)\n", ambient.r, ambient.g, ambient.b);
+	*/
 
 	result.r = fmin(ambient.r + hit->color.r * diffuse_intensity, 255);
 	result.g = fmin(ambient.g + hit->color.g * diffuse_intensity, 255);
 	result.b = fmin(ambient.b + hit->color.b * diffuse_intensity, 255);
 
+	/*
 	printf("Final color: (%d, %d, %d)\n", result.r, result.g, result.b);
 	printf("---------------------\n");
+	*/
 
 	return (create_trgb(0, result.r, result.g, result.b));
 }
@@ -140,13 +144,21 @@ void	render(t_img *img, t_app *app)
 		while (j < WIDTH)
 		{
 			ray.orig = app->scene->cam.pos;
-			ray.dir = get_ray_direction(&app->scene->cam, i, j);
+			ray.dir = get_ray_direction(&app->scene->cam, j, i);
 			hit = intersect_ray(ray, app);
-			if (hit.t > EPSILON)
+			if (hit.t > 0)
 			{
 				if (hit.obj != NULL)
 				{
-					color_value = create_trgb(0, hit.color.r, hit.color.g, hit.color.b);
+					// Calculate lighting if we have a valid hit
+					if (app->scene->lights)
+					{
+						color_value = calculate_light_color(&hit, app->scene->lights, app);
+					}
+					else
+					{
+						color_value = create_trgb(0, hit.color.r, hit.color.g, hit.color.b);
+					}
 				}
 				else
 				{
