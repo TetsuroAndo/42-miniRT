@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 10:28:38 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/20 05:14:39 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/20 06:35:38 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,31 +27,6 @@ int	create_trgb(int t, int r, int g, int b)
 {
 	return (t << 24 | r << 16 | g << 8 | b);
 }
-/*
-static void	temp(t_img *img)
-{
-	int	i;
-	int	j;
-	int	color;
-
-	i = 0;
-	j = 0;
-	color = create_trgb(0, 0, 0, 0);
-	while (i < WIDTH)
-	{
-		j = 0;
-		while (j < HEIGHT)
-		{
-			color = create_trgb(0, 0, 0, 0);
-			if ((i % 50 > 25 && j % 50 < 25) || (i % 50 < 25 && j % 50 > 25))
-				color = create_trgb(0, 255, 255, 255);
-			my_mlx_pixel_put(img, i, j, color);
-			j++;
-		}
-		i++;
-	}
-}
-*/
 
 int	is_shadow(t_hit_record *hit, t_lights *light, t_app *app)
 {
@@ -169,7 +144,21 @@ void	draw(t_app *app)
 		exit_app(app, 1);
 	img->px = mlx_get_data_addr(img->ptr, &img->bpp, &img->line_len,
 			&img->endian);
-	temp(img);
+	if (DEBUG_MODE & DEBUG_RENDER)
+		temp(img);
 	render(img, app);
 	mlx_put_image_to_window(app->mlx, app->win, img->ptr, 0, 0);
+}
+
+int	redraw_loop(void *param)
+{
+	t_app	*app;
+
+	app = (t_app *)param;
+	if (app->dirty == 0)
+		return (0);
+	app->dirty = 0;
+	render(app->img, app);
+	mlx_put_image_to_window(app->mlx, app->win, app->img->ptr, 0, 0);
+	return (0);
 }

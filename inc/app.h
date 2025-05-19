@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 14:03:38 by teando            #+#    #+#             */
-/*   Updated: 2025/05/15 22:34:53 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/20 06:06:46 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_app
 {
 	void	*mlx;
 	void	*win;
+	int		dirty;		/* 再描画が必要な場合: 1, 描画完了: 0 */
 	t_img	*img;
 	t_scene	*scene;
 	int		fd;

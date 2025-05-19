@@ -1,31 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   debug.h                                            :+:      :+:    :+:   */
+/*   debug_render.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/25 14:03:55 by teando            #+#    #+#             */
-/*   Updated: 2025/05/20 05:56:57 by teando           ###   ########.fr       */
+/*   Created: 2025/05/20 05:54:50 by teando            #+#    #+#             */
+/*   Updated: 2025/05/20 06:09:08 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RT_DEBUG_H
-# define RT_DEBUG_H
+#include "mod_render.h"
 
-# define DEBUG_NONE 0
-# define DEBUG_CORE (1 << 0)
-# define DEBUG_PARSE (1 << 1)
-# define DEBUG_RENDER (1 << 2)
-# define DEBUG_SCENE (1 << 3)
-# define DEBUG_OBJ (1 << 4)
-# define DEBUG_THREAD (1 << 5)
-# define DEBUG_CAMERA (1 << 6)
-# define DEBUG_RAY (1 << 7)
-# define DEBUG_ALL (~DEBUG_NONE)
+void	temp(t_img *img)
+{
+	int	i;
+	int	j;
+	int	color;
 
-# ifndef DEBUG_MODE
-#  define DEBUG_MODE DEBUG_NONE
-# endif
-
-#endif
+	i = 0;
+	j = 0;
+	color = create_trgb(0, 0, 0, 0);
+	while (i < WIDTH)
+	{
+		j = 0;
+		while (j < HEIGHT)
+		{
+			color = create_trgb(0, 0, 0, 0);
+			if ((i % 50 > 25 && j % 50 < 25) || (i % 50 < 25 && j % 50 > 25))
+				color = create_trgb(0, 255, 255, 255);
+			my_mlx_pixel_put(img, i, j, color);
+			j++;
+		}
+		i++;
+	}
+}
