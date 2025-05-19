@@ -6,11 +6,14 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 10:28:38 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/20 04:40:37 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/20 05:14:39 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mod_render.h"
+
+/* Forward declarations */
+t_hit_record	intersect_ray(t_ray ray, t_app *app);
 
 void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
 {
@@ -24,7 +27,7 @@ int	create_trgb(int t, int r, int g, int b)
 {
 	return (t << 24 | r << 16 | g << 8 | b);
 }
-
+/*
 static void	temp(t_img *img)
 {
 	int	i;
@@ -48,64 +51,55 @@ static void	temp(t_img *img)
 		i++;
 	}
 }
+*/
 
-int	is_shadow(t_hit_record *hit, t_app *app)
+int	is_shadow(t_hit_record *hit, t_lights *light, t_app *app)
 {
-	(void)hit;
-	(void)app;
-	//影かどうかの判定
-	return (0);
+	// 影判定: ヒット点から光源へのレイを飛ばし、途中で遮るものがあるか
+	t_vec3 dir_to_light = vec3_sub(light->pos, hit->pos);
+	double dist_to_light = vec3_len(dir_to_light);
+	dir_to_light = vec3_normalize(dir_to_light);
+
+	// 数値誤差を避けるため、ヒット点を少し法線方向に移動
+	t_ray shadow_ray;
+	shadow_ray.orig = vec3_add(hit->pos, vec3_scale(dir_to_light, EPSILON * 10));
+	shadow_ray.dir = dir_to_light;
+
+	// 交差判定
+	t_hit_record shadow_hit = intersect_ray(shadow_ray, app);
+
+	// 光源までの距離より手前で何かにヒットしたら影の中
+	return (shadow_hit.t > 0 && shadow_hit.t < dist_to_light);
 }
 
-int	calculate_light_color(t_hit_record *hit, t_lights *lights, t_app *app)
+int	calculate_light_color(t_hit_record *hit, t_app *app)
 {
-	t_color	result;
-	t_color	ambient;
-	t_vec3	light_dir;
-	double	diff;
-	double	distance;
-	double	attenuation;
-	double	diffuse_intensity;
+	/* ---- ambient -------------------------------------------------------- */
+	t_color sum;
+	sum.r = (int)(hit->color.r * app->scene->amb.ratio * app->scene->amb.color.r / 255.0);
+	sum.g = (int)(hit->color.g * app->scene->amb.ratio * app->scene->amb.color.g / 255.0);
+	sum.b = (int)(hit->color.b * app->scene->amb.ratio * app->scene->amb.color.b / 255.0);
 
-	// アンビエント光
-	ambient.r = (int)(hit->color.r * app->scene->amb.ratio
-			* app->scene->amb.color.r / 255);
-	ambient.g = (int)(hit->color.g * app->scene->amb.ratio
-			* app->scene->amb.color.g / 255);
-	ambient.b = (int)(hit->color.b * app->scene->amb.ratio
-			* app->scene->amb.color.b / 255);
+	/* ---- diffuse for every spot ---------------------------------------- */
+	for (t_lights *l = app->scene->lights; l; l = l->next)
+	{
+		if (is_shadow(hit, l, app))
+			continue; /* スキップ: この光源からの光は影になっている */
 
-	// 拡散光のための計算
-	light_dir = vec3_sub(lights->pos, hit->pos);
-	distance = vec3_len(light_dir);
-	light_dir = vec3_normalize(light_dir);
-	diff = fmax(vec3_dot(hit->normal, light_dir), 0.0);
-	attenuation = lights->bright / (distance * distance + 1);
-	diffuse_intensity = diff * attenuation;
+		t_vec3 light_dir = vec3_sub(l->pos, hit->pos);
+		double dist      = vec3_len(light_dir);
+		light_dir        = vec3_normalize(light_dir);
 
-	// デバッグ出力
-	/*
-	printf("---- Light Debug ----\n");
-	printf("Hit Pos: (%f, %f, %f)\n", hit->pos.x, hit->pos.y, hit->pos.z);
-	printf("Normal: (%f, %f, %f)\n", hit->normal.x, hit->normal.y, hit->normal.z);
-	printf("Light Pos: (%f, %f, %f)\n", lights->pos.x, lights->pos.y, lights->pos.z);
-	printf("Distance: %f\n", distance);
-	printf("Dot(N,L): %f\n", diff);
-	printf("Attenuation: %f\n", attenuation);
-	printf("Diffuse Intensity: %f\n", diffuse_intensity);
-	printf("Ambient: (%d, %d, %d)\n", ambient.r, ambient.g, ambient.b);
-	*/
+		double diff  = fmax(vec3_dot(hit->normal, light_dir), 0.0);
+		double atten = l->bright / (dist * dist + 1.0);
+		double intens = diff * atten;
 
-	result.r = fmin(ambient.r + hit->color.r * diffuse_intensity, 255);
-	result.g = fmin(ambient.g + hit->color.g * diffuse_intensity, 255);
-	result.b = fmin(ambient.b + hit->color.b * diffuse_intensity, 255);
+		sum.r += hit->color.r * intens * (l->color.r / 255.0);
+		sum.g += hit->color.g * intens * (l->color.g / 255.0);
+		sum.b += hit->color.b * intens * (l->color.b / 255.0);
+	}
 
-	/*
-	printf("Final color: (%d, %d, %d)\n", result.r, result.g, result.b);
-	printf("---------------------\n");
-	*/
-
-	return (create_trgb(0, result.r, result.g, result.b));
+	return create_trgb(0, CLAMP255(sum.r), CLAMP255(sum.g), CLAMP255(sum.b));
 }
 
 
@@ -146,29 +140,10 @@ void	render(t_img *img, t_app *app)
 			ray.orig = app->scene->cam.pos;
 			ray.dir = get_ray_direction(&app->scene->cam, j, i);
 			hit = intersect_ray(ray, app);
-			if (hit.t > 0)
-			{
-				if (hit.obj != NULL)
-				{
-					// Calculate lighting if we have a valid hit
-					if (app->scene->lights)
-					{
-						color_value = calculate_light_color(&hit, app->scene->lights, app);
-					}
-					else
-					{
-						color_value = create_trgb(0, hit.color.r, hit.color.g, hit.color.b);
-					}
-				}
-				else
-				{
-					color_value = create_trgb(0, 255, 0, 255);
-				}
-			}
+			if (hit.t > 0 && hit.obj)
+				color_value = calculate_light_color(&hit, app);
 			else
-			{
 				color_value = create_trgb(0, 20, 20, 20);
-			}
 			my_mlx_pixel_put(img, j, i, color_value);
 			j++;
 		}

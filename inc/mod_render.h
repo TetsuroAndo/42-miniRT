@@ -22,4 +22,11 @@ t_vec3					get_ray_direction(t_camera *cam, int i, int j);
 
 void					draw(t_app *app);
 
+/* shadow and lighting */
+int						is_shadow(t_hit_record *hit, t_lights *light, t_app *app);
+int						calculate_light_color(t_hit_record *hit, t_app *app);
+
+/* clamp helper */
+#define CLAMP255(x) ((x) > 255 ? 255 : (x))
+
 #endif
