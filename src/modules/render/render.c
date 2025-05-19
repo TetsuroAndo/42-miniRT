@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 10:28:38 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/20 06:35:38 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/20 07:35:34 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,20 @@ int	is_shadow(t_hit_record *hit, t_lights *light, t_app *app)
 	double dist_to_light = vec3_len(dir_to_light);
 	dir_to_light = vec3_normalize(dir_to_light);
 
-	// 数値誤差を避けるため、ヒット点を少し法線方向に移動
+	// オブジェクトの半径に基づいて適切なオフセットを計算
+	double radius = 0.0;
+	if (hit->obj)
+	{
+		if (hit->obj->type == OBJ_SPHERE)
+			radius = hit->obj->u.sp.radius;
+		else if (hit->obj->type == OBJ_CYLINDER)
+			radius = hit->obj->u.cy.radius;
+	}
+	// 数値誤差を避けるため、ヒット点を適切な距離だけ法線方向に移動
+	// 小さいオブジェクトでも確実に自己交差を避けるため、半径に基づいて調整
+	double offset = fmax(radius * 0.001, EPSILON);
 	t_ray shadow_ray;
-	shadow_ray.orig = vec3_add(hit->pos, vec3_scale(dir_to_light, EPSILON * 10));
+	shadow_ray.orig = vec3_add(hit->pos, vec3_scale(dir_to_light, offset));
 	shadow_ray.dir = dir_to_light;
 
 	// 交差判定

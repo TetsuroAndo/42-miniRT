@@ -6,13 +6,13 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 06:25:13 by teando            #+#    #+#             */
-/*   Updated: 2025/05/20 06:34:04 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/20 07:09:56 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mod_cam.h"
 
-int	move_key_hook(int keycode, t_app *app)
+void	move_key_hook(int keycode, t_app *app)
 {
 	t_vec3	forward;
 	t_vec3	right;
@@ -33,10 +33,9 @@ int	move_key_hook(int keycode, t_app *app)
 	if (keycode == KEY_F)
 		cam_translate(&app->scene->cam, vec3_scale(vec3_new(0, 1, 0),
 				-MOVE_STEP));
-	return (0);
 }
 
-int	rot_key_hook(int keycode, t_app *app)
+void	rot_key_hook(int keycode, t_app *app)
 {
 	if (keycode == KEY_LEFT)
 		cam_rotate_yaw(&app->scene->cam, ROT_STEP);
@@ -46,5 +45,4 @@ int	rot_key_hook(int keycode, t_app *app)
 		cam_rotate_pitch(&app->scene->cam, ROT_STEP);
 	if (keycode == KEY_DOWN)
 		cam_rotate_pitch(&app->scene->cam, -ROT_STEP);
-	return (0);
 }

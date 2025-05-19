@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 05:31:00 by teando            #+#    #+#             */
-/*   Updated: 2025/05/20 06:34:45 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/20 07:10:07 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@
 #define MOVE_STEP 1.0
 
 /* key */
-int move_key_hook(int keycode, t_app *app);
-int rot_key_hook(int keycode, t_app *app);
+void	move_key_hook(int keycode, t_app *app);
+void	rot_key_hook(int keycode, t_app *app);
 
 /* move */
-void cam_translate(t_camera *cam, t_vec3 delta);
-void cam_rotate_yaw(t_camera *cam, double rad);
+void	cam_translate(t_camera *cam, t_vec3 delta);
+void	cam_rotate_yaw(t_camera *cam, double rad);
 void cam_rotate_pitch(t_camera *cam, double rad);
 
 /* utils */
