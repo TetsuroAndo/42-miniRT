@@ -6,14 +6,18 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 10:28:38 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/20 07:35:34 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/20 07:55:49 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mod_render.h"
 
-/* Forward declarations */
-t_hit_record	intersect_ray(t_ray ray, t_app *app);
+static inline unsigned char	clamp255(int x)
+{
+	if (x > 255)
+		return (255);
+	return ((unsigned char)x);
+}
 
 void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
 {
@@ -25,8 +29,10 @@ void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
 
 int	create_trgb(int t, int r, int g, int b)
 {
-	return (t << 24 | r << 16 | g << 8 | b);
+	return (t << 24 | clamp255(r) << 16 | clamp255(g) << 8 | clamp255(b));
 }
+
+t_hit_record	intersect_ray(t_ray ray, t_app *app);
 
 int	is_shadow(t_hit_record *hit, t_lights *light, t_app *app)
 {
@@ -85,7 +91,7 @@ int	calculate_light_color(t_hit_record *hit, t_app *app)
 		sum.b += hit->color.b * intens * (l->color.b / 255.0);
 	}
 
-	return create_trgb(0, CLAMP255(sum.r), CLAMP255(sum.g), CLAMP255(sum.b));
+	return (create_trgb(0, sum.r, sum.g, sum.b));
 }
 
 

@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 22:20:32 by teando            #+#    #+#             */
-/*   Updated: 2025/05/20 06:09:33 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/20 07:52:18 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,6 @@ void					draw(t_app *app);
 /* shadow and lighting */
 int						is_shadow(t_hit_record *hit, t_lights *light, t_app *app);
 int						calculate_light_color(t_hit_record *hit, t_app *app);
-
-/* clamp helper */
-#define CLAMP255(x) ((x) > 255 ? 255 : (x))
 
 /* debug */
 void	temp(t_img *img);
