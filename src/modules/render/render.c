@@ -6,11 +6,13 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 10:28:38 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/20 07:55:49 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/21 07:28:11 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mod_render.h"
+
+#define SHADOW_BIAS 1e-4
 
 static inline unsigned char	clamp255(int x)
 {
@@ -32,36 +34,26 @@ int	create_trgb(int t, int r, int g, int b)
 	return (t << 24 | clamp255(r) << 16 | clamp255(g) << 8 | clamp255(b));
 }
 
-t_hit_record	intersect_ray(t_ray ray, t_app *app);
+t_hit_record	intersect_ray(t_ray ray, t_app *app, double t_max);
 
 int	is_shadow(t_hit_record *hit, t_lights *light, t_app *app)
 {
 	// 影判定: ヒット点から光源へのレイを飛ばし、途中で遮るものがあるか
-	t_vec3 dir_to_light = vec3_sub(light->pos, hit->pos);
-	double dist_to_light = vec3_len(dir_to_light);
-	dir_to_light = vec3_normalize(dir_to_light);
+	t_vec3 dir = vec3_sub(light->pos, hit->pos);
+	double t_max = vec3_len(dir);
+	dir = vec3_normalize(dir);
 
-	// オブジェクトの半径に基づいて適切なオフセットを計算
-	double radius = 0.0;
-	if (hit->obj)
-	{
-		if (hit->obj->type == OBJ_SPHERE)
-			radius = hit->obj->u.sp.radius;
-		else if (hit->obj->type == OBJ_CYLINDER)
-			radius = hit->obj->u.cy.radius;
-	}
-	// 数値誤差を避けるため、ヒット点を適切な距離だけ法線方向に移動
-	// 小さいオブジェクトでも確実に自己交差を避けるため、半径に基づいて調整
-	double offset = fmax(radius * 0.001, EPSILON);
-	t_ray shadow_ray;
-	shadow_ray.orig = vec3_add(hit->pos, vec3_scale(dir_to_light, offset));
-	shadow_ray.dir = dir_to_light;
+	// 数値誤差を避けるため、ヒット点を法線方向に一定距離だけ移動
+	t_ray shadow_ray = {
+		.orig = vec3_add(hit->pos, vec3_scale(hit->normal, SHADOW_BIAS)),
+		.dir = dir
+	};
 
-	// 交差判定
-	t_hit_record shadow_hit = intersect_ray(shadow_ray, app);
+	// 交差判定（t_maxを渡して光源手前の遮蔽のみ検出）
+	t_hit_record s = intersect_ray(shadow_ray, app, t_max);
 
-	// 光源までの距離より手前で何かにヒットしたら影の中
-	return (shadow_hit.t > 0 && shadow_hit.t < dist_to_light);
+	// 何かにヒットしたら影の中
+	return (s.t > 0.0);
 }
 
 int	calculate_light_color(t_hit_record *hit, t_app *app)
@@ -95,23 +87,23 @@ int	calculate_light_color(t_hit_record *hit, t_app *app)
 }
 
 
-t_hit_record	intersect_ray(t_ray ray, t_app *app)
+t_hit_record	intersect_ray(t_ray ray, t_app *app, double t_max)
 {
 	t_obj			*obj;
-	t_hit_record	min;
+	t_hit_record	min = { .t = INFINITY, .obj = NULL };
 	t_hit_record	tmp;
 
-	min.t = INFINITY;
 	obj = app->scene->objs;
 	while (obj)
 	{
 		tmp = obj->hit(obj, ray, app);
-		if (0 < tmp.t && tmp.t < min.t)
+		if (0 < tmp.t && tmp.t < min.t && tmp.t < t_max)
 			min = tmp;
 		obj = obj->next;
 	}
-	if (min.t == INFINITY)
-		min.t = 0;
+
+	if (min.obj == NULL)          /* 何も当たらなかった */
+		min.t = 0.0;              /*  t=0 で「当たっていない」を示す */
 	return (min);
 }
 
@@ -131,7 +123,7 @@ void	render(t_img *img, t_app *app)
 		{
 			ray.orig = app->scene->cam.pos;
 			ray.dir = get_ray_direction(&app->scene->cam, j, i);
-			hit = intersect_ray(ray, app);
+			hit = intersect_ray(ray, app, INFINITY);
 			if (hit.t > 0 && hit.obj)
 				color_value = calculate_light_color(&hit, app);
 			else
