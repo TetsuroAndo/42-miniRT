@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 06:25:13 by teando            #+#    #+#             */
-/*   Updated: 2025/05/20 07:09:56 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/21 08:27:47 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,14 @@ void	move_key_hook(int keycode, t_app *app)
 		cam_translate(&app->scene->cam, vec3_scale(right, -MOVE_STEP));
 	if (keycode == KEY_D)
 		cam_translate(&app->scene->cam, vec3_scale(right, MOVE_STEP));
-	if (keycode == KEY_R)
+}
+
+void	up_down_key_hook(int keycode, t_app *app)
+{
+	if (keycode == KEY_SPACE)
 		cam_translate(&app->scene->cam, vec3_scale(vec3_new(0, 1, 0),
 				MOVE_STEP));
-	if (keycode == KEY_F)
+	if (keycode == KEY_SHIFT)
 		cam_translate(&app->scene->cam, vec3_scale(vec3_new(0, 1, 0),
 				-MOVE_STEP));
 }

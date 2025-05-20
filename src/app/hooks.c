@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 13:25:14 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/20 06:32:03 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/21 08:29:10 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,18 @@ static inline int	close_window(t_app *app)
 	return (0);
 }
 
-static inline int	ctl_key_hook(int keycode, t_app *app)
+static inline int	ctl_key_hook(int k, t_app *app)
 {
-	if (keycode == KEY_ESC)
+	if (DEBUG_MODE & DEBUG_CORE)
+		ft_dprintf(2, "[Key-in] NUM: %d\n", k);
+	if (k == KEY_ESC)
 		exit_app(app, 0);
-	if (keycode >= KEY_A && keycode <= KEY_W)
-		move_key_hook(keycode, app);
-	if (keycode >= KEY_LEFT && keycode <= KEY_DOWN)
-		rot_key_hook(keycode, app);
+	if (k == KEY_A || k == KEY_D || k == KEY_S || k == KEY_W)
+		move_key_hook(k, app);
+	if (k == KEY_SPACE || k == KEY_SHIFT)
+		up_down_key_hook(k, app);
+	if (k >= KEY_LEFT && k <= KEY_DOWN)
+		rot_key_hook(k, app);
 	app->dirty = 1;
 	return (0);
 }
