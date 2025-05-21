@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_obj.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 15:30:28 by teando            #+#    #+#             */
-/*   Updated: 2025/05/15 17:58:12 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/21 09:17:51 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,8 @@ struct s_obj
         t_hyperboloid   hb;
         t_paraboloid    pb;
     }               u;
+    t_color         spec;       /* スペキュラ色   (default: 255,255,255) */
+    double          shininess;  /* 光沢係数 n     (default: 32)         */
     struct s_obj    *next;
     t_hit_record    (*hit)(struct s_obj *obj, t_ray ray, t_app *app);
 };

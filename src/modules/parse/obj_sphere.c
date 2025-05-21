@@ -27,6 +27,8 @@ void	parse_sphere(char *line, t_scene *scene, t_app *app)
 	obj = (t_obj *)xcalloc(1, sizeof(t_obj), app);
 	obj->type = OBJ_SPHERE;
 	obj->hit = sphere_hit;
+	obj->spec = (t_color){255, 255, 255};   /* ← 追加 */
+	obj->shininess = 32.0;                  /* ← 追加 */
 	/* 中心座標 */
 	if (!parse_vec3(&line, &obj->u.sp.center))
 		exit_errmsg("sphere: invalid center position", app);
