@@ -6,61 +6,24 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:17:06 by teando            #+#    #+#             */
-/*   Updated: 2025/05/21 12:30:54 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/21 13:31:03 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mod_thread.h"
 #include "mod_render.h"
 
-/* ------ 内部 forward ------ */
-static void *worker_main(void *arg);
-static int   fetch_tile(t_renderq *q);
-
-/* ★ 追加: タイルキューを再利用するためのリセット関数 */
-void reset_tile_queue(t_renderq *q)
+/* タイルを 1 枚取得（アトミック）*/
+static int fetch_tile(t_renderq *q)
 {
+	int id;
+	/* very light cas で良いが、可搬性優先で mutex */
 	pthread_mutex_lock(&q->lock);
-	q->next = 0;
+	id = q->next < q->tile_cnt ? q->next++ : -1;
 	pthread_mutex_unlock(&q->lock);
+	return id;
 }
 
-/* ------ タイル分割ユーティリティ ------ */
-t_renderq *make_tiles(t_app *app __attribute__((unused)), int tile_px)
-{
-	const int w = WIDTH, h = HEIGHT;
-	const int nx = (w + tile_px - 1) / tile_px;
-	const int ny = (h + tile_px - 1) / tile_px;
-
-	t_renderq *q = xmalloc(sizeof(*q), app);
-	q->tile_cnt = nx * ny;
-	q->tiles = xmalloc(sizeof(t_tile) * q->tile_cnt, app);
-	q->next  = 0;
-	pthread_mutex_init(&q->lock, NULL);
-
-	int id = 0;
-	for (int ty = 0; ty < ny; ++ty)
-		for (int tx = 0; tx < nx; ++tx)
-		{
-			q->tiles[id++] = (t_tile){
-				.x0 = tx * tile_px,
-				.y0 = ty * tile_px,
-				.x1 = (tx + 1) * tile_px > w ? w : (tx + 1) * tile_px,
-				.y1 = (ty + 1) * tile_px > h ? h : (ty + 1) * tile_px};
-		}
-	return q;
-}
-
-/* ------ 外部 API  ------ */
-void spawn_workers(t_app *app, t_renderq *q, int nthreads)
-{
-	app->workers = xmalloc(sizeof(pthread_t) * nthreads, app);
-	app->n_workers = nthreads;
-	app->renderq = q;
-	for (int i = 0; i < nthreads; ++i)
-		pthread_create(&app->workers[i], NULL, worker_main, (void *)app);
-	app->workers_ready = 1;
-}
 
 /* ------ ワーカ本体 ------ */
 static void *worker_main(void *arg)
@@ -123,15 +86,4 @@ static void *worker_main(void *arg)
 		pthread_mutex_unlock(&app->rstate.lock);
 	}
 	return (NULL);
-}
-
-/* タイルを 1 枚取得（アトミック）*/
-static int fetch_tile(t_renderq *q)
-{
-	int id;
-	/* very light cas で良いが、可搬性優先で mutex */
-	pthread_mutex_lock(&q->lock);
-	id = q->next < q->tile_cnt ? q->next++ : -1;
-	pthread_mutex_unlock(&q->lock);
-	return id;
 }
