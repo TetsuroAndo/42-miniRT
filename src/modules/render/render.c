@@ -300,8 +300,12 @@ void	draw(t_app *app)
 	const int cpu = sysconf(_SC_NPROCESSORS_ONLN);
 	t_renderq *q  = make_tiles(app, 16);  /* 32px × 32px タイル */
 	app->renderq  = q;
-	spawn_workers(app, q, cpu - 1);       /* メイン含めて cpu スレッド */
-	mlx_put_image_to_window(app->mlx, app->win, img->ptr, 0, 0);
+	spawn_workers(app, q, cpu - 1);       /* ← ここで全タイル完了 & join 済み */
+
+    /* ---------- FXAA Pass ---------- */
+    apply_fxaa(img);
+
+    mlx_put_image_to_window(app->mlx, app->win, img->ptr, 0, 0);
 }
 
 int	redraw_loop(void *param)

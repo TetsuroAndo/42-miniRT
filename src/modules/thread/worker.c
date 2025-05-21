@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:17:06 by teando            #+#    #+#             */
-/*   Updated: 2025/05/21 11:00:35 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/21 11:46:54 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,17 @@ static void *worker_main(void *arg)
 		for (int y = t.y0; y < t.y1; ++y)
 			for (int x = t.x0; x < t.x1; ++x)
 			{
-				/* ---- SSAA ×4 ---- */
-				const double ofs[4][2] = {
-					{0.25,0.25},{0.75,0.25},{0.25,0.75},{0.75,0.75}};
+				/* ---- SSAA ×SPP ---- */
+				/* サンプル位置の配列をSPPの最大値（4）に合わせて定義 */
+				const double ofs[][2] = {
+					{0.5,0.5},           /* SPP=1 用の中心位置 */
+					{0.25,0.25},          /* SPP=2,4 用の左上 */
+					{0.75,0.25},          /* SPP=2,4 用の右上 */
+					{0.25,0.75},          /* SPP=4 用の左下 */
+					{0.75,0.75}           /* SPP=4 用の右下 */
+				};
 				t_rgbd sum = {0,0,0};
-				for (int s=0;s<4;++s)
+				for (int s=0;s<SPP;++s)
 				{
 					t_ray rr = {
 						.orig = app->scene->cam.pos,
@@ -85,7 +91,7 @@ static void *worker_main(void *arg)
 										x+ofs[s][0], y+ofs[s][1])};
 					sum = rgbd_add(sum, trace_ray(rr, app, 0));
 				}
-				sum = rgbd_scale(sum, 0.25);             /* 平均 */
+				sum = rgbd_scale(sum, 1.0 / (double)SPP);  /* 平均 */
 				const int c = rgbd_to_trgb(sum);
 				my_mlx_pixel_put(app->img, x, y, c);
 			}

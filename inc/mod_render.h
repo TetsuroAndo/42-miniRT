@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 22:20:32 by teando            #+#    #+#             */
-/*   Updated: 2025/05/21 11:06:04 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/21 11:38:57 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,10 @@ typedef struct s_cam_basis
 
 # define SHADOW_BIAS 1e-4
 # define MAX_DEPTH 3
+
+#ifndef SPP
+# define SPP 4           /* Samples-Per-Pixel: 1 or 4 */
+#endif
 
 /* 便利関数：TRGB ⇔ RGB ベクタ */
 typedef struct s_rgbd
@@ -60,5 +64,8 @@ int				calculate_light_color(t_hit_record *hit, t_app *app);
 
 /* debug */
 void			temp(t_img *img);
+
+/* --- FXAA --- */
+void			apply_fxaa(t_img *img);
 
 #endif
