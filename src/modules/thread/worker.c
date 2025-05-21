@@ -6,17 +6,12 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:17:06 by teando            #+#    #+#             */
-/*   Updated: 2025/05/21 10:26:03 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/21 11:00:35 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mod_thread.h"
-
-/* Forward declarations */
-t_hit_record intersect_ray(t_ray ray, t_app *app, double t_max);
-int calculate_light_color(t_hit_record *hit, t_app *app);
-void my_mlx_pixel_put(t_img *img, int x, int y, int color);
-t_vec3 get_ray_direction(t_camera *cam, int x, int y);
+#include "mod_render.h"
 
 /* ------ 内部 forward ------ */
 static void *worker_main(void *arg);
@@ -78,13 +73,20 @@ static void *worker_main(void *arg)
 		for (int y = t.y0; y < t.y1; ++y)
 			for (int x = t.x0; x < t.x1; ++x)
 			{
-				t_ray ray = {
-					.orig = app->scene->cam.pos,
-					.dir  = get_ray_direction(&app->scene->cam, x, y)};
-				t_hit_record h = intersect_ray(ray, app, INFINITY);
-				const int c = (h.t > 0 && h.obj)
-					? calculate_light_color(&h, app)
-					: create_trgb(0, 20, 20, 20);
+				/* ---- SSAA ×4 ---- */
+				const double ofs[4][2] = {
+					{0.25,0.25},{0.75,0.25},{0.25,0.75},{0.75,0.75}};
+				t_rgbd sum = {0,0,0};
+				for (int s=0;s<4;++s)
+				{
+					t_ray rr = {
+						.orig = app->scene->cam.pos,
+						.dir  = get_ray_dir_sub(&app->scene->cam,
+										x+ofs[s][0], y+ofs[s][1])};
+					sum = rgbd_add(sum, trace_ray(rr, app, 0));
+				}
+				sum = rgbd_scale(sum, 0.25);             /* 平均 */
+				const int c = rgbd_to_trgb(sum);
 				my_mlx_pixel_put(app->img, x, y, c);
 			}
 	}

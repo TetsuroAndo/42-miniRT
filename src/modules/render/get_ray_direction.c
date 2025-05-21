@@ -6,20 +6,11 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 18:48:53 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/20 04:49:48 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/21 10:51:57 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mod_render.h"
-
-typedef struct s_cam_basis
-{
-	t_vec3			forward;
-	t_vec3			right;
-	t_vec3			up;
-	double			half_w;
-	double			half_h;
-}					t_cam_basis;
 
 static t_cam_basis	init_cam_basis(t_camera *cam)
 {

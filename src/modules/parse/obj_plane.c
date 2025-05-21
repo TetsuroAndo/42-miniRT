@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 22:25:41 by teando            #+#    #+#             */
-/*   Updated: 2025/05/21 09:17:59 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/21 11:02:22 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,9 @@ void	parse_plane(char *line, t_scene *scene, t_app *app)
 	/* RGB色 */
 	if (!parse_rgb(&line, &obj->u.pl.color))
 		exit_errmsg("plane: invalid color", app);
+	/* 反射率 */
+	obj->reflect = 0.0;
+	try_parse_reflect(&line, &obj->reflect);
 	if (!expect_line_end(&line))
 		exit_errmsg("plane: unexpected extra parameters", app);
 	add_obj(&scene->objs, obj);

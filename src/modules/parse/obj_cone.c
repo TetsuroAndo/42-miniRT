@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:30:00 by teando            #+#    #+#             */
-/*   Updated: 2025/05/15 22:04:52 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/21 11:02:09 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,9 @@ void	parse_cone(char *line, t_scene *scene, t_app *app)
 	/* RGB色 */
 	if (!parse_rgb(&line, &obj->u.co.color))
 		exit_errmsg("cone: invalid color", app);
+	/* 反射率 */
+	obj->reflect = 0.0;
+	try_parse_reflect(&line, &obj->reflect);
 	if (!expect_line_end(&line))
 		exit_errmsg("cone: unexpected extra parameters", app);
 	add_obj(&scene->objs, obj);

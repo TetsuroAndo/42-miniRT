@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 22:26:10 by teando            #+#    #+#             */
-/*   Updated: 2025/05/21 09:18:06 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/21 11:02:13 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,9 @@ void	parse_cylinder(char *line, t_scene *scene, t_app *app)
 	/* RGB色 */
 	if (!parse_rgb(&line, &obj->u.cy.color))
 		exit_errmsg("cylinder: invalid color", app);
+	/* 反射率 */
+	obj->reflect = 0.0;
+	try_parse_reflect(&line, &obj->reflect);
 	if (!expect_line_end(&line))
 		exit_errmsg("cylinder: unexpected extra parameters", app);
 	add_obj(&scene->objs, obj);

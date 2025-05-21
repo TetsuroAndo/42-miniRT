@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 21:50:00 by teando            #+#    #+#             */
-/*   Updated: 2025/05/15 22:05:38 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/21 11:08:01 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,23 @@ void	add_obj(t_obj **obj, t_obj *new)
 {
 	new->next = *obj;
 	*obj = new;
+}
+
+/* 反射率 (0-1) があれば読む。失敗しても構文エラーにはしない */
+int	try_parse_reflect(char **s, double *out)
+{
+	double r;
+	char  *save = *s;
+
+	skip_ws(s);
+	if (!expect_char(s, ':'))
+		return (0);
+	skip_ws(s);
+	if (!parse_f64(s, &r, 0.0, 1.0))
+	{
+		*s = save;
+		return (0);
+	}
+	*out = r;
+	return (1);
 }
