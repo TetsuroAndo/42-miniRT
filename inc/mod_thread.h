@@ -40,5 +40,6 @@ typedef struct s_renderq
 
 void spawn_workers(t_app *app, t_renderq *q, int nthreads);
 t_renderq *make_tiles(t_app *app __attribute__((unused)), int tile_px);
+void reset_tile_queue(t_renderq *q);   /* タイルキューをリセットする関数 */
 
 #endif

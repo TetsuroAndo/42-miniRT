@@ -43,6 +43,15 @@ typedef struct s_bvh		t_bvh;
 typedef struct s_img		t_img;
 typedef struct s_renderq	t_renderq;
 
+/* ── プログレッシブ描画共有状態 ── */
+typedef struct s_render_state
+{
+    volatile int     task_id;      /* dirty ごとに ++           */
+    volatile int     spp_target;   /* 1→2→4→…→FINAL_SPP        */
+    pthread_mutex_t  lock;
+    pthread_cond_t   cv;
+}               t_render_state;
+
 /* MLX + GC + Scene をまとめたグローバルコンテキスト */
 typedef struct s_app
 {
@@ -53,6 +62,12 @@ typedef struct s_app
 	t_bvh		*bvh;
 	t_img		*img;
 	t_renderq	*renderq;
+
+    /* --- 常駐ワーカープール --- */
+    t_render_state rstate;
+    pthread_t  *workers;
+    int         n_workers;
+    int         workers_ready;
 	int			fd;
 	t_list		*gc;
 }			t_app;

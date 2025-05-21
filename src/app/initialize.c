@@ -23,5 +23,13 @@ t_app	*init_app(void)
 	app->img = ft_calloc(sizeof(t_img), 1);
 	if (!app->img)
 		exit_app(app, 1);
+
+	/* ワーカー共有状態を初期化だけしておく (生成は draw() まで遅延) */
+	pthread_mutex_init(&app->rstate.lock, NULL);
+	pthread_cond_init(&app->rstate.cv, NULL);
+	app->rstate.task_id   = 0;
+	app->rstate.spp_target = 1;
+	app->workers_ready = 0;
+
 	return (app);
 }

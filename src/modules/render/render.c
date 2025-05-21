@@ -298,14 +298,16 @@ void	draw(t_app *app)
 		temp(img);
 	/* --- タイル + スレッド --- */
 	const int cpu = sysconf(_SC_NPROCESSORS_ONLN);
-	t_renderq *q  = make_tiles(app, 16);  /* 32px × 32px タイル */
+	t_renderq *q  = make_tiles(app, 16);
 	app->renderq  = q;
-	spawn_workers(app, q, cpu - 1);       /* ← ここで全タイル完了 & join 済み */
+	if (!app->workers_ready)              /* 初回だけ生成 */
+		spawn_workers(app, q, cpu - 1);
 
-    /* ---------- FXAA Pass ---------- */
-    apply_fxaa(img);
+	/* 初回描画を開始するためにdirtyフラグを立てる */
+	app->dirty = 1;
 
-    mlx_put_image_to_window(app->mlx, app->win, img->ptr, 0, 0);
+	/* 画像を表示 */
+	mlx_put_image_to_window(app->mlx, app->win, img->ptr, 0, 0);
 }
 
 int	redraw_loop(void *param)
@@ -313,10 +315,17 @@ int	redraw_loop(void *param)
 	t_app	*app;
 
 	app = (t_app *)param;
-	if (app->dirty == 0)
+	if (!app->dirty)
 		return (0);
+
+	/* ── 新フレームをキューに投入 ── */
+	pthread_mutex_lock(&app->rstate.lock);
 	app->dirty = 0;
-	render(app->img, app);
-	mlx_put_image_to_window(app->mlx, app->win, app->img->ptr, 0, 0);
+	app->rstate.task_id++;
+	app->rstate.spp_target = 1;          /* プレビューは 1 SPP から */
+	reset_tile_queue(app->renderq);      /* 全タイルを未処理に戻す (関数を追加) */
+	pthread_cond_broadcast(&app->rstate.cv);
+	pthread_mutex_unlock(&app->rstate.lock);
+
 	return (0);
 }
