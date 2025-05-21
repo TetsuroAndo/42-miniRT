@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 14:03:38 by teando            #+#    #+#             */
-/*   Updated: 2025/05/20 06:06:46 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/21 10:24:33 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 # include "mod_hit.h"
 # include "mod_parse.h"
 # include "mod_render.h"
+# include "mod_thread.h"
+# include "mod_accel.h"
 
 /* std lib */
 # include <errno.h>
@@ -37,18 +39,22 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-typedef struct s_img	t_img;
+typedef struct s_bvh		t_bvh;
+typedef struct s_img		t_img;
+typedef struct s_renderq	t_renderq;
 
 /* MLX + GC + Scene をまとめたグローバルコンテキスト */
 typedef struct s_app
 {
-	void	*mlx;
-	void	*win;
-	int		dirty;		/* 再描画が必要な場合: 1, 描画完了: 0 */
-	t_img	*img;
-	t_scene	*scene;
-	int		fd;
-	t_list	*gc;
+	void		*mlx;
+	void		*win;
+	int			dirty;		/* 再描画が必要な場合: 1, 描画完了: 0 */
+	t_scene		*scene;
+	t_bvh		*bvh;
+	t_img		*img;
+	t_renderq	*renderq;
+	int			fd;
+	t_list		*gc;
 }			t_app;
 
 

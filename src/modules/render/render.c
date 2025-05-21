@@ -6,13 +6,13 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 10:28:38 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/21 09:24:16 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/21 10:27:43 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mod_render.h"
-
-#define SHADOW_BIAS 1e-4
+#include "mod_thread.h"
+#include "mod_accel.h"
 
 static inline unsigned char	clamp255(int x)
 {
@@ -135,22 +135,10 @@ int	calculate_light_color(t_hit_record *hit, t_app *app)
 
 t_hit_record	intersect_ray(t_ray ray, t_app *app, double t_max)
 {
-	t_obj			*obj;
-	t_hit_record	min = { .t = INFINITY, .obj = NULL };
-	t_hit_record	tmp;
-
-	obj = app->scene->objs;
-	while (obj)
-	{
-		tmp = obj->hit(obj, ray, app);
-		if (0 < tmp.t && tmp.t < min.t && tmp.t < t_max)
-			min = tmp;
-		obj = obj->next;
-	}
-
-	if (min.obj == NULL)          /* 何も当たらなかった */
-		min.t = 0.0;              /*  t=0 で「当たっていない」を示す */
-	return (min);
+	t_hit_record rec = {.t = INFINITY, .obj = NULL};
+	if (!bvh_hit(app->bvh, ray, t_max, &rec))
+		rec.t = 0.0;
+	return rec;
 }
 
 void	render(t_img *img, t_app *app)
@@ -201,7 +189,11 @@ void	draw(t_app *app)
 			&img->endian);
 	if (DEBUG_MODE & DEBUG_RENDER)
 		temp(img);
-	render(img, app);
+	/* --- タイル + スレッド --- */
+	const int cpu = sysconf(_SC_NPROCESSORS_ONLN);
+	t_renderq *q  = make_tiles(app, 16);  /* 32px × 32px タイル */
+	app->renderq  = q;
+	spawn_workers(app, q, cpu - 1);       /* メイン含めて cpu スレッド */
 	mlx_put_image_to_window(app->mlx, app->win, img->ptr, 0, 0);
 }
 

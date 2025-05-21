@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 22:20:32 by teando            #+#    #+#             */
-/*   Updated: 2025/05/20 07:52:18 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/21 10:22:27 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 # define MOD_RENDER_H
 
 # include "xlib.h"
-#include <math.h>
+# include <math.h>
+
+#define SHADOW_BIAS 1e-4
 
 void					my_mlx_pixel_put(t_img *img, int x, int y, int color);
 int						create_trgb(int t, int r, int g, int b);
