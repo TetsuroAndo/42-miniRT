@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+         #
+#    By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/25 13:31:17 by teando            #+#    #+#              #
-#    Updated: 2025/05/22 20:57:11 by tomsato          ###   ########.fr        #
+#    Updated: 2025/05/22 23:15:39 by teando           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,10 +54,6 @@ OBJ		:= $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC))
 # =======================
 all:
 	$(MAKE) __build -j $(shell nproc)
-v: f
-	$(MAKE) __v -j $(shell nproc)
-core: f
-	$(MAKE) __core -j $(shell nproc)
 
 ifeq ($(UNAME_S),Darwin)
 __build: setup_xquartz
