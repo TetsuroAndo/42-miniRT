@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sphere.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 17:50:20 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/22 19:19:27 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/22 20:43:00 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ static inline void	fill_rec(t_hit_record *rec, t_obj *obj, t_ray ray, double t)
 	rec->t = t;
 	rec->pos = vec3_add(ray.orig, vec3_scale(ray.dir, t));
 	/* 法線を求める (pos - center) / r */
-	rec->normal = vec3_normalize(vec3_sub(rec->pos, obj->u.sp.center));
+	rec->normal = vec3_normalize(vec3_sub(rec->pos, obj->u_type.sp.center));
 	/* レイが球の内側から出て行く場合は外向きに反転させる */
 	if (vec3_dot(ray.dir, rec->normal) > 0.0)
 		rec->normal = vec3_scale(rec->normal, -1.0);
-	rec->color = obj->u.sp.color;
+	rec->color = obj->u_type.sp.color;
 	rec->obj = obj;
 }
 
@@ -55,11 +55,11 @@ t_hit_record	sphere_hit(t_obj *obj, t_ray ray, t_app *app)
 {
 	t_hit_record	rec;
 	double			t;
-	const t_vec3	oc = vec3_sub(ray.orig, obj->u.sp.center);
+	const t_vec3	oc = vec3_sub(ray.orig, obj->u_type.sp.center);
 
 	(void)app;
 	rec.t = -1.0; /* ヒットなしで初期化 */
-	t = solve_quadratic(oc, ray.dir, obj->u.sp.radius * obj->u.sp.radius);
+	t = solve_quadratic(oc, ray.dir, obj->u_type.sp.radius * obj->u_type.sp.radius);
 	if (t > 0.0)
 		fill_rec(&rec, obj, ray, t);
 	return (rec);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 17:51:37 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/22 19:11:39 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/22 20:43:00 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	cy_set_record(t_hit_record *rec, t_obj *obj, t_vec3 pos, double t)
 {
 	rec->t = t;
 	rec->pos = pos;
-	rec->color = obj->u.cy.color;
+	rec->color = obj->u_type.cy.color;
 	rec->obj = obj;
 }
 
@@ -45,7 +45,7 @@ t_hit_record	cylinder_hit(t_obj *obj, t_ray ray, t_app *app)
 
 	(void)app;
 	hit.t = -1.0;
-	axis = vec3_normalize(obj->u.cy.axis);
+	axis = vec3_normalize(obj->u_type.cy.axis);
 	cy_check_side(&hit, obj, ray, axis);
 	cy_check_caps(&hit, obj, ray, axis);
 	return (hit);

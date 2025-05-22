@@ -6,7 +6,7 @@
 /*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 15:26:45 by teando            #+#    #+#             */
-/*   Updated: 2025/05/18 21:27:09 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/22 20:41:05 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,6 @@ typedef struct s_app	t_app;
 
 # ifndef M_PI
 #  define M_PI 3.14159265358979323846
-# endif
-# ifndef M_PI_2
-#  define M_PI_2 (M_PI / 2)
 # endif
 
 /* gc */

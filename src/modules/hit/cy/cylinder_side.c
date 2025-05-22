@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder_side.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 18:46:13 by teando            #+#    #+#             */
-/*   Updated: 2025/05/22 19:11:47 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/22 20:43:00 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,15 +79,15 @@ void	cy_check_side(t_hit_record *hit, t_obj *obj, t_ray ray, t_vec3 axis)
 	double	m;
 	t_vec3	pos;
 
-	oc = vec3_sub(ray.orig, obj->u.cy.center);
-	t = cy_side_t(ray, oc, axis, obj->u.cy.radius);
+	oc = vec3_sub(ray.orig, obj->u_type.cy.center);
+	t = cy_side_t(ray, oc, axis, obj->u_type.cy.radius);
 	if (t <= EPSILON || (hit->t > 0 && t >= hit->t))
 		return ;
 	pos = vec3_add(ray.orig, vec3_scale(ray.dir, t));
-	m = vec3_dot(vec3_sub(pos, obj->u.cy.center), axis);
-	if (fabs(m) > obj->u.cy.height * 0.5 + EPSILON)
+	m = vec3_dot(vec3_sub(pos, obj->u_type.cy.center), axis);
+	if (fabs(m) > obj->u_type.cy.height * 0.5 + EPSILON)
 		return ;
 	cy_set_record(hit, obj, pos, t);
-	hit->normal = cy_side_normal(pos, obj->u.cy.center, axis);
+	hit->normal = cy_side_normal(pos, obj->u_type.cy.center, axis);
 	cy_apply_face_orientation(hit, ray);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 21:50:00 by teando            #+#    #+#             */
-/*   Updated: 2025/05/21 11:08:01 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/22 20:23:43 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /**
  * 空白文字をスキップする
- * 
+ *
  * @param s 入力文字列ポインタのポインタ
  * @return 常に1（成功）
  */
@@ -26,7 +26,7 @@ void	skip_ws(char **s)
 
 /**
  * 期待する文字があるかチェックし、あれば次に進む
- * 
+ *
  * @param s 入力文字列ポインタのポインタ
  * @param c 期待する文字
  * @return 成功時1、失敗時0
@@ -42,7 +42,7 @@ int	expect_char(char **s, char c)
 
 /*
  * 行末を期待 コメントは許容する
- * 
+ *
  * @param s 入力文字列ポインタのポインタ
  * @return 成功時1、失敗時0
  */
@@ -63,9 +63,10 @@ void	add_obj(t_obj **obj, t_obj *new)
 /* 反射率 (0-1) があれば読む。失敗しても構文エラーにはしない */
 int	try_parse_reflect(char **s, double *out)
 {
-	double r;
-	char  *save = *s;
+	double	r;
+	char	*save;
 
+	save = *s;
 	skip_ws(s);
 	if (!expect_char(s, ':'))
 		return (0);

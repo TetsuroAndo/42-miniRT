@@ -6,14 +6,14 @@
 /*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 16:35:22 by teando            #+#    #+#             */
-/*   Updated: 2025/05/15 17:53:33 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/22 20:40:09 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RT_VEC_H
 # define RT_VEC_H
 
-#include "math.h"
+# include "math.h"
 
 /** 3 次元ベクトル */
 typedef struct s_vec3
@@ -33,8 +33,8 @@ typedef struct s_color
 
 typedef struct s_ray
 {
-	t_vec3			orig; /* 発射点 */
-	t_vec3			dir;  /* 正規化済み方向 */
+	t_vec3			orig;/* 発射点 */
+	t_vec3			dir;/* 正規化済み方向 */
 }					t_ray;
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   obj_cylinder.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 22:26:10 by teando            #+#    #+#             */
-/*   Updated: 2025/05/21 11:02:13 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/22 20:43:00 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,21 +32,21 @@ void	parse_cylinder(char *line, t_scene *scene, t_app *app)
 	obj->spec = (t_color){255, 255, 255};
 	obj->shininess = 32.0;
 	/* 中心座標 */
-	if (!parse_vec3(&line, &obj->u.cy.center))
+	if (!parse_vec3(&line, &obj->u_type.cy.center))
 		exit_errmsg("cylinder: invalid center position", app);
 	/* 軸ベクトル (正規化) */
-	if (!parse_normal_vec3(&line, &obj->u.cy.axis))
+	if (!parse_normal_vec3(&line, &obj->u_type.cy.axis))
 		exit_errmsg("cylinder: invalid axis vector", app);
 	/* 直径 */
 	if (!parse_f64(&line, &diameter, 0.0, INFINITY))
 		exit_errmsg("cylinder: invalid diameter", app);
 	/* 直径から半径に変換 */
-	obj->u.cy.radius = diameter / 2.0;
+	obj->u_type.cy.radius = diameter / 2.0;
 	/* 高さ */
-	if (!parse_f64(&line, &obj->u.cy.height, 0.0, INFINITY))
+	if (!parse_f64(&line, &obj->u_type.cy.height, 0.0, INFINITY))
 		exit_errmsg("cylinder: invalid height", app);
 	/* RGB色 */
-	if (!parse_rgb(&line, &obj->u.cy.color))
+	if (!parse_rgb(&line, &obj->u_type.cy.color))
 		exit_errmsg("cylinder: invalid color", app);
 	/* 反射率 */
 	obj->reflect = 0.0;

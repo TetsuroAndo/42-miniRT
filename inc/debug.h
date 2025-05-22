@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   debug.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 14:03:55 by teando            #+#    #+#             */
-/*   Updated: 2025/05/20 05:56:57 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/22 20:40:24 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RT_DEBUG_H
-# define RT_DEBUG_H
+#ifndef DEBUG_H
+# define DEBUG_H
 
 # define DEBUG_NONE 0
 # define DEBUG_CORE (1 << 0)

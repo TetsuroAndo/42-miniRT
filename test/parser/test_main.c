@@ -230,32 +230,32 @@ static void print_objects(t_obj *objs)
         switch (o->type)
         {
             case OBJ_SPHERE:
-                print_vec3("  center", o->u.sp.center);
-                printf("    radius: %.3f\n", o->u.sp.radius);
+                print_vec3("  center", o->u_type.sp.center);
+                printf("    radius: %.3f\n", o->u_type.sp.radius);
                 break;
             case OBJ_PLANE:
-                print_vec3("  point",  o->u.pl.point);
-                print_vec3("  normal", o->u.pl.normal);
+                print_vec3("  point",  o->u_type.pl.point);
+                print_vec3("  normal", o->u_type.pl.normal);
                 break;
             case OBJ_CYLINDER:
-                print_vec3("  center", o->u.cy.center);
-                print_vec3("  axis",   o->u.cy.axis);
-                printf("    r=%.3f h=%.3f\n", o->u.cy.radius, o->u.cy.height);
+                print_vec3("  center", o->u_type.cy.center);
+                print_vec3("  axis",   o->u_type.cy.axis);
+                printf("    r=%.3f h=%.3f\n", o->u_type.cy.radius, o->u_type.cy.height);
                 break;
             case OBJ_CONE:
-                print_vec3("  vertex", o->u.co.vertex);
-                print_vec3("  axis",   o->u.co.axis);
-                printf("    angle=%.3f h=%.3f\n", o->u.co.angle, o->u.co.height);
+                print_vec3("  vertex", o->u_type.co.vertex);
+                print_vec3("  axis",   o->u_type.co.axis);
+                printf("    angle=%.3f h=%.3f\n", o->u_type.co.angle, o->u_type.co.height);
                 break;
             case OBJ_HYPERBOLOID:
-                print_vec3("  center", o->u.hb.center);
-                print_vec3("  axis",   o->u.hb.axis);
-                printf("    a=%.3f b=%.3f c=%.3f\n", o->u.hb.a, o->u.hb.b, o->u.hb.c);
+                print_vec3("  center", o->u_type.hb.center);
+                print_vec3("  axis",   o->u_type.hb.axis);
+                printf("    a=%.3f b=%.3f c=%.3f\n", o->u_type.hb.a, o->u_type.hb.b, o->u_type.hb.c);
                 break;
             case OBJ_PARABOLOID:
-                print_vec3("  vertex", o->u.pb.vertex);
-                print_vec3("  axis",   o->u.pb.axis);
-                printf("    k=%.3f h=%.3f\n", o->u.pb.k, o->u.pb.height);
+                print_vec3("  vertex", o->u_type.pb.vertex);
+                print_vec3("  axis",   o->u_type.pb.axis);
+                printf("    k=%.3f h=%.3f\n", o->u_type.pb.k, o->u_type.pb.height);
                 break;
             default:
                 break;

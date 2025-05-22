@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   obj_sphere.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 22:24:58 by teando            #+#    #+#             */
-/*   Updated: 2025/05/21 11:02:25 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/22 20:43:00 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,18 @@ void	parse_sphere(char *line, t_scene *scene, t_app *app)
 	obj = (t_obj *)xcalloc(1, sizeof(t_obj), app);
 	obj->type = OBJ_SPHERE;
 	obj->hit = sphere_hit;
-	obj->spec = (t_color){255, 255, 255};   /* ← 追加 */
-	obj->shininess = 32.0;                  /* ← 追加 */
+	obj->spec = (t_color){255, 255, 255};
+	obj->shininess = 32.0;
 	/* 中心座標 */
-	if (!parse_vec3(&line, &obj->u.sp.center))
+	if (!parse_vec3(&line, &obj->u_type.sp.center))
 		exit_errmsg("sphere: invalid center position", app);
 	/* 直径 */
 	if (!parse_f64(&line, &diameter, 0.0, INFINITY))
 		exit_errmsg("sphere: invalid diameter", app);
 	/* 直径から半径に変換 */
-	obj->u.sp.radius = diameter / 2.0;
+	obj->u_type.sp.radius = diameter / 2.0;
 	/* RGB色 */
-	if (!parse_rgb(&line, &obj->u.sp.color))
+	if (!parse_rgb(&line, &obj->u_type.sp.color))
 		exit_errmsg("sphere: invalid color", app);
 	/* 反射率 */
 	obj->reflect = 0.0;

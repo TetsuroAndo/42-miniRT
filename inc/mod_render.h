@@ -6,7 +6,7 @@
 /*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 22:20:32 by teando            #+#    #+#             */
-/*   Updated: 2025/05/22 20:20:09 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/22 20:28:32 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,9 @@ typedef struct s_cam_basis
 /* 便利関数：TRGB ⇔ RGB ベクタ */
 typedef struct s_rgbd
 {
-	double r, g, b;
+	double		r;
+	double		g;
+	double		b;
 }				t_rgbd;
 
 t_rgbd			trgb_to_rgbd(int c);

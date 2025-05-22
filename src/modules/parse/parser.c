@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 19:22:19 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/22 18:33:50 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/22 20:23:35 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mod_parse.h"
-#include <stdlib.h>
 #include <fcntl.h>
+#include <stdlib.h>
 
 /* 行のトリミングと空行・コメント行のスキップ */
 static char	*trim_line(char *line, t_app *app)
@@ -27,16 +27,10 @@ static char	*trim_line(char *line, t_app *app)
 
 static void	dispatch_line(char *line, t_scene *scene, t_app *app)
 {
-	static const t_dispatch	dispatch[] = {
-		{"A", 1, parse_ambient},
-		{"C", 1, parse_camera},
-		{"L", 1, parse_light},
-		{"sp", 2, parse_sphere},
-		{"pl", 2, parse_plane},
-		{"cy", 2, parse_cylinder},
-		{"", 0, NULL}
-	};
-	size_t i;
+	static const t_dispatch	dispatch[] = {{"A", 1, parse_ambient}, {"C", 1,
+		parse_camera}, {"L", 1, parse_light}, {"sp", 2, parse_sphere},
+	{"pl", 2, parse_plane}, {"cy", 2, parse_cylinder}, {"", 0, NULL}};
+	size_t					i;
 
 	i = 0;
 	while (dispatch[i].len)
@@ -61,7 +55,6 @@ static void	validate_scene(t_scene *scene, t_app *app)
 		exit_errmsg("missing light", app);
 	if (!scene->objs)
 		exit_errmsg("no renderable object!", app);
-	/* 追加チェック: 正規化ベクトル誤差など */
 }
 
 /* メインパース関数 */
@@ -89,7 +82,7 @@ t_scene	*parse_scene(char *filename, t_app *app)
 
 int	run_parser(int ac, char **av, t_app *app)
 {
-	char *extension;
+	char	*extension;
 
 	if (ac != 2)
 		return (ft_dprintf(2, "usage: %s <scene_file.rt>\n", av[0]), 1);

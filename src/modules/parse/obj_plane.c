@@ -6,7 +6,7 @@
 /*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 22:25:41 by teando            #+#    #+#             */
-/*   Updated: 2025/05/22 17:33:59 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/22 20:43:00 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ void	parse_plane(char *line, t_scene *scene, t_app *app)
 	obj->spec = (t_color){255, 255, 255};
 	obj->shininess = 0.0;
 	/* 平面上の点 */
-	if (!parse_vec3(&line, &obj->u.pl.point))
+	if (!parse_vec3(&line, &obj->u_type.pl.point))
 		exit_errmsg("plane: invalid point", app);
 	/* 法線ベクトル (正規化) */
-	if (!parse_normal_vec3(&line, &obj->u.pl.normal))
+	if (!parse_normal_vec3(&line, &obj->u_type.pl.normal))
 		exit_errmsg("plane: invalid normal vector", app);
 	/* RGB色 */
-	if (!parse_rgb(&line, &obj->u.pl.color))
+	if (!parse_rgb(&line, &obj->u_type.pl.color))
 		exit_errmsg("plane: invalid color", app);
 	/* 反射率 */
 	obj->reflect = 0.0;
