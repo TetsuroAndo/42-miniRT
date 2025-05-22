@@ -6,13 +6,13 @@
 /*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 19:08:24 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/22 20:18:40 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/22 21:11:02 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mod_render.h"
 
-static void	apply_diffuse(t_vec3 *sum, const t_hit_record *hit,
+static inline void	apply_diffuse(t_vec3 *sum, const t_hit_record *hit,
 		const t_color *light_col, double kd)
 {
 	sum->x += (hit->color.r / 255.0) * (light_col->r / 255.0) * kd;
@@ -20,7 +20,7 @@ static void	apply_diffuse(t_vec3 *sum, const t_hit_record *hit,
 	sum->z += (hit->color.b / 255.0) * (light_col->b / 255.0) * kd;
 }
 
-static void	apply_specular(t_vec3 *sum, const t_hit_record *hit,
+static inline void	apply_specular(t_vec3 *sum, const t_hit_record *hit,
 		const t_color *light_col, double ks)
 {
 	sum->x += (hit->obj->spec.r / 255.0) * (light_col->r / 255.0) * ks;
@@ -28,7 +28,7 @@ static void	apply_specular(t_vec3 *sum, const t_hit_record *hit,
 	sum->z += (hit->obj->spec.b / 255.0) * (light_col->b / 255.0) * ks;
 }
 
-static void	apply_light_contrib(t_vec3 *sum, const t_hit_record *hit,
+static inline void	apply_light_contrib(t_vec3 *sum, const t_hit_record *hit,
 		const t_lights *l, const t_vec3 view_dir)
 {
 	const t_vec3	light_dir = vec3_normalize(vec3_sub(l->pos, hit->pos));
@@ -43,7 +43,7 @@ static void	apply_light_contrib(t_vec3 *sum, const t_hit_record *hit,
 	apply_specular(sum, hit, &l->color, ks);
 }
 
-static void	apply_tone_mapping(t_vec3 *color)
+static inline void	apply_tone_mapping(t_vec3 *color)
 {
 	const double	max_comp = fmax(color->x, fmax(color->y, color->z));
 	const double	hdr_scale = 1.0 / (1.0 + max_comp);
