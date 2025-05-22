@@ -6,49 +6,63 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 17:50:20 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/18 17:31:16 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/20 04:22:27 by teando           ###   ########.fr       */
 /*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*   sphere.c                                                                */
 /* ************************************************************************** */
 
 #include "mod_hit.h"
 
-static void	fill_rec(t_hit_record *rec, t_obj *obj, t_ray ray, double t)
+/* ───────────────────────── ヘルパ ───────────────────────── */
+
+static inline void	fill_rec(t_hit_record *rec, t_obj *obj,
+					  t_ray ray, double t)
 {
-	rec->t = t;
-	rec->pos = vec3_add(ray.orig, vec3_scale(ray.dir, t));
+	rec->t     = t;
+	rec->pos   = vec3_add(ray.orig, vec3_scale(ray.dir, t));
+
+	/* 法線を求める (pos - center) / r */
 	rec->normal = vec3_normalize(vec3_sub(rec->pos, obj->u.sp.center));
+
+	/* レイが球の内側から出て行く場合は外向きに反転させる */
+	if (vec3_dot(ray.dir, rec->normal) > 0.0)
+		rec->normal = vec3_scale(rec->normal, -1.0);
+
 	rec->color = obj->u.sp.color;
-	rec->obj = obj;
+	rec->obj   = obj;
 }
 
-static double	get_valid_t(const double a, const double b, const double disc)
+static inline double	get_valid_t(double a, double b, double disc)
 {
-	double	sqrt_d;
-	double	t1;
-	double	t2;
+	const double sqrt_d = sqrt(disc);
+	const double t1     = (-b - sqrt_d) / (2 * a);
+	const double t2     = (-b + sqrt_d) / (2 * a);
 
-	sqrt_d = sqrt(disc);
-	t1 = (-b - sqrt_d) / (2 * a);
-	if (t1 >= EPSILON)
-		return (t1);
-	t2 = (-b + sqrt_d) / (2 * a);
-	if (t2 >= EPSILON)
-		return (t2);
-	return (INFINITY);
+	if (t1 > EPSILON)
+		return (t1);          /* 手前側ヒット */
+	if (t2 > EPSILON)
+		return (t2);          /* 内部にいた場合など */
+	return (-1.0);            /* ヒットなし */
 }
 
-static double	calc_sphere_hit(t_obj *obj, t_ray ray)
+static inline double	solve_quadratic(const t_vec3 oc,
+								const t_vec3 dir,
+								const double r2)
 {
-	const t_vec3	oc = vec3_sub(ray.orig, obj->u.sp.center);
-	const double	a = vec3_dot(ray.dir, ray.dir);
-	const double	b = 2.0 * vec3_dot(oc, ray.dir);
-	const double	c = vec3_dot(oc, oc) - obj->u.sp.radius * obj->u.sp.radius;
-	const double	disc = b * b - 4 * a * c;
+	const double a = vec3_dot(dir, dir);          /* (=1 になるはず) */
+	const double b = 2.0 * vec3_dot(oc, dir);
+	const double c = vec3_dot(oc, oc) - r2;
+	const double disc = b * b - 4.0 * a * c;
 
 	if (disc < 0.0)
-		return (INFINITY);
+		return (-1.0);
 	return (get_valid_t(a, b, disc));
 }
+
+/* ───────────────────────── main hit ───────────────────────── */
 
 t_hit_record	sphere_hit(t_obj *obj, t_ray ray, t_app *app)
 {
@@ -56,9 +70,13 @@ t_hit_record	sphere_hit(t_obj *obj, t_ray ray, t_app *app)
 	double			t;
 
 	(void)app;
-	rec = (t_hit_record){.t = INFINITY};
-	t = calc_sphere_hit(obj, ray);
-	if (t < INFINITY)
+	rec.t = -1.0;                           /* ヒットなしで初期化 */
+
+	const t_vec3 oc = vec3_sub(ray.orig, obj->u.sp.center);
+	t = solve_quadratic(oc, ray.dir, obj->u.sp.radius * obj->u.sp.radius);
+
+	if (t > 0.0)
 		fill_rec(&rec, obj, ray, t);
+
 	return (rec);
 }

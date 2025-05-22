@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 17:08:17 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/18 17:31:04 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/20 07:49:02 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "xlib.h"
 # include "rt_render.h"
+# include "rt_vec.h"
 
 typedef struct s_app	t_app;
 typedef struct s_scene	t_scene;

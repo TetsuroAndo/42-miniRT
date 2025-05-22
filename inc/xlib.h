@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   xlib.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 15:26:45 by teando            #+#    #+#             */
-/*   Updated: 2025/05/15 22:44:30 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/18 21:27:09 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,9 @@ void					vec3_print(t_vec3 v);
 t_vec3					vec3_sub(t_vec3 v1, t_vec3 v2);
 t_vec3					vec3_div(t_vec3 v, double t);
 double					vec3_dot(t_vec3 a, t_vec3 b);
+t_vec3					vec3_negate(t_vec3 v);
+
+/*debug print*/
+void					debug_print_scene(t_app *app);
 
 #endif

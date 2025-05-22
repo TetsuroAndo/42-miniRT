@@ -1,28 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   debug_render.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/25 14:02:41 by teando            #+#    #+#             */
-/*   Updated: 2025/05/21 09:59:12 by teando           ###   ########.fr       */
+/*   Created: 2025/05/20 05:54:50 by teando            #+#    #+#             */
+/*   Updated: 2025/05/20 06:09:08 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "app.h"
+#include "mod_render.h"
 
-int	main(int ac, char **av)
+void	temp(t_img *img)
 {
-	t_app	*app;
+	int	i;
+	int	j;
+	int	color;
 
-	app = init_app();
-	if (run_parser(ac, av, app))
-		exit_app(app, 1);
-	if (make_bvh(app->scene, app))
-		exit_app(app, 1);
-	draw(app);
-	setup_hooks(app);
-	mlx_loop(app->mlx);
-	return (0);
+	i = 0;
+	j = 0;
+	color = create_trgb(0, 0, 0, 0);
+	while (i < WIDTH)
+	{
+		j = 0;
+		while (j < HEIGHT)
+		{
+			color = create_trgb(0, 0, 0, 0);
+			if ((i % 50 > 25 && j % 50 < 25) || (i % 50 < 25 && j % 50 > 25))
+				color = create_trgb(0, 255, 255, 255);
+			my_mlx_pixel_put(img, i, j, color);
+			j++;
+		}
+		i++;
+	}
 }

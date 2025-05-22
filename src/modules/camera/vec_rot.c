@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   vec_rot.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/25 14:02:41 by teando            #+#    #+#             */
-/*   Updated: 2025/05/21 09:59:12 by teando           ###   ########.fr       */
+/*   Created: 2025/05/20 05:30:00 by teando            #+#    #+#             */
+/*   Updated: 2025/05/20 06:02:58 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "app.h"
+#include "mod_cam.h"
+#include <math.h>
 
-int	main(int ac, char **av)
+t_vec3	vec3_rotate(t_vec3 v, t_vec3 axis, double angle)
 {
-	t_app	*app;
+	double	c;
+	double	s;
+	t_vec3	term1;
+	t_vec3	term2;
+	t_vec3	term3;
 
-	app = init_app();
-	if (run_parser(ac, av, app))
-		exit_app(app, 1);
-	if (make_bvh(app->scene, app))
-		exit_app(app, 1);
-	draw(app);
-	setup_hooks(app);
-	mlx_loop(app->mlx);
-	return (0);
+	axis = vec3_normalize(axis);
+	c = cos(angle);
+	s = sin(angle);
+	term1 = vec3_scale(v, c);
+	term2 = vec3_scale(vec3_cross(axis, v), s);
+	term3 = vec3_scale(axis, vec3_dot(axis, v) * (1 - c));
+	return (vec3_add(vec3_add(term1, term2), term3));
 }

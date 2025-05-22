@@ -49,6 +49,7 @@ int			parse_f64(char **s, double *out, double min, double max);
 int			parse_rgb(char **s, t_color *out);
 int			parse_vec3(char **s, t_vec3 *out);
 int			parse_normal_vec3(char **s, t_vec3 *out);
+int			try_parse_reflect(char **s, double *out);
 void		add_obj(t_obj **obj, t_obj *new);
 
 /* tokenize utils */

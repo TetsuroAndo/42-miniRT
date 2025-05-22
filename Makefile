@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+         #
+#    By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/25 13:31:17 by teando            #+#    #+#              #
-#    Updated: 2025/05/15 17:17:19 by tomsato          ###   ########.fr        #
+#    Updated: 2025/05/21 11:49:02 by teando           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ CONF_SAMP		:= $(CONF_DIR)/minirt.conf.sample
 
 # FLAGS
 IDFLAGS		:= -I$(INC_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR)
-LFLAGS		:= -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
+LFLAGS		:= -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -pthread
 
 # Environment Dependent
 UNAME_S := $(shell uname -s)
@@ -44,8 +44,11 @@ endif
 SRC		:= $(shell find $(SRC_DIR)/app -name '*.c')
 SRC		+= $(shell find $(SRC_DIR)/lib/xlib -name '*.c')
 SRC		+= $(shell find $(SRC_DIR)/modules/parse -name '*.c')
+SRC		+= $(shell find $(SRC_DIR)/modules/camera -name '*.c')
 SRC		+= $(shell find $(SRC_DIR)/modules/render -name '*.c')
 SRC		+= $(shell find $(SRC_DIR)/modules/hit -name '*.c')
+SRC		+= $(shell find $(SRC_DIR)/modules/accel -name '*.c')
+SRC		+= $(shell find $(SRC_DIR)/modules/thread -name '*.c')
 OBJ		:= $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC))
 
 # =======================
@@ -79,6 +82,7 @@ $(NAME): $(LIBFT) $(MLX) $(OBJ)
 	@echo "[Compiler flags/CFLAGS]: $(CFLAGS)"
 	@echo "[Linker flags/LFLAGS]: $(LFLAGS)"
 	@echo "[Debug flags/DEFINE]: $(DEFINE)"
+	@echo "[SPP]: $(SPP)"
 	@echo "[Window size]: $(WIDTH_DEF) x $(HEIGHT_DEF)"
 	@echo "====================="
 
@@ -161,6 +165,7 @@ $(CONF):
 		echo "Warning: Sample config file $(CONF_SAMP) not found. Creating a default one."; \
 		echo "CFLAGS=-O3" > $(CONF); \
 		echo "DEBUG_MODE=DEBUG_NONE" >> $(CONF); \
+		echo "SPP=4" >> $(CONF); \
 		echo "WIDTH=1280" >> $(CONF); \
 		echo "HEIGHT=720" >> $(CONF); \
 	elif [ ! -f $(CONF) ]; then \
@@ -172,7 +177,8 @@ conf_get: $(CONF)
 	$(eval WIDTH_DEF := $(shell cat $(CONF) | grep WIDTH | cut -d'=' -f2 || echo 960))
 	$(eval HEIGHT_DEF := $(shell cat $(CONF) | grep HEIGHT | cut -d'=' -f2 || echo 540))
 	$(eval DEBUG_MODE := $(shell cat $(CONF) | grep DEBUG_MODE || echo DEBUG_MODE=DEBUG_NONE))
-	$(eval DEFINE := $(if $(findstring DEBUG_MODE,$(DEFINE)),$(DEFINE),-DWIDTH=$(WIDTH_DEF) -DHEIGHT=$(HEIGHT_DEF) -D$(DEBUG_MODE)))
+	$(eval SPP := $(shell cat $(CONF) | grep SPP || echo SPP=4))
+	$(eval DEFINE := $(if $(findstring DEBUG_MODE,$(DEFINE)),$(DEFINE),-DWIDTH=$(WIDTH_DEF) -DHEIGHT=$(HEIGHT_DEF) -D$(DEBUG_MODE) -D$(SPP)))
 	$(eval CFLAGS := $(if $(findstring -O, $(CFLAGS)), $(CFLAGS), $(CFLAGS) $(shell cat $(CONF) | grep CFLAGS | sed 's/CFLAGS=//')))
 
 conf: $(CONF)

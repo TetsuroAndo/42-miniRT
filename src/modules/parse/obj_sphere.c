@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   obj_sphere.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 22:24:58 by teando            #+#    #+#             */
-/*   Updated: 2025/05/15 17:49:50 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/21 11:02:25 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	parse_sphere(char *line, t_scene *scene, t_app *app)
 	obj = (t_obj *)xcalloc(1, sizeof(t_obj), app);
 	obj->type = OBJ_SPHERE;
 	obj->hit = sphere_hit;
+	obj->spec = (t_color){255, 255, 255};   /* ← 追加 */
+	obj->shininess = 32.0;                  /* ← 追加 */
 	/* 中心座標 */
 	if (!parse_vec3(&line, &obj->u.sp.center))
 		exit_errmsg("sphere: invalid center position", app);
@@ -38,6 +40,9 @@ void	parse_sphere(char *line, t_scene *scene, t_app *app)
 	/* RGB色 */
 	if (!parse_rgb(&line, &obj->u.sp.color))
 		exit_errmsg("sphere: invalid color", app);
+	/* 反射率 */
+	obj->reflect = 0.0;
+	try_parse_reflect(&line, &obj->reflect);
 	if (!expect_line_end(&line))
 		exit_errmsg("sphere: unexpected extra parameters", app);
 	add_obj(&scene->objs, obj);
