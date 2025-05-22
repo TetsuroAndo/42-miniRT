@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   mod_render.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 22:20:32 by teando            #+#    #+#             */
-/*   Updated: 2025/05/22 20:28:32 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/22 23:41:33 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MOD_RENDER_H
 # define MOD_RENDER_H
 
+# include "rt_scene.h"
 # include "xlib.h"
 # include <math.h>
 
