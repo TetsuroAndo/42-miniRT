@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_vec.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 16:35:22 by teando            #+#    #+#             */
-/*   Updated: 2025/05/22 20:40:09 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/22 23:23:32 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ typedef struct s_color
 
 typedef struct s_ray
 {
-	t_vec3 orig; /* 発射点 */
-	t_vec3 dir;  /* 正規化済み方向 */
+	t_vec3			orig; /* 発射点 */
+	t_vec3			dir;  /* 正規化済み方向 */
 }					t_ray;
 
 #endif

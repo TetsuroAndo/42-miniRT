@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_render.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 16:37:53 by teando            #+#    #+#             */
-/*   Updated: 2025/05/22 20:27:22 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/22 23:24:35 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,7 @@
 
 typedef struct s_img
 {
-	/* mlx_new_image */
 	void	*ptr;
-	/* data addr */
 	char	*px;
 	int		bpp;
 	int		line_len;
