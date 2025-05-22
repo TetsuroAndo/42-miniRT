@@ -6,7 +6,7 @@
 /*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 10:28:38 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/22 17:52:02 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/22 17:54:14 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,7 +191,7 @@ int	calculate_light_color(t_hit_record *hit, t_app *app)
 
 		/* 拡散 (Lambert) */
 		const double diff  = fmax(vec3_dot(hit->normal, light_dir), 0.0);
-		const double atten = l->bright * 20 / (dist * dist + 1.0);
+		const double atten = l->bright * 42 / (dist * dist + 1.0);
 		const double kd = diff * atten;
 
 		/* スペキュラ (Blinn–Phong) */
@@ -296,7 +296,7 @@ void	init_render(t_app *app)
 			&img->endian);
 	/* --- タイル + スレッド --- */
 	const int cpu = sysconf(_SC_NPROCESSORS_ONLN);
-	t_renderq *q  = make_tiles(app, 16);  /* 32px × 32px タイル */
+	t_renderq *q  = make_tiles(app, 16);
 	app->renderq  = q;
 	spawn_workers(app, q, cpu - 1);       /* ← ここで全タイル完了 & join 済み */
 	mlx_put_image_to_window(app->mlx, app->win, img->ptr, 0, 0);
