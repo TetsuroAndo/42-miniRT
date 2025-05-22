@@ -3,37 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   get_ray_direction.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 18:48:53 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/21 10:51:57 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/22 19:49:45 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mod_render.h"
 
-static t_cam_basis	init_cam_basis(t_camera *cam)
+t_cam_basis	init_cam_basis(t_camera *cam)
 {
-	t_cam_basis		basis;
-	double			aspect;
-	double			theta;
-	t_vec3			world_up;
-	double			dot_product;
+	t_cam_basis	basis;
+	double		aspect;
+	double		theta;
+	t_vec3		world_up;
+	double		dot_product;
 
-	// デフォルトのworld_upベクトル
 	world_up = vec3_new(0, 1, 0);
 	basis.forward = vec3_normalize(cam->dir);
-	// カメラの方向とworld_upが平行に近いかチェック
 	dot_product = fabs(vec3_dot(basis.forward, world_up));
 	if (dot_product > 0.9)
 	{
-		// 平行に近い場合は別の軸を使用
 		world_up = vec3_new(0, 0, 1);
-		// それでも平行なら最後の選択肢
 		if (fabs(vec3_dot(basis.forward, world_up)) > 0.9)
 			world_up = vec3_new(1, 0, 0);
 	}
-
 	basis.right = vec3_normalize(vec3_cross(basis.forward, world_up));
 	basis.up = vec3_cross(basis.right, basis.forward);
 	aspect = (double)WIDTH / (double)HEIGHT;
@@ -58,4 +53,19 @@ t_vec3	get_ray_direction(t_camera *cam, int x, int y)
 	pixel_dir = vec3_add(basis.forward, vec3_add(vec3_scale(basis.right, u),
 				vec3_scale(basis.up, v)));
 	return (vec3_normalize(pixel_dir));
+}
+
+t_vec3	get_ray_dir_sub(t_camera *cam, double x, double y)
+{
+	t_cam_basis	b;
+	double		u;
+	double		v;
+
+	b = init_cam_basis(cam);
+	u = (x + 0.5) / (double)WIDTH;
+	v = (y + 0.5) / (double)HEIGHT;
+	u = (2.0 * u - 1.0) * b.half_w;
+	v = (1.0 - 2.0 * v) * b.half_h;
+	return (vec3_normalize(vec3_add(b.forward, vec3_add(vec3_scale(b.right, u),
+					vec3_scale(b.up, v)))));
 }
