@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 14:47:56 by teando            #+#    #+#             */
-/*   Updated: 2025/05/09 03:20:49 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/22 20:47:39 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_app	*init_app(void)
 {
-	t_app *app;
+	t_app	*app;
 
 	app = (t_app *)ft_calloc(sizeof(t_app), 1);
 	if (!app)
