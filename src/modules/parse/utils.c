@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 21:50:00 by teando            #+#    #+#             */
-/*   Updated: 2025/05/22 20:23:43 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/22 21:58:49 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,8 @@ int	try_parse_reflect(char **s, double *out)
 	char	*save;
 
 	save = *s;
-	skip_ws(s);
 	if (!expect_char(s, ':'))
 		return (0);
-	skip_ws(s);
 	if (!parse_f64(s, &r, 0.0, 1.0))
 	{
 		*s = save;
