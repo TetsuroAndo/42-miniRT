@@ -35,7 +35,6 @@ typedef struct s_app
 
 void print_scene(t_scene *scene);    /* 宣言だけ残す */
 
-# include "debug.h"
 # include "err.h"
 # include "libft.h"
 # include "rt_obj.h"

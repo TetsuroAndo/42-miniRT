@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 13:25:14 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/21 08:29:10 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/22 20:53:59 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ static inline int	close_window(t_app *app)
 
 static inline int	ctl_key_hook(int k, t_app *app)
 {
-	if (DEBUG_MODE & DEBUG_CORE)
-		ft_dprintf(2, "[Key-in] NUM: %d\n", k);
+	ft_dprintf(2, "[Key-in] NUM: %d\n", k);
 	if (k == KEY_ESC)
 		exit_app(app, 0);
 	if (k == KEY_A || k == KEY_D || k == KEY_S || k == KEY_W)

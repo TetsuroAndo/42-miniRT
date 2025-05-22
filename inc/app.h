@@ -6,7 +6,7 @@
 /*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 14:03:38 by teando            #+#    #+#             */
-/*   Updated: 2025/05/22 20:28:39 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/22 20:54:28 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define APP_H
 
 /* origin lib */
-# include "debug.h"
 # include "err.h"
 # include "libft.h"
 # include "mlx.h"

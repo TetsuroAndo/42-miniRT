@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+         #
+#    By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/25 13:31:17 by teando            #+#    #+#              #
-#    Updated: 2025/05/22 18:41:16 by teando           ###   ########.fr        #
+#    Updated: 2025/05/22 20:57:11 by tomsato          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,8 +58,6 @@ v: f
 	$(MAKE) __v -j $(shell nproc)
 core: f
 	$(MAKE) __core -j $(shell nproc)
-debug: f
-	$(MAKE) __debug -j $(shell nproc)
 
 ifeq ($(UNAME_S),Darwin)
 __build: setup_xquartz
@@ -79,7 +77,7 @@ $(NAME): $(LIBFT) $(MLX) $(OBJ)
 	@echo "[IncludeDir]: $(INC_DIR) | $(LIBFT_DIR) | $(MLX_DIR)"
 	@echo "[Compiler flags/CFLAGS]: $(CFLAGS)"
 	@echo "[Linker flags/LFLAGS]: $(LFLAGS)"
-	@echo "[Debug flags/DEFINE]: $(DEFINE)"
+	@echo "[DEFINE]: $(DEFINE)"
 	@echo "[Window size]: $(WIDTH_DEF) x $(HEIGHT_DEF)"
 	@echo "====================="
 
@@ -112,25 +110,6 @@ fclean: clean
 re: fclean all
 
 # =======================
-# == PRODUCTION =========
-# =======================
-
-__v: CFLAGS := $(filter-out -O%,$(CFLAGS)) -O3
-__v: __build
-
-# =======================
-# == DEBUG =============
-# =======================
-
-__core: CFLAGS := $(filter-out -O%,$(CFLAGS)) -O1 -g -fsanitize=address -fno-omit-frame-pointer
-__core: DEFINE := -DDEBUG_MODE=DEBUG_CORE
-__core: __build
-
-__debug: CFLAGS := $(filter-out -O%,$(CFLAGS)) -O1 -g -fsanitize=address -fno-omit-frame-pointer
-__debug: DEFINE := -DDEBUG_MODE=DEBUG_ALL
-__debug: __build
-
-# =======================
 # == Submodule Targets ==
 # =======================
 
@@ -161,7 +140,6 @@ $(CONF):
 	@if [ ! -f $(CONF_SAMP) ]; then \
 		echo "Warning: Sample config file $(CONF_SAMP) not found. Creating a default one."; \
 		echo "CFLAGS=-O3" > $(CONF); \
-		echo "DEBUG_MODE=DEBUG_NONE" >> $(CONF); \
 		echo "WIDTH=1280" >> $(CONF); \
 		echo "HEIGHT=720" >> $(CONF); \
 	elif [ ! -f $(CONF) ]; then \
@@ -172,8 +150,7 @@ $(CONF):
 conf_get: $(CONF)
 	$(eval WIDTH_DEF := $(shell cat $(CONF) | grep WIDTH | cut -d'=' -f2 || echo 960))
 	$(eval HEIGHT_DEF := $(shell cat $(CONF) | grep HEIGHT | cut -d'=' -f2 || echo 540))
-	$(eval DEBUG_MODE := $(shell cat $(CONF) | grep DEBUG_MODE || echo DEBUG_MODE=DEBUG_NONE))
-	$(eval DEFINE := $(if $(findstring DEBUG_MODE,$(DEFINE)),$(DEFINE),-DWIDTH=$(WIDTH_DEF) -DHEIGHT=$(HEIGHT_DEF) -D$(DEBUG_MODE)))
+	$(eval DEFINE := -DWIDTH=$(WIDTH_DEF) -DHEIGHT=$(HEIGHT_DEF))
 	$(eval CFLAGS := $(if $(findstring -O, $(CFLAGS)), $(CFLAGS), $(CFLAGS) $(shell cat $(CONF) | grep CFLAGS | sed 's/CFLAGS=//')))
 
 conf: $(CONF)
