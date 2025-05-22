@@ -3,30 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   plane.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 17:12:32 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/18 21:56:27 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/22 19:17:27 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mod_hit.h"
 
-// ... (includes) ...
 static void	fill_plane_hit_record(t_hit_record *rec, t_obj *obj, t_ray ray)
 {
 	rec->pos = vec3_add(ray.orig, vec3_scale(ray.dir, rec->t));
 	rec->obj = obj;
-	rec->normal = vec3_normalize(obj->u.pl.normal); // (1) 法線はオブジェクト定義の法線
+	rec->normal = vec3_normalize(obj->u.pl.normal);
 	rec->color = obj->u.pl.color;
 }
 
 t_hit_record	plane_hit(t_obj *obj, t_ray ray, t_app *app)
 {
-	t_hit_record result;
-	double denom;
-	t_vec3 diff;
-	t_plane pl;
+	t_hit_record	result;
+	double			denom;
+	t_vec3			diff;
+	t_plane			pl;
 
 	(void)app;
 	pl = obj->u.pl;
