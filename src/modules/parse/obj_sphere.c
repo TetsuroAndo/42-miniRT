@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   obj_sphere.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 22:24:58 by teando            #+#    #+#             */
-/*   Updated: 2025/05/22 20:43:00 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/22 22:19:06 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  *	- 球の直径: `12.6`
  *	- `R,G,B` 色 `[0‑255]`: `10,0,255`
  */
-void	parse_sphere(char *line, t_scene *scene, t_app *app)
+void	parse_sphere(char *line, int lnum, t_scene *scene, t_app *app)
 {
 	t_obj	*obj;
 	double	diameter;
@@ -31,19 +31,19 @@ void	parse_sphere(char *line, t_scene *scene, t_app *app)
 	obj->shininess = 32.0;
 	/* 中心座標 */
 	if (!parse_vec3(&line, &obj->u_type.sp.center))
-		exit_errmsg("sphere: invalid center position", app);
+		exit_errmsg("sphere: invalid center position", lnum, app);
 	/* 直径 */
 	if (!parse_f64(&line, &diameter, 0.0, INFINITY))
-		exit_errmsg("sphere: invalid diameter", app);
+		exit_errmsg("sphere: invalid diameter", lnum, app);
 	/* 直径から半径に変換 */
 	obj->u_type.sp.radius = diameter / 2.0;
 	/* RGB色 */
 	if (!parse_rgb(&line, &obj->u_type.sp.color))
-		exit_errmsg("sphere: invalid color", app);
+		exit_errmsg("sphere: invalid color", lnum, app);
 	/* 反射率 */
 	obj->reflect = 0.0;
 	try_parse_reflect(&line, &obj->reflect);
 	if (!expect_line_end(&line))
-		exit_errmsg("sphere: unexpected extra parameters", app);
+		exit_errmsg("sphere: unexpected extra parameters", lnum, app);
 	add_obj(&scene->objs, obj);
 }

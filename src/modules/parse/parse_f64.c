@@ -21,7 +21,7 @@ static int	check_range_f64(double val, double min, double max)
 	return (min <= val && val <= max);
 }
 
-/* 
+/*
  * 文字列から浮動小数点数へ変換
  * 注：デリミタ処理を行わず、数値のみを解析する
  *

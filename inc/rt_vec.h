@@ -33,8 +33,8 @@ typedef struct s_color
 
 typedef struct s_ray
 {
-	t_vec3			orig;/* 発射点 */
-	t_vec3			dir;/* 正規化済み方向 */
+	t_vec3 orig; /* 発射点 */
+	t_vec3 dir;  /* 正規化済み方向 */
 }					t_ray;
 
 #endif

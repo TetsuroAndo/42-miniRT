@@ -13,9 +13,9 @@
 #ifndef MOD_HIT_H
 # define MOD_HIT_H
 
-# include "xlib.h"
 # include "rt_render.h"
 # include "rt_vec.h"
+# include "xlib.h"
 
 typedef struct s_app	t_app;
 typedef struct s_scene	t_scene;
