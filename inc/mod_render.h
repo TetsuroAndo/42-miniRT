@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mod_render.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 22:20:32 by teando            #+#    #+#             */
-/*   Updated: 2025/05/21 11:38:57 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/22 17:52:02 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_vec3			get_ray_dir_sub(t_camera *cam, double x, double y);
 
 int				redraw_loop(void *param);
 void			render(t_img *img, t_app *app);
-void			draw(t_app *app);
+void			init_render(t_app *app);
 
 /* shadow and lighting */
 int				is_shadow(t_hit_record *hit, t_lights *light, t_app *app);
@@ -64,8 +64,5 @@ int				calculate_light_color(t_hit_record *hit, t_app *app);
 
 /* debug */
 void			temp(t_img *img);
-
-/* --- FXAA --- */
-void			apply_fxaa(t_img *img);
 
 #endif

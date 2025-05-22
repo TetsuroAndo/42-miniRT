@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   obj_plane.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 22:25:41 by teando            #+#    #+#             */
-/*   Updated: 2025/05/21 11:02:22 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/22 17:33:59 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	parse_plane(char *line, t_scene *scene, t_app *app)
 	obj->type = OBJ_PLANE;
 	obj->hit = plane_hit;
 	obj->spec = (t_color){255, 255, 255};
-	obj->shininess = 32.0;
+	obj->shininess = 0.0;
 	/* 平面上の点 */
 	if (!parse_vec3(&line, &obj->u.pl.point))
 		exit_errmsg("plane: invalid point", app);

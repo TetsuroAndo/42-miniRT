@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 10:28:38 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/21 11:13:01 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/22 17:52:02 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,7 +191,7 @@ int	calculate_light_color(t_hit_record *hit, t_app *app)
 
 		/* 拡散 (Lambert) */
 		const double diff  = fmax(vec3_dot(hit->normal, light_dir), 0.0);
-		const double atten = l->bright / (dist * dist + 1.0);
+		const double atten = l->bright * 20 / (dist * dist + 1.0);
 		const double kd = diff * atten;
 
 		/* スペキュラ (Blinn–Phong) */
@@ -215,17 +215,17 @@ int	calculate_light_color(t_hit_record *hit, t_app *app)
 		sum_b += (hit->obj->spec.b / 255.0) * lb * ks;
 	}
 
-	/* ---------- 2. HDR / トーンマッピング ---------- */
+	// /* ---------- 2. HDR / トーンマッピング ---------- */
 	const double max_comp = fmax(sum_r, fmax(sum_g, sum_b));
 	const double hdr_scale = 1.0 / (1.0 + max_comp);   /* Reinhard 1/(1+x) */
 	sum_r *= hdr_scale;
 	sum_g *= hdr_scale;
 	sum_b *= hdr_scale;
 
-	/* ---------- 3. ガンマ 2.2 補正 ---------- */
-	sum_r = pow(sum_r, 1.0 / 2.2);
-	sum_g = pow(sum_g, 1.0 / 2.2);
-	sum_b = pow(sum_b, 1.0 / 2.2);
+	// /* ---------- 3. ガンマ 2.2 補正 ---------- */
+	// sum_r = pow(sum_r, 1.0 / 2.2);
+	// sum_g = pow(sum_g, 1.0 / 2.2);
+	// sum_b = pow(sum_b, 1.0 / 2.2);
 
 	/* ---------- 4. 0-255 へ戻して TRGB ---------- */
 	return create_trgb(0,
@@ -276,7 +276,7 @@ void	render(t_img *img, t_app *app)
 	}
 }
 
-void	draw(t_app *app)
+void	init_render(t_app *app)
 {
 	t_img	*img;
 
@@ -294,18 +294,12 @@ void	draw(t_app *app)
 		exit_app(app, 1);
 	img->px = mlx_get_data_addr(img->ptr, &img->bpp, &img->line_len,
 			&img->endian);
-	if (DEBUG_MODE & DEBUG_RENDER)
-		temp(img);
 	/* --- タイル + スレッド --- */
 	const int cpu = sysconf(_SC_NPROCESSORS_ONLN);
 	t_renderq *q  = make_tiles(app, 16);  /* 32px × 32px タイル */
 	app->renderq  = q;
 	spawn_workers(app, q, cpu - 1);       /* ← ここで全タイル完了 & join 済み */
-
-    /* ---------- FXAA Pass ---------- */
-    apply_fxaa(img);
-
-    mlx_put_image_to_window(app->mlx, app->win, img->ptr, 0, 0);
+	mlx_put_image_to_window(app->mlx, app->win, img->ptr, 0, 0);
 }
 
 int	redraw_loop(void *param)
