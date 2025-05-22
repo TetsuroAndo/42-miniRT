@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 19:22:19 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/15 22:44:41 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/22 18:33:50 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,6 @@ static void	dispatch_line(char *line, t_scene *scene, t_app *app)
 		{"sp", 2, parse_sphere},
 		{"pl", 2, parse_plane},
 		{"cy", 2, parse_cylinder},
-		{"co", 2, parse_cone},
-		{"hb", 2, parse_hyperboloid},
-		{"pb", 2, parse_paraboloid},
 		{"", 0, NULL}
 	};
 	size_t i;

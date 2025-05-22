@@ -19,8 +19,7 @@ int	main(int ac, char **av)
 	app = init_app();
 	if (run_parser(ac, av, app))
 		exit_app(app, 1);
-	if (make_bvh(app->scene, app))
-		exit_app(app, 1);
+	/* BVH は削除 */
 	init_render(app);
 	setup_hooks(app);
 	mlx_loop(app->mlx);

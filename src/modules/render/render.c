@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 10:28:38 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/22 17:54:14 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/22 18:32:36 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mod_render.h"
-#include "mod_thread.h"
-#include "mod_accel.h"
+# /* シングルスレッド & BVH 無し */
 
 t_rgbd trgb_to_rgbd(int c)
 {
@@ -215,19 +214,14 @@ int	calculate_light_color(t_hit_record *hit, t_app *app)
 		sum_b += (hit->obj->spec.b / 255.0) * lb * ks;
 	}
 
-	// /* ---------- 2. HDR / トーンマッピング ---------- */
+	/* ---------- 2. HDR / トーンマッピング ---------- */
 	const double max_comp = fmax(sum_r, fmax(sum_g, sum_b));
 	const double hdr_scale = 1.0 / (1.0 + max_comp);   /* Reinhard 1/(1+x) */
 	sum_r *= hdr_scale;
 	sum_g *= hdr_scale;
 	sum_b *= hdr_scale;
 
-	// /* ---------- 3. ガンマ 2.2 補正 ---------- */
-	// sum_r = pow(sum_r, 1.0 / 2.2);
-	// sum_g = pow(sum_g, 1.0 / 2.2);
-	// sum_b = pow(sum_b, 1.0 / 2.2);
-
-	/* ---------- 4. 0-255 へ戻して TRGB ---------- */
+	/* ---------- 3. 0-255 へ戻して TRGB ---------- */
 	return create_trgb(0,
 			(int)(sum_r * 255.0 + 0.5),
 			(int)(sum_g * 255.0 + 0.5),
@@ -235,15 +229,25 @@ int	calculate_light_color(t_hit_record *hit, t_app *app)
 }
 
 
-t_hit_record	intersect_ray(t_ray ray, t_app *app, double t_max)
+#ifdef UNUSED
+#endif
+
+/* --- ここをシンプルなリニア交差テストに置き換え --- */
+t_hit_record intersect_ray(t_ray ray, t_app *app, double t_max)
 {
-	t_hit_record rec = {.t = INFINITY, .obj = NULL};
-	if (!bvh_hit(app->bvh, ray, t_max, &rec))
-		rec.t = 0.0;
-	return rec;
+    t_hit_record closest = {.t = t_max, .obj = NULL};
+    for (t_obj *o = app->scene->objs; o; o = o->next)
+    {
+        t_hit_record rec = o->hit(o, ray, app);
+        if (rec.t > 0.0 && rec.t < closest.t)
+            closest = rec;
+    }
+    if (!closest.obj)
+        closest.t = 0.0;      /* ミスヒット扱い */
+    return closest;
 }
 
-void	render(t_img *img, t_app *app)
+void	render(t_img *img, t_app *app)    /* シンプル 1 サンプル */
 {
 	int				i;
 	int				j;
@@ -255,19 +259,10 @@ void	render(t_img *img, t_app *app)
 		j = 0;
 		while (j < WIDTH)
 		{
-			/* ---- SSAA ×4 ---- */
-			const double ofs[4][2] = {
-				{0.25,0.25},{0.75,0.25},{0.25,0.75},{0.75,0.75}};
-			t_rgbd sum = {0,0,0};
-			for (int s=0;s<4;++s)
-			{
-				t_ray rr = {
-					.orig = app->scene->cam.pos,
-					.dir  = get_ray_dir_sub(&app->scene->cam,
-										j+ofs[s][0], i+ofs[s][1])};
-				sum = rgbd_add(sum, trace_ray(rr, app, 0));
-			}
-			sum = rgbd_scale(sum, 0.25);             /* 平均 */
+			const t_ray rr = {
+				.orig = app->scene->cam.pos,
+				.dir  = get_ray_direction(&app->scene->cam, j, i) };
+			const t_rgbd sum = trace_ray(rr, app, 0);
 			color_value = rgbd_to_trgb(sum);
 			my_mlx_pixel_put(img, j, i, color_value);
 			j++;
@@ -294,11 +289,7 @@ void	init_render(t_app *app)
 		exit_app(app, 1);
 	img->px = mlx_get_data_addr(img->ptr, &img->bpp, &img->line_len,
 			&img->endian);
-	/* --- タイル + スレッド --- */
-	const int cpu = sysconf(_SC_NPROCESSORS_ONLN);
-	t_renderq *q  = make_tiles(app, 16);
-	app->renderq  = q;
-	spawn_workers(app, q, cpu - 1);       /* ← ここで全タイル完了 & join 済み */
+	render(img, app);
 	mlx_put_image_to_window(app->mlx, app->win, img->ptr, 0, 0);
 }
 

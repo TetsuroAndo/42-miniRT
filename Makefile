@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+         #
+#    By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/25 13:31:17 by teando            #+#    #+#              #
-#    Updated: 2025/05/22 17:53:47 by tomsato          ###   ########.fr        #
+#    Updated: 2025/05/22 18:41:16 by teando           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ CONF_SAMP		:= $(CONF_DIR)/minirt.conf.sample
 
 # FLAGS
 IDFLAGS		:= -I$(INC_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR)
-LFLAGS		:= -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -pthread
+LFLAGS		:= -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
 
 # Environment Dependent
 UNAME_S := $(shell uname -s)
@@ -47,8 +47,6 @@ SRC		+= $(shell find $(SRC_DIR)/modules/parse -name '*.c')
 SRC		+= $(shell find $(SRC_DIR)/modules/camera -name '*.c')
 SRC		+= $(shell find $(SRC_DIR)/modules/render -name '*.c')
 SRC		+= $(shell find $(SRC_DIR)/modules/hit -name '*.c')
-SRC		+= $(shell find $(SRC_DIR)/modules/accel -name '*.c')
-SRC		+= $(shell find $(SRC_DIR)/modules/thread -name '*.c')
 OBJ		:= $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC))
 
 # =======================

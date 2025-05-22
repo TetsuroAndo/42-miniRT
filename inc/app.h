@@ -28,8 +28,7 @@
 # include "mod_hit.h"
 # include "mod_parse.h"
 # include "mod_render.h"
-# include "mod_thread.h"
-# include "mod_accel.h"
+# /* マルチスレッド & BVH を廃止したので両方削除 */
 
 /* std lib */
 # include <errno.h>
@@ -39,9 +38,8 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-typedef struct s_bvh		t_bvh;
 typedef struct s_img		t_img;
-typedef struct s_renderq	t_renderq;
+# /* typedef も不要 */
 
 /* MLX + GC + Scene をまとめたグローバルコンテキスト */
 typedef struct s_app
@@ -50,9 +48,8 @@ typedef struct s_app
 	void		*win;
 	int			dirty;		/* 再描画が必要な場合: 1, 描画完了: 0 */
 	t_scene		*scene;
-	t_bvh		*bvh;
 	t_img		*img;
-	t_renderq	*renderq;
+#	/* bvh / renderq は丸ごと撤去 */
 	int			fd;
 	t_list		*gc;
 }			t_app;
