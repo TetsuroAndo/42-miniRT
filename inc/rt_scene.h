@@ -6,20 +6,20 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 16:36:11 by teando            #+#    #+#             */
-/*   Updated: 2025/05/09 17:21:51 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/22 23:23:27 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RT_SCENE_H
 # define RT_SCENE_H
 
-# include "rt_vec.h"
 # include "rt_obj.h"
+# include "rt_vec.h"
 
 /** 環境光 (A) */
 typedef struct s_ambient
 {
-	double 			ratio; /* 0.0 – 1.0 */
+	double			ratio; /* 0.0 – 1.0 */
 	t_color			color;
 }					t_ambient;
 
@@ -27,7 +27,7 @@ typedef struct s_ambient
 typedef struct s_camera
 {
 	t_vec3			pos;
-	t_vec3			dir; /* 正規化 */
+	t_vec3 			dir; /* 正規化 */
 	double			fov; /* ° */
 }					t_camera;
 

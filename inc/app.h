@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 14:03:38 by teando            #+#    #+#             */
-/*   Updated: 2025/05/21 10:24:33 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/22 22:57:02 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define APP_H
 
 /* origin lib */
-# include "debug.h"
 # include "err.h"
 # include "libft.h"
 # include "mlx.h"
@@ -28,8 +27,6 @@
 # include "mod_hit.h"
 # include "mod_parse.h"
 # include "mod_render.h"
-# include "mod_thread.h"
-# include "mod_accel.h"
 
 /* std lib */
 # include <errno.h>
@@ -39,30 +36,24 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-typedef struct s_bvh		t_bvh;
-typedef struct s_img		t_img;
-typedef struct s_renderq	t_renderq;
+typedef struct s_img	t_img;
 
-/* MLX + GC + Scene をまとめたグローバルコンテキスト */
 typedef struct s_app
 {
-	void		*mlx;
-	void		*win;
-	int			dirty;		/* 再描画が必要な場合: 1, 描画完了: 0 */
-	t_scene		*scene;
-	t_bvh		*bvh;
-	t_img		*img;
-	t_renderq	*renderq;
-	int			fd;
-	t_list		*gc;
-}			t_app;
+	void				*mlx;
+	void				*win;
+	int					dirty;
+	t_scene				*scene;
+	t_img				*img;
+	int					fd;
+	t_list				*gc;
+}						t_app;
 
-
-t_app		*init_app(void);
-void		exit_app(t_app *app, int code);
-void		exit_errmsg(char *msg, t_app *app);
+t_app					*init_app(void);
+void					exit_app(t_app *app, int code);
+void					exit_errmsg(char *msg, int lnum, t_app *app);
 
 /*hook*/
-void	setup_hooks(t_app *app);
+void					setup_hooks(t_app *app);
 
 #endif

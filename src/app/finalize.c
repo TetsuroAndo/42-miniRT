@@ -6,20 +6,23 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 14:47:54 by teando            #+#    #+#             */
-/*   Updated: 2025/05/15 22:52:49 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/22 22:52:11 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "app.h"
+#include "app.h"
 
-void	exit_errmsg(char *msg, t_app *app)
+void	exit_errmsg(char *msg, int lnum, t_app *app)
 {
-	ft_putstr_fd("Error: ", STDERR_FILENO);
+	if (lnum)
+		ft_dprintf(STDERR_FILENO, "line: %d error: ", lnum);
+	else
+		ft_putstr_fd("error: ", STDERR_FILENO);
 	ft_putendl_fd(msg, STDERR_FILENO);
 	exit_app(app, EXIT_FAILURE);
 }
 
-void exit_app(t_app *app, int code)
+void	exit_app(t_app *app, int code)
 {
 	if (app->fd > 0)
 		xclose(&app->fd);

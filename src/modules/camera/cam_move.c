@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   camera_bonus.c                                     :+:      :+:    :+:   */
+/*   cam_move.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 05:32:00 by teando            #+#    #+#             */
-/*   Updated: 2025/05/20 06:07:15 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/22 20:22:25 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	cam_rotate_yaw(t_camera *cam, double rad)
 
 void	cam_rotate_pitch(t_camera *cam, double rad)
 {
-	t_vec3 right = vec3_normalize(vec3_cross(cam->dir, (t_vec3){0, 1, 0}));
+	t_vec3	right;
+
+	right = vec3_normalize(vec3_cross(cam->dir, (t_vec3){0, 1, 0}));
 	cam->dir = vec3_rotate(cam->dir, right, rad);
 }

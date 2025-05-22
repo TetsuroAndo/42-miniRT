@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   xfree.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:40:41 by teando            #+#    #+#             */
-/*   Updated: 2025/05/05 09:58:02 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/22 20:25:03 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "xlib.h"
 
-void xfree(void **p, t_app *app)
+void	xfree(void **p, t_app *app)
 {
 	ft_gc_free(app->gc, p);
 }

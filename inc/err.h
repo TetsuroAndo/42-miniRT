@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   err.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 14:04:11 by teando            #+#    #+#             */
-/*   Updated: 2025/05/04 21:27:06 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/22 20:27:09 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RT_ERR_H
-# define RT_ERR_H
+#ifndef ERR_H
+# define ERR_H
 
 typedef enum e_status
 {
