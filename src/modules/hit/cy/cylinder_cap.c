@@ -6,7 +6,7 @@
 /*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 18:48:06 by teando            #+#    #+#             */
-/*   Updated: 2025/05/22 20:43:00 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/22 20:49:14 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ void	cy_try_cap(t_hit_record *hit, t_obj *obj, t_ray ray, t_vec3 cap_dir)
 	else
 		sign = -1.0;
 	axis = vec3_normalize(cap_dir);
-	center = vec3_add(obj->u_type.cy.center, vec3_scale(axis, sign * obj->u_type.cy.height
-				* 0.5));
+	center = vec3_add(obj->u_type.cy.center, vec3_scale(axis, sign
+				* obj->u_type.cy.height * 0.5));
 	t = cy_cap_t(ray, center, axis);
 	if (t <= EPSILON || (hit->t > 0 && t >= hit->t))
 		return ;

@@ -6,7 +6,7 @@
 /*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 17:50:20 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/22 20:43:00 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/22 20:49:24 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ t_hit_record	sphere_hit(t_obj *obj, t_ray ray, t_app *app)
 
 	(void)app;
 	rec.t = -1.0; /* ヒットなしで初期化 */
-	t = solve_quadratic(oc, ray.dir, obj->u_type.sp.radius * obj->u_type.sp.radius);
+	t = solve_quadratic(oc, ray.dir, obj->u_type.sp.radius
+			* obj->u_type.sp.radius);
 	if (t > 0.0)
 		fill_rec(&rec, obj, ray, t);
 	return (rec);
