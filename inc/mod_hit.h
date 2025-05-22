@@ -24,7 +24,6 @@ typedef struct s_scene	t_scene;
 #  define EPSILON 1e-6
 # endif
 
-/* hit functions */
 t_hit_record			plane_hit(t_obj *obj, t_ray ray, t_app *app);
 t_hit_record			cylinder_hit(t_obj *obj, t_ray ray, t_app *app);
 t_hit_record			sphere_hit(t_obj *obj, t_ray ray, t_app *app);

@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   trace_ray.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 19:43:49 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/22 19:52:16 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/22 23:36:54 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mod_render.h"
 
-/* 既存の calculate_light_color を "ローカル色" として double 版で呼び出す */
 t_rgbd	shade_local(t_hit_record *hit, t_app *app)
 {
 	int	trgb;
@@ -57,7 +56,6 @@ int	is_shadow(t_hit_record *hit, t_lights *light, t_app *app)
 	return (s.t > 0.0);
 }
 
-/* --- ここをシンプルなリニア交差テストに置き換え --- */
 t_hit_record	intersect_ray(t_ray ray, t_app *app, double t_max)
 {
 	t_hit_record	rec;

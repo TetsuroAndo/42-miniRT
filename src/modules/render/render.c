@@ -12,12 +12,6 @@
 
 #include "mod_render.h"
 
-/* 反射ベクトル (未使用ならコメントアウト可) */
-// static inline t_vec3 reflect_vec(t_vec3 v, t_vec3 n)
-// {
-// 	return (vec3_sub(v, vec3_scale(n, 2.0 * vec3_dot(v, n))));
-// }
-
 void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
 {
 	char	*dst;

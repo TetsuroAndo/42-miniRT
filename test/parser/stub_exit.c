@@ -13,28 +13,23 @@ void exit_app(t_app *app, int code)
 {
 	(void)app;
 	fprintf(stderr, "[TEST] exit_app() called with code=%d (This would normally exit the program)\n", code);
-	
-	/* エラー情報を記録 */
+
 	g_test_error_code = code;
 	g_test_error_occurred = 1;
-	
-	/* テスト環境ではプログラムを終了しない */
+
 }
 
 void exit_errmsg(char *msg, t_app *app)
 {
 	(void)app;
 	fprintf(stderr, "[TEST] exit_errmsg(): %s (This would normally exit the program)\n", msg);
-	
-	/* エラー情報を記録 */
+
 	if (msg)
 		strncpy(g_test_error_msg, msg, sizeof(g_test_error_msg) - 1);
 	g_test_error_occurred = 1;
-	
-	/* テスト環境ではプログラムを終了しない */
+
 }
 
-/* テスト環境用のヘルパー関数 */
 int test_error_occurred(void)
 {
 	return g_test_error_occurred;

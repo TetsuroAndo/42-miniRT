@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_obj.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 15:30:28 by teando            #+#    #+#             */
-/*   Updated: 2025/05/22 20:44:13 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/22 23:36:29 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,80 +15,61 @@
 
 # include "rt_vec.h"
 
-/* --- 前方宣言 ------------------------------------------------------- */
-struct s_app;
 typedef struct s_app		t_app;
-struct s_obj;
 typedef struct s_obj		t_obj;
-struct s_hit_record;
 typedef struct s_hit_record	t_hit_record;
-struct s_ray;
 typedef struct s_ray		t_ray;
 
-/*======================================================================
-**  個別オブジェクト構造体
-**====================================================================*/
-
-/* ● 球 ---------------------------------------------------------------- */
 typedef struct s_sphere
 {
-	t_vec3 center; /* 中心座標                */
-	double radius; /* 半径                    */
-	t_color color; /* 表面色 (0‑255 RGB)      */
+	t_vec3					center;
+	double					radius;
+	t_color					color;
 }							t_sphere;
 
-/* ● 平面 -------------------------------------------------------------- */
 typedef struct s_plane
 {
-	t_vec3 point;  /* 平面上の 1 点            */
-	t_vec3 normal; /* 単位法線ベクトル         */
-	t_color color; /* 表面色                   */
+	t_vec3					point;
+	t_vec3					normal;
+	t_color					color;
 }							t_plane;
 
-/* ● 円柱 -------------------------------------------------------------- */
 typedef struct s_cylinder
 {
-	t_vec3 center; /* 中心軸上の基準点          */
-	t_vec3 axis;   /* 単位軸ベクトル            */
-	double radius; /* 半径                      */
-	double height; /* 高さ                      */
-	t_color color; /* 表面色                    */
+	t_vec3					center;
+	t_vec3					axis;
+	double					radius;
+	double					height;
+	t_color					color;
 }							t_cylinder;
 
-/* ● 円錐 -------------------------------------------------------------- */
 typedef struct s_cone
 {
-	t_vec3 vertex; /* 頂点位置                  */
-	t_vec3 axis;   /* 単位軸ベクトル            */
-	double angle;  /* 半頂角 (rad)              */
-	double height; /* 高さ                      */
-	t_color color; /* 表面色                    */
+	t_vec3					vertex;
+	t_vec3					axis;
+	double					angle;
+	double					height;
+	t_color					color;
 }							t_cone;
 
-/* ● 双曲面 ------------------------------------------------------------ */
 typedef struct s_hyperboloid
 {
-	t_vec3 center; /* 中心位置                  */
-	t_vec3 axis;   /* 単位軸ベクトル            */
-	double a;      /* x 方向半径                */
-	double b;      /* y 方向半径                */
-	double c;      /* z 方向係数                */
-	t_color color; /* 表面色                    */
+	t_vec3					center;
+	t_vec3					axis;
+	double					a;
+	double					b;
+	double					c;
+	t_color					color;
 }							t_hyperboloid;
 
-/* ● 放物面 ------------------------------------------------------------ */
 typedef struct s_paraboloid
 {
-	t_vec3 vertex; /* 頂点位置                  */
-	t_vec3 axis;   /* 単位軸ベクトル            */
-	double k;      /* 開口度 (z = k·r^2)        */
-	double height; /* 有限放物面の切断高さ       */
-	t_color color; /* 表面色                    */
+	t_vec3					vertex;
+	t_vec3					axis;
+	double					k;
+	double					height;
+	t_color					color;
 }							t_paraboloid;
-
-/*======================================================================
-**  汎用オブジェクトラッパー
-**====================================================================*/
 
 typedef enum e_obj_type
 {
@@ -112,11 +93,11 @@ struct						s_obj
 		t_hyperboloid		hb;
 		t_paraboloid		pb;
 	} u_type;
-	t_color spec;     /* スペキュラ色   (default: 255,255,255) */
-	double shininess; /* 光沢係数 n     (default: 32)         */
-	double reflect;   /* 0.0 = 全く反射しない, 1.0 = 完全鏡面 (デフォルト 0) */
+	t_color					spec;
+	double					shininess;
+	double					reflect;
 	struct s_obj			*next;
-	t_hit_record			(*hit)(struct s_obj *obj, t_ray ray, t_app *app);
+	t_hit_record			(*hit)(struct s_obj * obj, t_ray ray, t_app * app);
 };
 
 #endif

@@ -15,7 +15,6 @@
 
 # include "math.h"
 
-/** 3 次元ベクトル */
 typedef struct s_vec3
 {
 	double			x;
@@ -23,7 +22,6 @@ typedef struct s_vec3
 	double			z;
 }					t_vec3;
 
-/** 8‑bit RGB カラー */
 typedef struct s_color
 {
 	unsigned char	r;
@@ -33,8 +31,8 @@ typedef struct s_color
 
 typedef struct s_ray
 {
-	t_vec3			orig; /* 発射点 */
-	t_vec3			dir;  /* 正規化済み方向 */
+	t_vec3			orig;
+	t_vec3			dir;
 }					t_ray;
 
 #endif

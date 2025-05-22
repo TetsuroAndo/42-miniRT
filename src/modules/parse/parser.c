@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 19:22:19 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/22 23:09:20 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/22 23:37:04 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 #include <limits.h>
 #include <stdlib.h>
 
-/* 行のトリミングと空行・コメント行のスキップ */
 static char	*trim_line(char *line, t_app *app)
 {
 	char	*trimmed;
@@ -47,7 +46,6 @@ static void	dispatch_line(char *line, int lnum, t_scene *scene, t_app *app)
 		exit_errmsg("unknown identifier", lnum, app);
 }
 
-/* シーン検証 */
 static void	validate_scene(t_scene *scene, t_app *app)
 {
 	if (!scene->amb.ratio)
@@ -60,7 +58,6 @@ static void	validate_scene(t_scene *scene, t_app *app)
 		exit_errmsg("no renderable object!", 0, app);
 }
 
-/* メインパース関数 */
 t_scene	*parse_scene(char *filename, t_app *app)
 {
 	char			*line;

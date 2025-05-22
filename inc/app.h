@@ -13,22 +13,15 @@
 #ifndef APP_H
 # define APP_H
 
-/* origin lib */
 # include "err.h"
 # include "libft.h"
 # include "mlx.h"
-# include "xlib.h"
-
-/* rt */
-# include "rt_render.h"
-# include "rt_scene.h"
-
-/* modules */
 # include "mod_hit.h"
 # include "mod_parse.h"
 # include "mod_render.h"
-
-/* std lib */
+# include "rt_render.h"
+# include "rt_scene.h"
+# include "xlib.h"
 # include <errno.h>
 # include <fcntl.h>
 # include <math.h>
@@ -53,7 +46,6 @@ t_app					*init_app(void);
 void					exit_app(t_app *app, int code);
 void					exit_errmsg(char *msg, int lnum, t_app *app);
 
-/*hook*/
 void					setup_hooks(t_app *app);
 
 #endif

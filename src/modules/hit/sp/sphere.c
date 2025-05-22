@@ -16,9 +16,7 @@ static inline void	fill_rec(t_hit_record *rec, t_obj *obj, t_ray ray, double t)
 {
 	rec->t = t;
 	rec->pos = vec3_add(ray.orig, vec3_scale(ray.dir, t));
-	/* 法線を求める (pos - center) / r */
 	rec->normal = vec3_normalize(vec3_sub(rec->pos, obj->u_type.sp.center));
-	/* レイが球の内側から出て行く場合は外向きに反転させる */
 	if (vec3_dot(ray.dir, rec->normal) > 0.0)
 		rec->normal = vec3_scale(rec->normal, -1.0);
 	rec->color = obj->u_type.sp.color;
@@ -32,9 +30,9 @@ static inline double	get_valid_t(double a, double b, double disc)
 	const double	t2 = (-b + sqrt_d) / (2 * a);
 
 	if (t1 > EPSILON)
-		return (t1); /* 手前側ヒット */
+		return (t1);
 	if (t2 > EPSILON)
-		return (t2); /* 内部にいた場合など */
+		return (t2);
 	return (-1.0);
 }
 
@@ -58,7 +56,7 @@ t_hit_record	sphere_hit(t_obj *obj, t_ray ray, t_app *app)
 	const t_vec3	oc = vec3_sub(ray.orig, obj->u_type.sp.center);
 
 	(void)app;
-	rec.t = -1.0; /* ヒットなしで初期化 */
+	rec.t = -1.0;
 	t = solve_quadratic(oc, ray.dir, obj->u_type.sp.radius
 			* obj->u_type.sp.radius);
 	if (t > 0.0)

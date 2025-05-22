@@ -12,15 +12,6 @@
 
 #include "mod_parse.h"
 
-/*
- * 円柱のパース (cy)
- *	- 識別子: `cy`
- *	- 円柱中心の `x,y,z` 座標: `50.0,0.0,20.6`
- *	- 円柱軸の 3D **正規化** ベクトル (各軸 `[-1,1]`): `0.0,0.0,1.0`
- *	- 円柱の直径: `14.2`
- *	- 円柱の高さ: `21.42`
- *	- `R,G,B` 色 `[0‑255]`: `10,0,255`
- */
 void	parse_cylinder(char *line, int lnum, t_scene *scene, t_app *app)
 {
 	t_obj	*obj;
@@ -31,24 +22,17 @@ void	parse_cylinder(char *line, int lnum, t_scene *scene, t_app *app)
 	obj->hit = cylinder_hit;
 	obj->spec = (t_color){255, 255, 255};
 	obj->shininess = 32.0;
-	/* 中心座標 */
 	if (!parse_vec3(&line, &obj->u_type.cy.center))
 		exit_errmsg("cylinder: invalid center position", lnum, app);
-	/* 軸ベクトル (正規化) */
 	if (!parse_normal_vec3(&line, &obj->u_type.cy.axis))
 		exit_errmsg("cylinder: invalid axis vector", lnum, app);
-	/* 直径 */
 	if (!parse_f64(&line, &diameter, 0.0, INFINITY))
 		exit_errmsg("cylinder: invalid diameter", lnum, app);
-	/* 直径から半径に変換 */
 	obj->u_type.cy.radius = diameter / 2.0;
-	/* 高さ */
 	if (!parse_f64(&line, &obj->u_type.cy.height, 0.0, INFINITY))
 		exit_errmsg("cylinder: invalid height", lnum, app);
-	/* RGB色 */
 	if (!parse_rgb(&line, &obj->u_type.cy.color))
 		exit_errmsg("cylinder: invalid color", lnum, app);
-	/* 反射率 */
 	obj->reflect = 0.0;
 	try_parse_reflect(&line, &obj->reflect);
 	if (!expect_line_end(&line))

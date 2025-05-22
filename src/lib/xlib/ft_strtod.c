@@ -15,7 +15,6 @@
 #define DOT '.'
 #define BASE 10
 
-/* 累乗計算のヘルパー関数 */
 static double	my_pow(double x, double y)
 {
 	double	result;
@@ -31,7 +30,6 @@ static double	my_pow(double x, double y)
 	return (result);
 }
 
-/* 小数点以降の桁数をカウントする関数 */
 static size_t	count_decimal_digits(const char *decimal_start)
 {
 	size_t	digits;
@@ -67,32 +65,3 @@ double	ft_strtod(const char *nptr, char **endptr)
 	}
 	return ((double)b_dot);
 }
-
-/*
-#include "xlib.h"
-#include <stdio.h>
-
-int	main(void)
-{
-	const char *test_cases[] = {"123.456", "0.123", "42.0", "3.14159", "-1.23",
-		"999999.999999", "0.0", "invalid", NULL};
-
-	for (int i = 0; test_cases[i]; i++)
-	{
-		char *endptr;
-		double result = ft_strtod(test_cases[i], &endptr);
-		printf("Input: %-15s | Result: %f | Endptr: %s\n", test_cases[i],
-			result, endptr);
-	}
-
-	// Compare with standard strtod
-	printf("\nComparing with standard strtod:\n");
-	const char *compare = "123.456";
-	char *endptr1, *endptr2;
-	double val1 = ft_strtod(compare, &endptr1);
-	double val2 = strtod(compare, &endptr2);
-	printf("ft_strtod: %f\nstrtod:    %f\n", val1, val2);
-
-	return (0);
-}
-*/

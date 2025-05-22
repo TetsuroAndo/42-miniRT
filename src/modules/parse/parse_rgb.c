@@ -12,7 +12,6 @@
 
 #include "mod_parse.h"
 
-/* 文字列からRGB色へ変換 */
 int	parse_rgb(char **s, t_color *out)
 {
 	double	r;
@@ -20,19 +19,14 @@ int	parse_rgb(char **s, t_color *out)
 	double	b;
 
 	skip_ws(s);
-	/* R成分をパース */
 	if (!parse_f64(s, &r, 0, 255))
 		return (0);
-	/* カンマを期待 */
 	if (!expect_char(s, ','))
 		return (0);
-	/* G成分をパース */
 	if (!parse_f64(s, &g, 0, 255))
 		return (0);
-	/* カンマを期待 */
 	if (!expect_char(s, ','))
 		return (0);
-	/* B成分をパース */
 	if (!parse_f64(s, &b, 0, 255))
 		return (0);
 	out->r = (unsigned char)r;

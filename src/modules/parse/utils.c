@@ -12,25 +12,12 @@
 
 #include "mod_parse.h"
 
-/**
- * 空白文字をスキップする
- *
- * @param s 入力文字列ポインタのポインタ
- * @return 常に1（成功）
- */
 void	skip_ws(char **s)
 {
 	while (**s && ft_isspace(**s))
 		(*s)++;
 }
 
-/**
- * 期待する文字があるかチェックし、あれば次に進む
- *
- * @param s 入力文字列ポインタのポインタ
- * @param c 期待する文字
- * @return 成功時1、失敗時0
- */
 int	expect_char(char **s, char c)
 {
 	skip_ws(s);
@@ -40,12 +27,6 @@ int	expect_char(char **s, char c)
 	return (1);
 }
 
-/*
- * 行末を期待 コメントは許容する
- *
- * @param s 入力文字列ポインタのポインタ
- * @return 成功時1、失敗時0
- */
 int	expect_line_end(char **s)
 {
 	if (!*s)
@@ -60,7 +41,6 @@ void	add_obj(t_obj **obj, t_obj *new)
 	*obj = new;
 }
 
-/* 反射率 (0-1) があれば読む。失敗しても構文エラーにはしない */
 int	try_parse_reflect(char **s, double *out)
 {
 	double	r;

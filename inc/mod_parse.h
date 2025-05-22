@@ -29,11 +29,9 @@ typedef struct s_dispatch
 	void				(*fn)(char *, int, t_scene *, t_app *);
 }						t_dispatch;
 
-/* main */
 int						run_parser(int ac, char **av, t_app *app);
 t_scene					*parse_scene(char *filename, t_app *app);
 
-/* parse functions */
 void					parse_ambient(char *line, int lnum, t_scene *scene,
 							t_app *app);
 void					parse_camera(char *line, int lnum, t_scene *scene,
@@ -47,7 +45,6 @@ void					parse_plane(char *line, int lnum, t_scene *scene,
 void					parse_cylinder(char *line, int lnum, t_scene *scene,
 							t_app *app);
 
-/* parse utils */
 int						parse_f64(char **s, double *out, double min,
 							double max);
 int						parse_rgb(char **s, t_color *out);
@@ -56,7 +53,6 @@ int						parse_normal_vec3(char **s, t_vec3 *out);
 int						try_parse_reflect(char **s, double *out);
 void					add_obj(t_obj **obj, t_obj *new);
 
-/* tokenize utils */
 void					skip_ws(char **s);
 int						expect_char(char **s, char c);
 int						expect_line_end(char **s);
