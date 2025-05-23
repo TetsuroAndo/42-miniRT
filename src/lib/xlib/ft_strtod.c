@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 18:11:02 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/23 23:01:07 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/23 23:03:38 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 #define DOT '.'
 #define BASE 10
 
-/* 小数点以降の桁数をカウントする関数 */
 static size_t	count_decimal_digits(const char *decimal_start)
 {
 	size_t	digits;
