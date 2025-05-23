@@ -6,13 +6,13 @@
 #    By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/25 13:31:17 by teando            #+#    #+#              #
-#    Updated: 2025/05/23 19:44:08 by teando           ###   ########.fr        #
+#    Updated: 2025/05/23 20:50:31 by teando           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		:= miniRT
 CC			:= cc
-CFLAGS		:= -Wall -Wextra -Werror
+CFLAGS		:= -Wall -Wextra -Werror -g -fsanitize=address -O1 -fno-omit-frame-pointer
 RM			:= rm -rf
 
 # Project PATH
@@ -26,9 +26,14 @@ CONF_DIR		:= $(ROOT_DIR)/config
 CONF			:= $(CONF_DIR)/minirt.conf
 CONF_SAMP		:= $(CONF_DIR)/minirt.conf.sample
 
+# Window size
+WIDTH_DEF	:= 1280
+HEIGHT_DEF	:= 720
+
 # FLAGS
 IDFLAGS		:= -I$(INC_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR)
 LFLAGS		:= -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
+DEFINE		:= -DWIDTH=$(WIDTH_DEF) -DHEIGHT=$(HEIGHT_DEF)
 
 # Environment Dependent
 UNAME_S := $(shell uname -s)
@@ -91,9 +96,9 @@ OBJ		:= $(patsubst ./%.c,$(OBJ_DIR)/%.o,$(SRC))
 # =======================
 
 ifeq ($(UNAME_S),Darwin)
-all: setup_xquartz conf_get $(NAME)
+all: setup_xquartz $(NAME)
 else
-all: conf_get $(NAME)
+all: $(NAME)
 endif
 
 $(NAME): $(LIBFT) $(MLX) $(OBJ)
@@ -167,30 +172,6 @@ printsrc:
 
 printobj:
 	@echo $(OBJ) | tr ' ' '\n' | sort
-
-# =======================
-# == Config Targets ===
-# =======================
-
-$(CONF):
-	@mkdir -p $(CONF_DIR)
-	@if [ ! -f $(CONF_SAMP) ]; then \
-		echo "Warning: Sample config file $(CONF_SAMP) not found. Creating a default one."; \
-		echo "CFLAGS=-O3" > $(CONF); \
-		echo "WIDTH=1280" >> $(CONF); \
-		echo "HEIGHT=720" >> $(CONF); \
-	elif [ ! -f $(CONF) ]; then \
-		echo "Creating default config file from sample..."; \
-		cp $(CONF_SAMP) $(CONF); \
-	fi
-
-conf_get: $(CONF)
-	$(eval WIDTH_DEF := $(shell cat $(CONF) | grep WIDTH | cut -d'=' -f2 || echo 960))
-	$(eval HEIGHT_DEF := $(shell cat $(CONF) | grep HEIGHT | cut -d'=' -f2 || echo 540))
-	$(eval DEFINE := -DWIDTH=$(WIDTH_DEF) -DHEIGHT=$(HEIGHT_DEF))
-	$(eval CFLAGS := $(if $(findstring -O, $(CFLAGS)), $(CFLAGS), $(CFLAGS) $(shell cat $(CONF) | grep CFLAGS | sed 's/CFLAGS=//')))
-
-conf: $(CONF)
 
 # =======================
 # == MACOS Setup ========

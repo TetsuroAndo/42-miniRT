@@ -1,3 +1,0 @@
-CFLAGS=-g -fsanitize=address -O1 -fno-omit-frame-pointer
-WIDTH=1280
-HEIGHT=720
