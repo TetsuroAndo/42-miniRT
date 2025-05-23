@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 19:22:19 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/23 22:45:26 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/24 00:22:08 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ static void	dispatch_line(char *line, int lnum, t_scene *scene, t_app *app)
 /* シーン検証 */
 static void	validate_scene(t_scene *scene, t_app *app)
 {
-	if (!scene->amb.ratio)
+	if (!scene->amb.flag)
 		exit_errmsg("missing ambient light", 0, app);
-	if (!scene->cam.fov)
+	if (!scene->cam.flag)
 		exit_errmsg("missing camera", 0, app);
 	if (!scene->lights)
 		exit_errmsg("missing light", 0, app);
