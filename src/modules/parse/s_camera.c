@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 22:23:31 by teando            #+#    #+#             */
-/*   Updated: 2025/05/22 22:19:35 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/24 00:38:09 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,9 @@
 
 void	parse_camera(char *line, int lnum, t_scene *scene, t_app *app)
 {
-	static int	seen_camera = 0;
-
-	if (seen_camera)
+	if (scene->cam.flag)
 		exit_errmsg("duplicate camera", lnum, app);
-	seen_camera = 1;
+	scene->cam.flag = 1;
 	if (!parse_vec3(&line, &scene->cam.pos))
 		exit_errmsg("camera: invalid position (expected x,y,z)", lnum, app);
 	if (!parse_normal_vec3(&line, &scene->cam.dir))
