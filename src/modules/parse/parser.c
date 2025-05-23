@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 19:22:19 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/23 22:42:23 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/23 22:45:26 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,15 @@ static char	*trim_line(char *line, t_app *app)
 
 static void	dispatch_line(char *line, int lnum, t_scene *scene, t_app *app)
 {
-	static const t_dispatch	dispatch[] = {{"A", 1, parse_ambient}, {"C", 1,
-		parse_camera}, {"L", 1, parse_light}, {"sp", 2, parse_sphere},
-	{"pl", 2, parse_plane}, {"cy", 2, parse_cylinder}, {"", 0, NULL}};
+	static const t_dispatch	dispatch[] = {
+		{"A", 1, parse_ambient},
+		{"C", 1, parse_camera},
+		{"L", 1, parse_light},
+		{"sp", 2, parse_sphere},
+		{"pl", 2, parse_plane},
+		{"cy", 2, parse_cylinder},
+		{"", 0, NULL}
+	};
 	size_t					i;
 
 	if (lnum >= INT_MAX)
