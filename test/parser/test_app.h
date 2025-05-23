@@ -55,11 +55,11 @@ void	*xmalloc(size_t size, t_app *app);
 void	*xcalloc(size_t count, size_t size, t_app *app);
 void	xfree(void **ptr, t_app *app);
 int		xopen(char *filename, int flags, t_app *app);
-int		xclose(int fd);
+int		xclose(int *fd);
 
 /* エラー処理関数 */
 void	exit_app(t_app *app, int exit_code);
-void	exit_errmsg(char *msg, t_app *app);
+void	exit_errmsg(char *msg, int lnum, t_app *app);
 void	set_error(t_app *app, int err_code, const char *msg);
 
 #endif

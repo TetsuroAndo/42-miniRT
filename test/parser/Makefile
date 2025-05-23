@@ -5,7 +5,7 @@ SRC_DIR   := $(ROOT)/src
 INC_DIR   := $(ROOT)/inc
 XLIB_DIR  := $(SRC_DIR)/lib/xlib
 PARSE_DIR := $(SRC_DIR)/modules/parse
-HIT_DIR := $(SRC_DIR)/modules/hit
+HIT_DIR   := $(SRC_DIR)/modules/hit/*/
 LIBFT_DIR := $(SRC_DIR)/lib/libft
 
 ifeq ($(UNAME_S),Darwin)

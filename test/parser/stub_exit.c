@@ -21,10 +21,10 @@ void exit_app(t_app *app, int code)
 	/* テスト環境ではプログラムを終了しない */
 }
 
-void exit_errmsg(char *msg, t_app *app)
+void exit_errmsg(char *msg, int lnum, t_app *app)
 {
 	(void)app;
-	fprintf(stderr, "[TEST] exit_errmsg(): %s (This would normally exit the program)\n", msg);
+	fprintf(stderr, "[TEST] exit_errmsg(): %s (line %d) (This would normally exit the program)\n", msg, lnum);
 	
 	/* エラー情報を記録 */
 	if (msg)
