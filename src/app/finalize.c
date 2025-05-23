@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 14:47:54 by teando            #+#    #+#             */
-/*   Updated: 2025/05/22 22:52:11 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/23 23:29:18 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 void	exit_errmsg(char *msg, int lnum, t_app *app)
 {
+	ft_putstr_fd("Error\n", STDERR_FILENO);
 	if (lnum)
-		ft_dprintf(STDERR_FILENO, "line: %d error: ", lnum);
+		ft_dprintf(STDERR_FILENO, "line:%d: ", lnum);
 	else
 		ft_putstr_fd("error: ", STDERR_FILENO);
 	ft_putendl_fd(msg, STDERR_FILENO);
