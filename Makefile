@@ -6,7 +6,7 @@
 #    By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/25 13:31:17 by teando            #+#    #+#              #
-#    Updated: 2025/05/22 23:15:39 by teando           ###   ########.fr        #
+#    Updated: 2025/05/23 19:44:08 by teando           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,25 +41,59 @@ else
 	MLX			:= $(MLX_DIR)/libmlx_Linux.a
 endif
 
-SRC		:= $(shell find $(SRC_DIR)/app -name '*.c')
-SRC		+= $(shell find $(SRC_DIR)/lib/xlib -name '*.c')
-SRC		+= $(shell find $(SRC_DIR)/modules/parse -name '*.c')
-SRC		+= $(shell find $(SRC_DIR)/modules/camera -name '*.c')
-SRC		+= $(shell find $(SRC_DIR)/modules/render -name '*.c')
-SRC		+= $(shell find $(SRC_DIR)/modules/hit -name '*.c')
-OBJ		:= $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC))
+SRC		:= \
+		./src/app/finalize.c \
+		./src/app/hooks.c \
+		./src/app/initialize.c \
+		./src/app/main.c \
+		./src/lib/xlib/ft_strtod.c \
+		./src/lib/xlib/vec_utils_1.c \
+		./src/lib/xlib/vec_utils_2.c \
+		./src/lib/xlib/vec_utils_3.c \
+		./src/lib/xlib/xcalloc.c \
+		./src/lib/xlib/xclose.c \
+		./src/lib/xlib/xfree.c  \
+		./src/lib/xlib/xgc_init.c \
+		./src/lib/xlib/xget_next_line.c \
+		./src/lib/xlib/xmalloc.c \
+		./src/lib/xlib/xopen.c \
+		./src/lib/xlib/xstrdup.c \
+		./src/lib/xlib/xstrtrim.c \
+		./src/modules/camera/cam_key.c \
+		./src/modules/camera/cam_move.c \
+		./src/modules/camera/vec_rot.c \
+		./src/modules/hit/cy/cylinder_cap.c \
+		./src/modules/hit/cy/cylinder_side.c \
+		./src/modules/hit/cy/cylinder.c \
+		./src/modules/hit/pl/plane.c \
+		./src/modules/hit/sp/sphere.c \
+		./src/modules/parse/obj_cylinder.c \
+		./src/modules/parse/obj_plane.c \
+		./src/modules/parse/obj_sphere.c \
+		./src/modules/parse/parse_f64.c \
+		./src/modules/parse/parse_rgb.c \
+		./src/modules/parse/parse_vec3.c \
+		./src/modules/parse/parser.c \
+		./src/modules/parse/s_ambient.c \
+		./src/modules/parse/s_camera.c \
+		./src/modules/parse/s_light.c \
+		./src/modules/parse/utils.c \
+		./src/modules/render/calculate_light_color.c \
+		./src/modules/render/calculate_lights_utils.c \
+		./src/modules/render/color_convert.c \
+		./src/modules/render/get_ray_direction.c \
+		./src/modules/render/render.c \
+		./src/modules/render/trace_ray.c
+OBJ		:= $(patsubst ./%.c,$(OBJ_DIR)/%.o,$(SRC))
 
 # =======================
-# == Targets =============
+# == Targets ============
 # =======================
-all:
-	$(MAKE) __build -j $(shell nproc)
 
 ifeq ($(UNAME_S),Darwin)
-__build: setup_xquartz
-__build: conf_get $(NAME)
+all: setup_xquartz conf_get $(NAME)
 else
-__build: conf_get $(NAME)
+all: conf_get $(NAME)
 endif
 
 $(NAME): $(LIBFT) $(MLX) $(OBJ)
@@ -77,14 +111,14 @@ $(NAME): $(LIBFT) $(MLX) $(OBJ)
 	@echo "[Window size]: $(WIDTH_DEF) x $(HEIGHT_DEF)"
 	@echo "====================="
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(LIBFT_DIR) $(MLX_DIR)
+$(OBJ_DIR)/%.o: ./%.c $(LIBFT_DIR) $(MLX_DIR)
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $(IDFLAGS) $(DEFINE) -fPIC -MMD -MP  -c $< -o $@
 
-$(LIBFT): | $(LIBFT_DIR)/libft.h
+$(LIBFT):
 	$(MAKE) -C $(LIBFT_DIR)
 
-$(MLX): | $(MLX_DIR)/mlx.h
+$(MLX): | $(MLX_DIR)
 	$(MAKE) -C $(MLX_DIR)
 
 c:
@@ -106,17 +140,14 @@ fclean: clean
 re: fclean all
 
 # =======================
-# == Submodule Targets ==
+# == minilibx Targets ==
 # =======================
 
-$(LIBFT_DIR)/libft.h:
-	git submodule update --remote --init --recursive
+$(MLX_DIR):
+	git clone https://github.com/42Paris/minilibx-linux.git $(MLX_DIR)
 
-$(MLX_DIR)/mlx.h:
-	git submodule update --init --recursive
-
-sub:
-	git submodule update --remote
+mlxrm:
+	rm -rf $(MLX_DIR)
 
 # =======================
 # == Dev Tool Targets ===
@@ -130,6 +161,16 @@ nm:
 
 nmbin:
 	@nm $(NAME) | grep ' U ' | awk '{print $$2}' | sort | uniq
+
+printsrc:
+	@echo $(SRC) | tr ' ' '\n' | sort
+
+printobj:
+	@echo $(OBJ) | tr ' ' '\n' | sort
+
+# =======================
+# == Config Targets ===
+# =======================
 
 $(CONF):
 	@mkdir -p $(CONF_DIR)

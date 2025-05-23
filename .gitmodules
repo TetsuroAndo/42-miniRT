@@ -1,6 +1,0 @@
-[submodule "src/lib/minilibx"]
-	path = src/lib/minilibx
-	url = https://github.com/42paris/minilibx-linux.git
-[submodule "src/lib/libft"]
-	path = src/lib/libft
-	url = https://github.com/TetsuroAndo/42-libft
