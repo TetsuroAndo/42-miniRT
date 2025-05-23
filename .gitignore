@@ -13,7 +13,7 @@ objs
 .env
 miniRT
 playground/
-*libft/*
+*minilibx/*
 parser_tests
 *.conf
 
