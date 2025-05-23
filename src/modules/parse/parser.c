@@ -6,10 +6,9 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 19:22:19 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/24 00:36:51 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/24 00:43:57 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "mod_parse.h"
 #include <fcntl.h>
