@@ -6,13 +6,13 @@
 #    By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/25 13:31:17 by teando            #+#    #+#              #
-#    Updated: 2025/05/23 20:50:31 by teando           ###   ########.fr        #
+#    Updated: 2025/05/24 15:53:40 by teando           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		:= miniRT
 CC			:= cc
-CFLAGS		:= -Wall -Wextra -Werror -g -fsanitize=address -O1 -fno-omit-frame-pointer
+CFLAGS		:= -Wall -Wextra -Werror -O2
 RM			:= rm -rf
 
 # Project PATH
