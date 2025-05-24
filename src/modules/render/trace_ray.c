@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   trace_ray.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 19:43:49 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/22 23:36:54 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/24 16:27:30 by tomsato          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ t_rgbd	trace_ray(t_ray ray, t_app *app, int depth)
 
 	h = intersect_ray(ray, app, INFINITY);
 	if (h.t <= 0.0 || !h.obj)
-		return ((t_rgbd){0.078, 0.078, 0.078});
+		return (rgbd_scale((t_rgbd){0.625, 0.84375, 0.93359375},
+			app->scene->amb.ratio));
 	local = shade_local(&h, app);
 	refl_col = (t_rgbd){0, 0, 0};
 	if (h.obj->reflect > 0.0 && depth < MAX_DEPTH)
