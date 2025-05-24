@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 19:22:19 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/22 23:09:20 by teando           ###   ########.fr       */
+/*   Updated: 2025/05/24 00:22:08 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,15 @@ static char	*trim_line(char *line, t_app *app)
 
 static void	dispatch_line(char *line, int lnum, t_scene *scene, t_app *app)
 {
-	static const t_dispatch	dispatch[] = {{"A", 1, parse_ambient}, {"C", 1,
-		parse_camera}, {"L", 1, parse_light}, {"sp", 2, parse_sphere},
-	{"pl", 2, parse_plane}, {"cy", 2, parse_cylinder}, {"", 0, NULL}};
+	static const t_dispatch	dispatch[] = {
+		{"A", 1, parse_ambient},
+		{"C", 1, parse_camera},
+		{"L", 1, parse_light},
+		{"sp", 2, parse_sphere},
+		{"pl", 2, parse_plane},
+		{"cy", 2, parse_cylinder},
+		{"", 0, NULL}
+	};
 	size_t					i;
 
 	if (lnum >= INT_MAX)
@@ -50,9 +56,9 @@ static void	dispatch_line(char *line, int lnum, t_scene *scene, t_app *app)
 /* シーン検証 */
 static void	validate_scene(t_scene *scene, t_app *app)
 {
-	if (!scene->amb.ratio)
+	if (!scene->amb.flag)
 		exit_errmsg("missing ambient light", 0, app);
-	if (!scene->cam.fov)
+	if (!scene->cam.flag)
 		exit_errmsg("missing camera", 0, app);
 	if (!scene->lights)
 		exit_errmsg("missing light", 0, app);
@@ -76,13 +82,11 @@ t_scene	*parse_scene(char *filename, t_app *app)
 		line = xget_next_line(app->fd, app);
 		if (!line)
 			break ;
+		if (lnum < INT_MAX)
+			++lnum;
 		trimmed = trim_line(line, app);
 		if (trimmed)
-		{
-			if (lnum < INT_MAX)
-				++lnum;
 			dispatch_line(trimmed, lnum, scene, app);
-		}
 	}
 	xclose(&app->fd);
 	validate_scene(scene, app);

@@ -6,7 +6,7 @@
 #    By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/25 13:31:17 by teando            #+#    #+#              #
-#    Updated: 2025/05/22 23:15:39 by teando           ###   ########.fr        #
+#    Updated: 2025/05/24 01:16:52 by teando           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -130,6 +130,16 @@ nm:
 
 nmbin:
 	@nm $(NAME) | grep ' U ' | awk '{print $$2}' | sort | uniq
+
+printsrc:
+	@echo $(SRC) | tr ' ' '\n' | sort
+
+printobj:
+	@echo $(OBJ) | tr ' ' '\n' | sort
+
+# =======================
+# == Config Targets =====
+# =======================
 
 $(CONF):
 	@mkdir -p $(CONF_DIR)
