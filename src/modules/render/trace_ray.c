@@ -3,16 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   trace_ray.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomsato <tomsato@student.42.jp>            +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 19:43:49 by tomsato           #+#    #+#             */
-/*   Updated: 2025/05/22 19:52:16 by tomsato          ###   ########.fr       */
+/*   Updated: 2025/05/24 16:34:01 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mod_render.h"
 
-/* 既存の calculate_light_color を "ローカル色" として double 版で呼び出す */
+/**
+ * @brief 衝突点でのローカル照明計算を行う関数
+ * 
+ * @param hit 衝突情報を格納した構造体へのポインタ（位置、法線、オブジェクト情報など）
+ * @param app アプリケーション全体の状態を保持する構造体へのポインタ（シーン情報を含む）
+ * @return t_rgbd 計算された色をRGB double形式で返す（各成分は0.0～1.0の範囲）
+ * 
+ * この関数は、calculate_light_color関数（整数RGB形式で計算）を呼び出し、
+ * その結果を浮動小数点数形式（t_rgbd）に変換して返します。
+ * 「ローカル照明」とは、反射光を含まない、直接光源からの寄与のみを計算した色です。
+ */
 t_rgbd	shade_local(t_hit_record *hit, t_app *app)
 {
 	int	trgb;
@@ -21,6 +31,21 @@ t_rgbd	shade_local(t_hit_record *hit, t_app *app)
 	return (trgb_to_rgbd(trgb));
 }
 
+/**
+ * @brief レイトレーシングの中核となる再帰的なレイ追跡関数
+ * 
+ * @param ray 追跡するレイ（原点と方向を含む）
+ * @param app アプリケーション全体の状態を保持する構造体へのポインタ
+ * @param depth 現在の再帰の深さ（反射回数の制限に使用）
+ * @return t_rgbd 計算された色をRGB double形式で返す
+ * 
+ * 1. レイとシーン内のオブジェクトとの交差判定
+ * 2. 交差がない場合は背景色を返す
+ * 3. 交差点でのローカル照明計算
+ * 4. オブジェクトが反射性を持ち、最大深度に達していない場合は反射レイを計算
+ * 5. 反射レイを再帰的に追跡し、その結果を反射率に応じて合成
+ * 6. 最終的な色を返す
+ */
 t_rgbd	trace_ray(t_ray ray, t_app *app, int depth)
 {
 	t_vec3			r;
@@ -31,7 +56,8 @@ t_rgbd	trace_ray(t_ray ray, t_app *app, int depth)
 
 	h = intersect_ray(ray, app, INFINITY);
 	if (h.t <= 0.0 || !h.obj)
-		return ((t_rgbd){0.078, 0.078, 0.078});
+		return (rgbd_scale((t_rgbd){0.625, 0.84375, 0.93359375},
+			app->scene->amb.ratio));
 	local = shade_local(&h, app);
 	refl_col = (t_rgbd){0, 0, 0};
 	if (h.obj->reflect > 0.0 && depth < MAX_DEPTH)
@@ -46,6 +72,20 @@ t_rgbd	trace_ray(t_ray ray, t_app *app, int depth)
 			rgbd_scale(refl_col, h.obj->reflect)));
 }
 
+/**
+ * @brief 影（シャドウ）判定を行う関数
+ * 
+ * @param hit 衝突点の情報を格納した構造体へのポインタ
+ * @param light 判定対象の光源情報を格納した構造体へのポインタ
+ * @param app アプリケーション全体の状態を保持する構造体へのポインタ
+ * @return int 影の中にある場合は1、そうでない場合は0を返す
+ * 
+ * 1. 衝突点から光源への方向ベクトルを計算
+ * 2. 衝突点から光源までの距離を計算
+ * 3. 衝突点から光源方向へのシャドウレイを生成（自己交差を避けるためにSHADOW_BIASだけオフセット）
+ * 4. シャドウレイと他のオブジェクトとの交差判定
+ * 5. 交差がある場合（t > 0.0）は影の中にあると判断
+ */
 int	is_shadow(t_hit_record *hit, t_lights *light, t_app *app)
 {
 	const t_vec3		dir = vec3_normalize(vec3_sub(light->pos, hit->pos));
@@ -57,7 +97,22 @@ int	is_shadow(t_hit_record *hit, t_lights *light, t_app *app)
 	return (s.t > 0.0);
 }
 
-/* --- ここをシンプルなリニア交差テストに置き換え --- */
+/**
+ * @brief レイとシーン内のすべてのオブジェクトとの交差判定を行う関数
+ * 
+ * @param ray 交差判定を行うレイ（原点と方向を含む）
+ * @param app アプリケーション全体の状態を保持する構造体へのポインタ
+ * @param t_max 交差判定を行う最大距離（これより遠い交差点は無視される）
+ * @return t_hit_record 最も近い交差点の情報を格納した構造体
+ * 
+ * 1. シーン内のすべてのオブジェクトに対して線形探索を行う
+ * 2. 各オブジェクトの衝突判定関数（o->hit）を呼び出す
+ * 3. 有効な交差点（t > 0.0）のうち、最も近いものを記録
+ * 4. 交差するオブジェクトがない場合はt=0.0を設定して返す
+ * 
+ * 注：この実装はシンプルな線形探索による交差テストです。
+ * 大規模なシーンでは空間分割などの高速化手法が必要になります。
+ */
 t_hit_record	intersect_ray(t_ray ray, t_app *app, double t_max)
 {
 	t_hit_record	rec;
